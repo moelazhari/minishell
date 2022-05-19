@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/15 18:03:42 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/19 18:07:37 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@
 #include <readline/history.h>
 #include <termios.h>
 
-# define WSPACE -1 // 
-# define REDIN -2 // <
-# define REDOUT -3 // >
-# define APPEND -6 // >>
-# define HEREDOC -7 // <<
-# define SQUOTE -8 // ''
-# define DQUOTE -10 // " "
-# define ENV_SIGN -11 // $
-# define EXIT_STATUS -12 // $?
+# define WSPACE -1 // ' '
+# define pipe -2 // |
+# define REDIN -3 // <
+# define REDOUT -4 // >
+# define APPEND -5// >>
+# define HEREDOC -6 // <<
+# define SQUOTE -7 // ''
+# define DQUOTE -8 // " "
+# define ENV_SIGN -9 // $
+# define EXIT_STATUS -10 // $?
 
 typedef struct s_cmd
 {

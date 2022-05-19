@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/15 18:18:40 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/19 19:40:37 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,24 @@
 // 	cmd->path = ft_split((env[i] + 5), ':');
 // }
 
+void print_list(t_list *list)
+{
+	t_node *tmp;
+	int i;
+
+	tmp = list->head;
+	i = 0;
+
+	printf("number of nodes %d: \n", list->n);
+	while (i < list->n)
+	{
+		printf("%d node taype: %d val: %s\n", i, tmp->type, tmp->val);
+		tmp = tmp->next;
+		i++;
+	}
+}
+
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -36,6 +54,7 @@ int	main(int ac, char **av, char **env)
 	{
 		line = prompt();
 		list = lexer(line);
+		print_list(list);
 	}
 	return (0);
 }
