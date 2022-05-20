@@ -6,7 +6,7 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/05/15 17:45:09 by mazhari          ###   ########.fr        #
+#    Updated: 2022/05/20 16:23:58 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 B_DIR= build
 
 PROMPT= $(addprefix prompt/, prompt)
-LEXER= $(addprefix lexer/, lexer tokenizer tokenizer_utils)
+LEXER= $(addprefix lexer/, lexer tokenizer list_utils)
 PARSER= $(addprefix parser/, parser $(LEXER))
 #UTILS= $(addprefix src/, $(addprefix utils/, utils))
 
