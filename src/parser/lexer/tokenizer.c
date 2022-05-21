@@ -6,101 +6,124 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/20 18:33:17 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/21 20:02:09 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*is_metacharacters(t_list *list,char *line)
+char	*is_wspace(t_list *list, char *line)
+{
+	while (*line && ft_strchr(" \t\v\f\r", *line))
+		line++;
+	push_back(list, WSPACE, " ");
+	return (line);
+}
+
+char	*is_word(t_list *list, char *line, char *stop)
+{
+	char	*val;
+	int		i;
+
+	i = 0;
+	val = NULL;
+	while (!(ft_strchr(stop, line[i])))
+		i++;
+	val = malloc(sizeof(char) * (i + 1));
+	i = 0;
+	while (!(ft_strchr(stop, *line)))
+	{
+		val[i++] = *line;
+		line++;
+	}
+	val[i] = '\0';
+	push_back(list, WORD, val);
+	return (line);
+}
+
+char	*is_sing(t_list *list, char *line)
+{
+	line++;
+	if (*line == '?')
+	{
+		push_back(list, EXIT_STATUS, "$?");
+		line++;
+	}
+	else if (*line == '{' && ft_strchr(line + 1, '}'))
+	{
+		push_back(list, SIGN, "$");
+		line = is_word(list, line + 1, "}");
+		line++;
+	}
+	else
+		push_back(list, SIGN, "$");
+	return (line);
+}
+
+char	*is_quote(t_list *list, char *line)
+{
+	if (*line == '"')
+	{
+		line = is_word(list, line + 1, "\"$");
+		if (*line == '$')
+		{	
+			line = is_sing(list, line);
+			*(line - 1) = '"';
+			return (line - 1);
+		}
+	}
+	else
+		line = is_word(list, line + 1, "'");
+	line++;
+	return (line);
+}
+
+char	*is_metacharacters(t_list *list, char *line)
 {
 	if (*line == '>')
 	{
 		if (*(line + 1) == '>')
 		{
 			push_back(list, APPEND, ">>");
-			return (line + 2);
+			line++;
 		}
-		push_back(list, REDOUT, ">");	
+		else
+			push_back(list, REDOUT, ">");
 	}
-	if (*line == '<')
+	else if (*line == '<')
 	{
 		if (*(line + 1) == '<')
 		{
 			push_back(list, HEREDOC, "<<");
-			return (line + 2);
+			line++;
 		}
-		push_back(list, REDIN, "<");	
+		else
+			push_back(list, REDIN, "<");
 	}
-	if (*line == '|')
+	else if (*line == '|')
 		push_back(list, PIPE, "|");
-	return (line + 1);
-}
-
-char	*is_squote(t_list *list, char *line)
-{
-	char	*val;
-	int		i;
-
-	i = 0;
-	val = NULL;
-
-	while (line[i] != '\'')
-		i++;
-	val = malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (*line != '\'')
-	{
-		val[i++] = *line;
-		line++;
-	}
-	val[i] = '\0';
-	push_back(list, WORD, val);
-	return (line + i - 1);
-}
-
-char	*is_dquote(t_list *list, char *line)
-{
-	char	*val;
-	int		i;
-
-	i = 0;
-	val = NULL;
-
-	while (line[i] != '\"')
-		i++;
-	val = malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (*line != '\"')
-	{
-		val[i++] = *line;
-		line++;
-	}
-	val[i] = '\0';
-	push_back(list, WORD, val);
-	return (line + i - 1);
+	line++;
+	return (line);
 }
 
 t_list	*tokenizer(char *line)
 {
-	t_list *list;
-	
+	t_list	*list;
+
 	list = new_list();
 	while (*line)
 	{
-		if (*line == ' ')
-		{
-			while (*line == ' ')
-				line++;
-			push_back(list, WSPACE, " ");
-		}
-		if (ft_strchr("|<>$", *line))
+		if (ft_strchr(" \t\v\f\r", *line))
+			line = is_wspace(list, line);
+		else if ( (*line == '\'' && ft_strchr((line + 1), '\''))\
+					|| (*line == '"' && ft_strchr((line + 1), '"')))
+			line = is_quote(list, line);
+		else if (*line == '$')
+			line = is_sing(list, line);
+		else if (ft_strchr("|<>", *line))
 		 	line = is_metacharacters(list, line);
-		if (*line == '\'' && ft_strchr(++line, '\''))
-			line = is_squote(list, line);
-		if (*line == '"' && ft_strchr(++line, '"'))
-		 	line = is_dquote(list, line);
-		line++;
+		else
+			line = is_word(list, line, "\t\v\f\r$|<>");
 	}
 	return (list);
 }

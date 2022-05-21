@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/20 18:31:42 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/21 20:02:18 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ typedef struct	s_list
 char	*prompt(void); // display prompt and get commandline
 // fnc of the parser
 t_list	*lexer(char *line); // lexical analyser
+//fnc utils in tokenizer
 t_list	*tokenizer(char *line);// converts the line into list of tokens 
-// fnc utils in tokenizer
+//fnc utils in list
 t_node	*new_node(int type, char *val);
 t_node	*push_back(t_list *list, int type, char *val);
 t_list	*new_list(void);
