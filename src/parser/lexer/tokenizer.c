@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/21 20:02:09 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/23 14:43:24 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,27 @@ char	*is_quote(t_list *list, char *line)
 {
 	if (*line == '"')
 	{
-		line = is_word(list, line + 1, "\"$");
-		if (*line == '$')
-		{	
-			line = is_sing(list, line);
-			*(line - 1) = '"';
-			return (line - 1);
+		if (ft_strchr(line + 1, '"'))
+		{
+			line = is_word(list, line + 1, "\"$");
+			if (*line == '$')
+			{	
+				line = is_sing(list, line);
+				line =  is_word(list, line, " \"");
+				*(line - 1) = '"';
+				return (line - 1);
+			}
 		}
+		else
+			printf("minishell: unclosed double quotes\n");
 	}
 	else
-		line = is_word(list, line + 1, "'");
+	{	
+		if (ft_strchr(line + 1, '\''))
+			line = is_word(list, line + 1, "'");
+		else
+			printf("minishell: unclosed singel quotes\n");
+	}
 	line++;
 	return (line);
 }
@@ -115,15 +126,14 @@ t_list	*tokenizer(char *line)
 	{
 		if (ft_strchr(" \t\v\f\r", *line))
 			line = is_wspace(list, line);
-		else if ( (*line == '\'' && ft_strchr((line + 1), '\''))\
-					|| (*line == '"' && ft_strchr((line + 1), '"')))
+		else if (*line == '\'' || *line == '"')
 			line = is_quote(list, line);
 		else if (*line == '$')
 			line = is_sing(list, line);
 		else if (ft_strchr("|<>", *line))
 		 	line = is_metacharacters(list, line);
 		else
-			line = is_word(list, line, "\t\v\f\r$|<>");
+			line = is_word(list, line, " \t\v\f\r\"'$|<>");
 	}
 	return (list);
 }

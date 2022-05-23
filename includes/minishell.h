@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/21 20:02:18 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/23 14:27:04 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct	s_list
 
 // fnc of the prompt
 char	*prompt(void); // display prompt and get commandline
+void	sig_int_handler(int sig);
 // fnc of the parser
 t_list	*lexer(char *line); // lexical analyser
 //fnc utils in tokenizer
