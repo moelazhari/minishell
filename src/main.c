@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/20 18:33:59 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/24 11:48:30 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void print_list(t_list *list)
 		i++;
 	}
 }
-
 
 int	main(int ac, char **av, char **env)
 {
