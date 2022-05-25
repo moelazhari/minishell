@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_utils.c                                  :+:      :+:    :+:   */
+/*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:51:26 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/19 19:37:00 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/25 15:02:44 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,24 @@ t_list	*new_list(void)
 	list->head = NULL;
 	list->tail = NULL;
 	return (list);
+}
+
+void	del_node(t_list *list, t_node *node)
+{
+	t_node *tmp;
+	
+	tmp = node;
+	if (!node)
+		return ;
+	else if (!node->prev)
+		list->head = list->head->next;		
+	else if (!node->next)
+		node->prev->next = NULL;
+	else
+	{
+		node->prev->next = node->next;
+		node->next->prev = node->prev;
+	}
+	(list->n)--;
+	free(tmp);
 }

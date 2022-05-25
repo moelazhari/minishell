@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/23 14:43:24 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/25 15:44:31 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*is_wspace(t_list *list, char *line)
 {
-	while (*line && ft_strchr(" \t\v\f\r", *line))
+	while (*line && ft_strchr(" \t", *line))
 		line++;
-	push_back(list, WSPACE, " ");
+	push_back(list, WSPACE, NULL);
 	return (line);
 }
 
@@ -124,7 +124,7 @@ t_list	*tokenizer(char *line)
 	list = new_list();
 	while (*line)
 	{
-		if (ft_strchr(" \t\v\f\r", *line))
+		if (ft_strchr(" \t", *line))
 			line = is_wspace(list, line);
 		else if (*line == '\'' || *line == '"')
 			line = is_quote(list, line);

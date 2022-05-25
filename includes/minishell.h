@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/23 14:27:04 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/05/25 15:26:43 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define REDOUT -4 // >
 # define APPEND -5// >>
 # define HEREDOC -6 // <<
+# define SQUOTES -7// '
+# define DQUOTES -8// "
 # define SIGN -9 // $
 # define EXIT_STATUS -10 // $?
 # define WORD -11 // 	
@@ -64,5 +66,7 @@ t_list	*tokenizer(char *line);// converts the line into list of tokens
 t_node	*new_node(int type, char *val);
 t_node	*push_back(t_list *list, int type, char *val);
 t_list	*new_list(void);
+//fnc exit
+
 
 #endif
