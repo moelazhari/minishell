@@ -31,7 +31,6 @@ void print_list(t_list *list)
 
 	tmp = list->head;
 	i = 0;
-
 	printf("number of nodes %d: \n", list->n);
 	while (i < list->n)
 	{
@@ -45,14 +44,13 @@ int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	(void)env;
 	char	*cmd; // bufer to store the commandline
 	t_list	*list;
 	
 	while(1)
 	{
 		cmd = prompt();
-		list = lexer(cmd);
+		list = lexer(cmd, env);
 		print_list(list);
 	}
 	return (0);

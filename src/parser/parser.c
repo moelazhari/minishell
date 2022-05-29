@@ -10,3 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell"
+
+t_list *paser(t_list *list)
+{
+    t_list  *list;
+    t_node  *
+    
+    list = new_list();
+
+    while ()
+
+
+}

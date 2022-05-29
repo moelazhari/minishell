@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+int	is_metachar(t_node *tmp)
+{
+	if (tmp->type == PIPE || tmp->type == REDIN || tmp->type == REDOUT\
+		|| tmp->type == HEREDOC || tmp->type == APPEND)
+		if (tmp->next->type != WORD && tmp->next->type != WSPACE)
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
+			return (0);
+		}
+	return (1);
+}
+
 int	check_Syntax(t_list *list)
 {
 	t_node	*tmp;
@@ -23,7 +35,7 @@ int	check_Syntax(t_list *list)
 		if (tmp->next == NULL)
 			if (ft_strchr("|<>", tmp->val[0]))
 			{
-				ft_exit(list, "minishell: syntax error near unexpected token `newline'\n", 2);	
+				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);	
 				return (0);
 			}
 		if (tmp->type == WORD)
@@ -31,21 +43,53 @@ int	check_Syntax(t_list *list)
 			if ((ptr = ft_strchr(tmp->val, ';')))
 			{
 				if (*(ptr + 1) == ';')
-				ft_exit(list, "minishell: syntax error near unexpected token `;;'\n", 2);
+				ft_putstr_fd("minishell: syntax error near unexpected token `;;'\n", 2);
 				return (0);
 			}
 		}
+		else
+			if (!is_metachar(tmp))
+				return (0);
 		tmp = tmp->next;
 	}
 	return (1);
 }
 
-t_list *lexer(char *line)
+t_list	*expaned(t_list *list, char **env)
+{
+	t_node	*tmp;
+	int		i;
+
+	tmp = list->head;
+	while (tmp)
+	{
+		if (tmp->type == WSPACE)
+			del_node(list, tmp);
+		if (tmp->type == SIGN)
+		{	
+			tmp = tmp->next;
+			if (tmp->type == WORD)
+			{
+				i = -1;
+				while (env[++i])
+				{
+					if (!ft_strncmp(tmp->val, env[i], ft_strlen(tmp->val)))
+						tmp->val = *(env + i) + ft_strlen(tmp->val) + 1;
+				}
+			}
+		}
+		tmp = tmp->next;
+	}
+	return (list);
+}
+
+t_list *lexer(char *line, char **env)
 { 
 	t_list	*list;
 
 	list = tokenizer(line);
 	if (!check_Syntax(list))
 		return (NULL);
+	list = expaned(list, env);
 	return (list);
 }

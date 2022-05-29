@@ -16,7 +16,7 @@ char	*is_wspace(t_list *list, char *line)
 {
 	while (*line && ft_strchr(" \t", *line))
 		line++;
-	push_back(list, WSPACE, NULL);
+	push_back(list, WSPACE, " ");
 	return (line);
 }
 
@@ -132,6 +132,12 @@ t_list	*tokenizer(char *line)
 			line = is_sing(list, line);
 		else if (ft_strchr("|<>", *line))
 		 	line = is_metacharacters(list, line);
+		else if (*line == '~')
+		{
+			push_back(list, SIGN, "$");
+			push_back(list, WORD, "HOME");
+			line++;
+		}
 		else
 			line = is_word(list, line, " \t\v\f\r\"'$|<>");
 	}

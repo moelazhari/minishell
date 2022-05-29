@@ -33,11 +33,26 @@
 # define EXIT_STATUS -10 // $?
 # define WORD -11 // 	
 
+// typedef struct s_cmd
+// {
+// 	char	*command;
+// 	char	*program;
+// 	char	**path;
+// }				t_cmd;
+
+typedef struct	s_red
+{
+	int		type;
+	char	*filename;
+}				t_red;
+
 typedef struct s_cmd
 {
-	char	*command;
-	char	*program;
-	char	**path;
+	struct s_cmd	*prev;
+	char			*val;
+	struct s_cmd	*next;
+	t_red			*red;
+
 }				t_cmd;
 
 typedef struct	s_node
@@ -59,14 +74,14 @@ typedef struct	s_list
 char	*prompt(void); // display prompt and get commandline
 void	sig_int_handler(int sig);
 // fnc of the parser
-t_list	*lexer(char *line); // lexical analyser
+t_list	*lexer(char *line, char **env); // lexical analyser
 //fnc utils in tokenizer
 t_list	*tokenizer(char *line);// converts the line into list of tokens 
 //fnc utils in list
 t_node	*new_node(int type, char *val);
 t_node	*push_back(t_list *list, int type, char *val);
 t_list	*new_list(void);
+void	del_node(t_list *list, t_node *node);
 //fnc exit
-
 
 #endif
