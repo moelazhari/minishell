@@ -33,11 +33,14 @@ int	check_Syntax(t_list *list)
 	while (tmp)
 	{
 		if (tmp->next == NULL)
-			if (ft_strchr("|<>", tmp->val[0]))
+		{
+			if (tmp->type == PIPE || tmp->type == REDIN || tmp->type == REDOUT\
+				|| tmp->type == HEREDOC || tmp->type == APPEND)
 			{
 				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);	
 				return (0);
 			}
+		}
 		if (tmp->type == WORD)
 		{
 			if ((ptr = ft_strchr(tmp->val, ';')))
@@ -55,36 +58,73 @@ int	check_Syntax(t_list *list)
 	return (1);
 }
 
+void	expaned_sign(t_list *list, t_node *tmp, char **env)
+{
+	int	i;
+
+	i = -1;
+	tmp = tmp->next;
+	if (tmp->val[0] == 0)
+	{
+		tmp->prev->type = WORD;
+		del_node(list, tmp);
+	}
+	else 
+	{
+		while (env[++i])
+		{
+			if (!ft_strncmp(tmp->val, env[i], ft_strlen(tmp->val)))
+			{
+				tmp->val = *(env + i) + ft_strlen(tmp->val) + 1;
+				break ;
+			}
+		}
+		if (!env[i])
+			del_node(list, tmp);
+		del_node(list, tmp->prev);
+	}
+}
+
+void	combaine_words(t_list *list)
+{
+	t_node *tmp;
+	int i;
+    
+	i = -1;
+	tmp = list->tail;
+	while (++i < list->n)
+	{
+		if (tmp->type == WORD && tmp->prev->type == WORD)
+		{
+			tmp->prev->val = ft_strjoin(tmp->prev->val, tmp->val);
+				tmp = tmp->prev;	
+				del_node(list, tmp->next);
+		}
+		else
+			tmp = tmp->prev;
+	}
+}
+
 t_list	*expaned(t_list *list, char **env)
 {
 	t_node	*tmp;
-	int		i;
 
 	tmp = list->head;
 	while (tmp)
 	{
-		if (tmp->type == WSPACE)
-			del_node(list, tmp);
 		if (tmp->type == SIGN)
-		{	
-			tmp = tmp->next;
-			if (tmp->type == WORD)
-			{
-				i = -1;
-				while (env[++i])
-				{
-					if (!ft_strncmp(tmp->val, env[i], ft_strlen(tmp->val)))
-						tmp->val = *(env + i) + ft_strlen(tmp->val) + 1;
-				}
-			}
+		{
+			expaned_sign(list, tmp, env);
 		}
 		tmp = tmp->next;
 	}
+	combaine_words(list);
 	return (list);
 }
 
-t_list *lexer(char *line, char **env)
+t_list	*lexer(char *line, char **env)
 { 
+	(void)env;
 	t_list	*list;
 
 	list = tokenizer(line);

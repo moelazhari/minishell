@@ -20,7 +20,6 @@ HEDEAR= $(INCLUDES)/minishell.h
 
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
-
 B_DIR= build
 
 PROMPT= $(addprefix prompt/, prompt)

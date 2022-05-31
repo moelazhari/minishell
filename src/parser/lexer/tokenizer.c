@@ -56,7 +56,10 @@ char	*is_sing(t_list *list, char *line)
 		line++;
 	}
 	else
+	{
 		push_back(list, SIGN, "$");
+		line = is_word(list, line, " \t!\"$%'()*+,-./:;<=>?@[\\]^`{|}~");
+	}
 	return (line);
 }
 
@@ -66,13 +69,18 @@ char	*is_quote(t_list *list, char *line)
 	{
 		if (ft_strchr(line + 1, '"'))
 		{
-			line = is_word(list, line + 1, "\"$");
+			line = is_word(list, line + 1, "\"$~");
 			if (*line == '$')
 			{	
 				line = is_sing(list, line);
-				line =  is_word(list, line, " \"");
-				*(line - 1) = '"';
-				return (line - 1);
+				if (*line != '"')
+					line =  is_word(list, line, "\"");
+			}
+			else if (*line == '~')
+			{
+				push_back(list, SIGN, "$");
+				push_back(list, WORD, "HOME");
+				line++;
 			}
 		}
 		else

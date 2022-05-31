@@ -35,31 +35,15 @@
 
 // typedef struct s_cmd
 // {
-// 	char	*command;
+//	char	*command;
 // 	char	*program;
 // 	char	**path;
 // }				t_cmd;
-
-typedef struct	s_red
-{
-	int		type;
-	char	*filename;
-}				t_red;
-
-typedef struct s_cmd
-{
-	struct s_cmd	*prev;
-	char			*val;
-	struct s_cmd	*next;
-	t_red			*red;
-
-}				t_cmd;
-
 typedef struct	s_node
 {
 	int				type;
-	struct s_node	*prev;
 	char			*val;
+	struct s_node	*prev;
 	struct s_node	*next;
 }				t_node;
 
@@ -69,6 +53,22 @@ typedef struct	s_list
 	t_node	*head; // the beginning of the list
 	t_node	*tail; // the end of the list
 }				t_list;	
+
+typedef struct	s_red
+{
+	int				type;
+	char			*filename;
+	struct s_red	*prev;
+	struct s_red	*next;
+}				t_red;
+
+typedef struct s_cmd
+{
+	char			**args;
+	t_list			*red;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}				t_cmd;
 
 // fnc of the prompt
 char	*prompt(void); // display prompt and get commandline

@@ -52,6 +52,5 @@ int	main(int ac, char **av, char **env)
 		cmd = prompt();
 		list = lexer(cmd, env);
 		print_list(list);
-	}
-	return (0);
+	}	return (0);
 }
