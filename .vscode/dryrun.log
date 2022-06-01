@@ -1,8 +1,5 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/mazhari/Desktop/minishell'
-mkdir -p build/src/parser/lexer
-gcc -I./includes -Wall -Werror -Wextra -g -I ./readline/include -c src/parser/lexer/lexer.c -o build/src/parser/lexer/lexer.o
- 
-gcc -Wall -Werror -Wextra -g libft/libft.a -L ./readline/lib -lreadline build/src/main.o build/src/prompt/prompt.o build/src/parser/parser.o build/src/parser/lexer/lexer.o build/src/parser/lexer/tokenizer.o build/src/parser/lexer/list_utils.o -o minishell
+make: Nothing to be done for `all'.
 make: Leaving directory `/Users/mazhari/Desktop/minishell'
  

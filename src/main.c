@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/05/24 11:48:30 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/01 19:12:02 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,15 @@ int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	char	*cmd; // bufer to store the commandline
+	char	*line; // bufer to store the commandline
 	t_list	*list;
+	t_cmd	*cmd;
 	
 	while(1)
 	{
-		cmd = prompt();
-		list = lexer(cmd, env);
+		line = prompt();
+		list = lexer(line, env);
+		cmd = paser(list);
 		print_list(list);
 	}	return (0);
 }
