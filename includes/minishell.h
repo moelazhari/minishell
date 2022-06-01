@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/01 18:42:53 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/01 21:32:15 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct	s_red_node
 
 typedef struct	s_red
 {
-	int			n; // number of node;
 	t_red_node	*head; // the beginning of the list
 	t_red_node	*tail; // the end of the list
 }				t_red;

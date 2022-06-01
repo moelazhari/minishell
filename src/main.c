@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/01 19:12:02 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/01 21:19:29 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **env)
 	{
 		line = prompt();
 		list = lexer(line, env);
-		cmd = paser(list);
 		print_list(list);
+		cmd = paser(list);
 	}	return (0);
 }
