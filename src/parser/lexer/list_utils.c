@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:51:26 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/01 17:39:35 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/03 14:43:28 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_node	*new_node(int type, char *val)
 	return (new);
 }
 
-t_node	*push_back(t_list *list, int type, char *val)
+void	push_back(t_list *list, int type, char *val)
 {
 	t_node	*new;
 
@@ -36,7 +36,6 @@ t_node	*push_back(t_list *list, int type, char *val)
 		list->head = new;
 	list->tail = new;
 	(list->n)++;
-	return (new);
 }
 
 t_list	*new_list(void)
@@ -52,22 +51,27 @@ t_list	*new_list(void)
 
 void	del_node(t_list *list, t_node *node)
 {
-	t_node *tmp;
-	
-	tmp = node;
-	if (!node)
-		return ;
-	else if (!node->prev)
-		list->head = list->head->next;		
+    if (list->n == 0 || !node)
+		return	;
+	if (!node->prev)
+    {
+        list->head = list->head->next;
+	    if (list->head)
+		    list->head->prev = NULL;
+    }
 	else if (!node->next)
-		node->prev->next = NULL;
+    {
+        list->tail = list->tail->prev;
+	    if (list->tail)
+		    list->tail->next = NULL;
+    }
 	else
 	{
 		node->prev->next = node->next;
 		node->next->prev = node->prev;
 	}
 	(list->n)--;
-	if (tmp->type == WORD)
-		free(tmp->val);
-	free(tmp);
+	if (node->type == WORD)
+		free(node->val);
+	free(node);
 }

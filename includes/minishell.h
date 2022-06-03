@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/01 21:32:15 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/03 14:56:47 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct	s_red_node
 
 typedef struct	s_red
 {
+	int			n;
 	t_red_node	*head; // the beginning of the list
 	t_red_node	*tail; // the end of the list
 }				t_red;
@@ -81,13 +82,13 @@ typedef struct	s_cmd
 char	*prompt(void); // display prompt and get commandline
 void	sig_int_handler(int sig);
 // fnc of the parser
-t_cmd  *paser(t_list *list);
+t_cmd  *paser(t_list *list, t_cmd *cmd);
 // fnc list cmd red utils
 t_cmd		*new_cmd(void);
-t_cmd		*push_back_cmd(t_cmd *cmd, char **args, t_red *red);
+void		push_back_cmd(t_cmd *cmd, char **args, t_red *red);
 t_red		*new_red(void);
 t_red_node	*new_red_node(int type, char *filename);
-t_red		*push_back_red(t_red *red, int type, char *filename);
+void		push_back_red(t_red *red, int type, char *filename);
 // lexical analyser
 t_list	*lexer(char *line, char **env); // lexical analyser
 //fnc utils in tokenizer
@@ -96,7 +97,7 @@ char	*is_word(t_list *list, char *line, char *stop);
 char	*is_metacharacters(t_list *list, char *line);
 //fnc utils in list
 t_node	*new_node(int type, char *val);
-t_node	*push_back(t_list *list, int type, char *val);
+void	push_back(t_list *list, int type, char *val);
 t_list	*new_list(void);
 void	del_node(t_list *list, t_node *node);
 //syntax fnc

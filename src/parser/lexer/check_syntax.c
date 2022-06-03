@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:39:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/01 15:14:01 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/03 15:49:49 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	check_syntax(t_list *list)
 	char	*ptr;
 
 	tmp = list->head;
+	
 	while (tmp)
 	{
 		if (tmp->next == NULL)
@@ -41,7 +42,7 @@ int	check_syntax(t_list *list)
 				return (0);
 			}
 		}
-		if (tmp->type == WORD)
+		else if (tmp->type == WORD)
 		{
 			if ((ptr = ft_strchr(tmp->val, ';')))
 			{
@@ -54,6 +55,6 @@ int	check_syntax(t_list *list)
 			if (!is_metachar(tmp))
 				return (0);
 		tmp = tmp->next;
-	}
+	};
 	return (1);
 }

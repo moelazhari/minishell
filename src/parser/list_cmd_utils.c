@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:38:53 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/01 18:13:41 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/02 20:01:33 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_cmd_node	*new_cmd_node(char **args, t_red *red)
 	return (new);
 }
 
-t_cmd	*push_back_cmd(t_cmd *cmd, char **args, t_red *red)
+void	push_back_cmd(t_cmd *cmd, char **args, t_red *red)
 {
 	t_cmd_node	*new;
 
@@ -36,7 +36,6 @@ t_cmd	*push_back_cmd(t_cmd *cmd, char **args, t_red *red)
 		cmd->head = new;
 	cmd->tail = new;
 	(cmd->n)++;
-	return (cmd);
 }
 
 t_cmd	*new_cmd(void)

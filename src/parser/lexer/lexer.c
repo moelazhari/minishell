@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/01 14:28:11 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/03 14:41:16 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,15 @@ void	expaned_sign(t_list *list, t_node *tmp, char **env)
 void	combaine_words(t_list *list)
 {
 	t_node *tmp;
-	int i;
-    
-	i = -1;
+
 	tmp = list->tail;
-	while (++i < list->n)
+	while (tmp != list->head)
 	{
-		if (tmp == list->head)
-			return ;
 		if (tmp->type == WORD && tmp->prev->type == WORD)
 		{
 			tmp->prev->val = ft_strjoin(tmp->prev->val, tmp->val);
-				tmp = tmp->prev;	
-				del_node(list, tmp->next);
+			tmp = tmp->prev;	
+			del_node(list, tmp->next);
 		}
 		else
 			tmp = tmp->prev;
@@ -73,13 +69,19 @@ static t_list	*expaned(t_list *list, char **env)
 		tmp = tmp->next;
 	}
 	combaine_words(list);
-	tmp = list->head;
-	while (tmp)
+	tmp = list->tail;
+	while (tmp != list->head)
 	{
 		if (tmp->type == WSPACE)
-			del_node(list, tmp);
-		tmp = tmp->next;
+		{
+			tmp = tmp->prev;
+			del_node(list, tmp->next);
+		}
+		else
+			tmp = tmp->prev;
 	}
+	if (list->head->type == WSPACE)
+		del_node(list, list->head);
 	return (list);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 17:58:39 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/01 21:32:13 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:42:28 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_red_node	*new_red_node(int type, char *filename)
 	return (new);
 }
 
-t_red	*push_back_red(t_red *red, int type, char *filename)
+void	push_back_red(t_red *red, int type, char *filename)
 {
 	t_red_node	*new;
 
@@ -35,7 +35,7 @@ t_red	*push_back_red(t_red *red, int type, char *filename)
 	else
 		red->head = new;
 	red->tail = new;
-	return (red);
+	(red->n)++;
 }
 
 t_red	*new_red(void)
@@ -43,6 +43,7 @@ t_red	*new_red(void)
 	t_red   *new;
 
 	new = malloc(sizeof(t_red));
+	new->n = 0;
 	new->head = NULL;
 	new->tail = NULL;
 	return (new);
