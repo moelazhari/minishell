@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:39:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/03 20:12:47 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/03 21:18:45 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static int  is_metachar(t_node *tmp)
 {
-	if (tmp->type == PIPE || tmp->type == REDIN || tmp->type == REDOUT\
-		|| tmp->type == HEREDOC || tmp->type == APPEND)
+	if (ft_strchr("<|>", tmp->val[0]))
 		if (tmp->next->type != WORD && tmp->next->type != WSPACE)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
@@ -27,31 +26,20 @@ static int  is_metachar(t_node *tmp)
 int	check_syntax(t_list *list)
 {
 	t_node	*tmp;
-	char	*ptr;
 
 	tmp = list->head;
-	
+	if (ft_strchr("<|>", list->tail->val[0]))
+	{
+			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);	
+			return (0);
+	}
 	while (tmp)
 	{
-		if (tmp->next == NULL)
+		if (tmp->type == WORD && ft_strchr(tmp->val, ';'))
 		{
-			if (tmp->type == PIPE || tmp->type == REDIN || tmp->type == REDOUT\
-				|| tmp->type == HEREDOC || tmp->type == APPEND)
-			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);	
+				ft_putstr_fd("minishell: syntax error near unexpected token `;'\n", 2);
 				return (0);
-			}
 		}
-		else if (tmp->type == WORD)
-		{
-			if ((ptr = ft_strchr(tmp->val, ';')))
-			{
-				if (*(ptr + 1) == ';')
-				ft_putstr_fd("minishell: syntax error near unexpected token `;;'\n", 2);
-				return (0);
-			}
-		}
-
 		else
 			if (!is_metachar(tmp))
 				return (0);

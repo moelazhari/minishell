@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/03 19:31:42 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/03 21:21:08 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,59 +24,62 @@
 // 	cmd->path = ft_split((env[i] + 5), ':');
 // }
 
-void print_red(t_red *red)
-{
-	t_red_node *tmp;
-	int i;
+// void print_red(t_red *red)
+// {
+// 	t_red_node *tmp;
+// 	int i;
 
-	tmp = red->head;
-	i = 0;
-	while (i < red->n)
-	{
-		printf("%d node taype: %d filename: %s\n", i, tmp->type, tmp->filename);
-		tmp = tmp->next;
-		i++;
-	}
-}
+// 	tmp = red->head;
+// 	i = 0;
+// 	while (i < red->n)
+// 	{
+// 		printf("%d node taype: %d filename: %s\n", i, tmp->type, tmp->filename);
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// }
 
-void	print_cmd(t_cmd   *cmd)
-{
-	t_cmd_node  *tmp;
-	int i;
+// void	print_cmd(t_cmd   *cmd)
+// {
+// 	t_cmd_node  *tmp;
+// 	int i;
 
-	i = 0;
-    if (!cmd)
-        return ;
-	tmp = cmd->head;
-    printf("number of nodes %d: \n", cmd->n);
-	while (tmp)
-	{
-		i = 0;
-        while (tmp->args[i])
-        {
-		    printf("%s\n", tmp->args[i]);
-            i++;
-        }
-		print_red(tmp->red);
-		tmp = tmp->next;
-	}
-}
+// 	i = 0;
+//     if (!cmd)
+//         return ;
+// 	tmp = cmd->head;
+//     printf("number of nodes %d: \n", cmd->n);
+// 	while (tmp)
+// 	{
+// 		i = 0;
+// 		if (tmp->args)
+// 		{
+// 	        while (tmp->args[i])
+// 	        {
+// 			    printf("%s\n", tmp->args[i]);
+// 	            i++;
+// 	        }
+// 		}
+// 		print_red(tmp->red);
+// 		tmp = tmp->next;
+// 	}
+// }
 
-void print_list(t_list *list)
-{
-	t_node *tmp;
-	int i;
+// void print_list(t_list *list)
+// {
+// 	t_node *tmp;
+// 	int i;
 
-	tmp = list->head;
-	i = 0;
-	printf("number of nodes %d: \n", list->n);
-	while (i < list->n)
-	{
-		printf("%d node taype: %d val: %s\n", i, tmp->type, tmp->val);
-		tmp = tmp->next;
-		i++;
-	}
-}
+// 	tmp = list->head;
+// 	i = 0;
+// 	printf("number of nodes %d: \n", list->n);
+// 	while (i < list->n)
+// 	{
+// 		printf("%d node taype: %d val: %s\n", i, tmp->type, tmp->val);
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// }
 
 int is_all_wspace(char *line)
 {
@@ -101,10 +104,11 @@ int	main(int ac, char **av, char **env)
 		line = prompt();
 		if (line[0] == 0 || is_all_wspace(line))
 			continue ;
-		list = lexer(line, env);
-		cmd = paser(list, cmd);
-		print_cmd(cmd);
-		free (cmd);
+		if ((list = lexer(line, env)))
+		{
+			cmd = paser(list, cmd);
+			free (cmd);
+		}
 	}	
 	return (0);
 }

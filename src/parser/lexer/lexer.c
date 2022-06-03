@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/03 17:41:18 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/03 21:09:11 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ t_list	*lexer(char *line, char **env)
 
 	if (!(list = tokenizer(line)))
 		return (NULL);
+	list = expaned(list, env);
 	if (!check_syntax(list))
 		return (NULL);
-	list = expaned(list, env);
 	return (list);
 }
