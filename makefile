@@ -6,7 +6,7 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/06/01 18:50:08 by mazhari          ###   ########.fr        #
+#    Updated: 2022/06/03 17:07:49 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,10 @@ all: $(NAME)
 
 $(B_DIR)/src/%.o: src/%.c $(LIBFT_LIB) $(HEDEAR)
 	mkdir -p $(@D)
-	$(CC) -I$(INCLUDES) $(CFLAGS) -I ./readline/include -c $< -o $@
+	$(CC) -I$(INCLUDES) $(CFLAGS) -I /Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/include -c $< -o $@
 
 $(NAME): $(OBJS) $(HEDEAR)
-	$(CC) $(CFLAGS) $(LIBFT_LIB) -L ./readline/lib -lreadline $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(LIBFT_LIB) -L /Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/lib -lreadline $(OBJS) -o $(NAME)
 
 $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)

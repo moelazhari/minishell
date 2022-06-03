@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:39:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/03 15:49:49 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/03 20:12:47 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ int	check_syntax(t_list *list)
 				return (0);
 			}
 		}
+
 		else
 			if (!is_metachar(tmp))
 				return (0);
 		tmp = tmp->next;
-	};
+	}
 	return (1);
 }
