@@ -6,80 +6,46 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/03 21:21:08 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/04 16:16:03 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void free_red(t_red *red)
+{
+	t_red_node *tmp;
 
-// void	get_path(t_cmd *cmd, char **env)
-// {
-// 	int i;
+	tmp = red->head;
+	while (tmp)
+	{
+		free(tmp->filename);
+		tmp = tmp->next;
+	}
+	free(red);
+}
 
-// 	i = -1;
-// 	while (env[++i])
-// 		if (!(ft_strncmp("PATH", env[i], 4)))
-// 			break ;
-// 	cmd->path = ft_split((env[i] + 5), ':');
-// }
+void	free_cmd(t_cmd *cmd)
+{
+	t_cmd_node	*tmp;
+	int			i;
 
-// void print_red(t_red *red)
-// {
-// 	t_red_node *tmp;
-// 	int i;
-
-// 	tmp = red->head;
-// 	i = 0;
-// 	while (i < red->n)
-// 	{
-// 		printf("%d node taype: %d filename: %s\n", i, tmp->type, tmp->filename);
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// }
-
-// void	print_cmd(t_cmd   *cmd)
-// {
-// 	t_cmd_node  *tmp;
-// 	int i;
-
-// 	i = 0;
-//     if (!cmd)
-//         return ;
-// 	tmp = cmd->head;
-//     printf("number of nodes %d: \n", cmd->n);
-// 	while (tmp)
-// 	{
-// 		i = 0;
-// 		if (tmp->args)
-// 		{
-// 	        while (tmp->args[i])
-// 	        {
-// 			    printf("%s\n", tmp->args[i]);
-// 	            i++;
-// 	        }
-// 		}
-// 		print_red(tmp->red);
-// 		tmp = tmp->next;
-// 	}
-// }
-
-// void print_list(t_list *list)
-// {
-// 	t_node *tmp;
-// 	int i;
-
-// 	tmp = list->head;
-// 	i = 0;
-// 	printf("number of nodes %d: \n", list->n);
-// 	while (i < list->n)
-// 	{
-// 		printf("%d node taype: %d val: %s\n", i, tmp->type, tmp->val);
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// }
+	tmp = cmd->head;
+	while (tmp)
+	{
+		i = -1; 
+		if (tmp->args)
+		{
+	        while (tmp->args[++i])
+	        	free (tmp->args[i]);
+			free(tmp->args);
+		}
+		if (tmp->red)
+			free_red(tmp->red);
+		tmp = tmp->next;
+	}
+	free(cmd);
+}
 
 int is_all_wspace(char *line)
 {
@@ -106,8 +72,8 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		if ((list = lexer(line, env)))
 		{
-			cmd = paser(list, cmd);
-			free (cmd);
+			execute(paser(list, cmd));
+			free_cmd(cmd);
 		}
 	}	
 	return (0);

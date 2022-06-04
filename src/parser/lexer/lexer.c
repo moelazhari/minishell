@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/03 21:09:11 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/04 17:08:43 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	combaine_words(t_list *list)
 		if (tmp->type == WORD && tmp->prev->type == WORD)
 		{
 			tmp->prev->val = ft_strjoin(tmp->prev->val, tmp->val);
-			tmp = tmp->prev;	
+			free(tmp->val);
+			tmp = tmp->prev;
 			del_node(list, tmp->next);
 		}
 		else

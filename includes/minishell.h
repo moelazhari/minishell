@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/03 14:56:47 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/04 15:13:53 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <termios.h>
+#include <fcntl.h>
 
 # define WSPACE -1 // ' '
 # define PIPE -2 // |
@@ -102,6 +103,8 @@ t_list	*new_list(void);
 void	del_node(t_list *list, t_node *node);
 //syntax fnc
 int	check_syntax(t_list *list);
+//exec fnc
+void execute(t_cmd *cmds);
 //fnc exit
 
 #endif
