@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/01 14:38:26 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/04 21:46:11 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static char	*is_dquote(t_list *list, char *line)
 		push_back(list, WORD, "HOME");
 		line++;
 	}
-	push_back(list, WSPACE, " ");
 	return (line);	
 }
 
@@ -73,10 +72,7 @@ static char	*is_quote(t_list *list, char *line)
 	else
 	{	
 		if (ft_strchr(line + 1, '\''))
-		{
 			line = is_word(list, line + 1, "'");
-			push_back(list, WSPACE, " ");
-		}
 		else
 			printf("minishell: unclosed singel quotes\n");
 	}

@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/04 17:08:43 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/04 23:17:16 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ void	expaned_sign(t_list *list, t_node *tmp, char **env)
 		{
 			if (!ft_strncmp(tmp->val, env[i], ft_strlen(tmp->val)))
 			{
-				tmp->val = *(env + i) + ft_strlen(tmp->val) + 1;
-				break ;
+				if (*(*(env + i) + ft_strlen(tmp->val))== '=')
+				{
+					tmp->val = *(env + i) + ft_strlen(tmp->val) + 1;
+					break ;
+				}
 			}
 		}
 		if (!env[i])
@@ -49,7 +52,6 @@ void	combaine_words(t_list *list)
 		if (tmp->type == WORD && tmp->prev->type == WORD)
 		{
 			tmp->prev->val = ft_strjoin(tmp->prev->val, tmp->val);
-			free(tmp->val);
 			tmp = tmp->prev;
 			del_node(list, tmp->next);
 		}

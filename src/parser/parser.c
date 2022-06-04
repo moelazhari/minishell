@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/04 17:07:07 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/04 20:06:37 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void   join_nodes(t_list *list, t_node *tmp)
 { 
     char *forfree;
 
-    if (list->n == 0)
+    if (list->n == 0 || list->n == 1)
         return ;
     if (tmp->type == PIPE)
         tmp = tmp->prev;
