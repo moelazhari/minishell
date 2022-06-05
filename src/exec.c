@@ -43,7 +43,12 @@ void execute(t_cmd *cmds)
     int     tmp_in;
     int     tmp_out;
     int     r;
+    char    *path;
+    char    **splited_path;
     
+    // printf("%s\n",path[1]);
+    path = getenv("PATH");
+    splited_path = ft_split(path, ':');
     node = cmds->head;
     tmp_in = dup(0);
     tmp_out = dup(1);
@@ -65,9 +70,11 @@ void execute(t_cmd *cmds)
                 dup2(fd[1], 1);
             else if (fd_out != 1)
                 dup2(fd_out,1);
-            //printf("%s\n",node->args[0]);
-            //exit(1);
-            execvp(node->args[0], node->args);
+            if (ft_strchr(node->args[0], '/'))
+                execve(node->args[0], node->args, NULL);
+            else
+                while (*splited_path)
+                    execve(ft_strjoin(ft_strjoin(*splited_path++, "/"), node->args[0]), node->args, NULL);
             perror("execv");
             exit(0);
         }

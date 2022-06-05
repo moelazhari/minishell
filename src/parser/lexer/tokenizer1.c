@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/04 23:51:51 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/05 17:31:14 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ char	*is_metacharacters(t_list *list, char *line)
 	}
 	else if (*line == '|')
 		push_back(list, PIPE, "|");
+	line++;
+	return (line);
+}
+
+char	*is_tilde(t_list *list,char *line)
+{
+	push_back(list, SIGN, "$");
+	push_back(list, WORD, "HOME");
 	line++;
 	return (line);
 }

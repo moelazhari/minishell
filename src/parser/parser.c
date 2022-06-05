@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/04 20:06:37 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/05 17:37:47 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void   join_nodes(t_list *list, t_node *tmp)
 	{
         forfree = ft_strjoin(tmp->prev->val , " ");
         tmp->prev->val = ft_strjoin(forfree, tmp->val);
-        free(tmp->val);
-        free(forfree);
+        // free(tmp->val);
+        // free(forfree);
         tmp = tmp->prev;	
 		del_node(list, tmp->next);
     }

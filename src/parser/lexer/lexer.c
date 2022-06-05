@@ -6,14 +6,15 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/04 23:17:16 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/05 16:58:50 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expaned_sign(t_list *list, t_node *tmp, char **env)
+void	expand_sign(t_list *list, t_node *tmp, char **env)
 {
+	(void)env;
 	int	i;
 
 	i = -1;
@@ -25,18 +26,9 @@ void	expaned_sign(t_list *list, t_node *tmp, char **env)
 	}
 	else 
 	{
-		while (env[++i])
-		{
-			if (!ft_strncmp(tmp->val, env[i], ft_strlen(tmp->val)))
-			{
-				if (*(*(env + i) + ft_strlen(tmp->val))== '=')
-				{
-					tmp->val = *(env + i) + ft_strlen(tmp->val) + 1;
-					break ;
-				}
-			}
-		}
-		if (!env[i])
+		if (getenv(tmp->val))
+			tmp->val = getenv(tmp->val);
+		else
 			del_node(list, tmp);
 		del_node(list, tmp->prev);
 	}
@@ -60,7 +52,7 @@ void	combaine_words(t_list *list)
 	}
 }
 
-static t_list	*expaned(t_list *list, char **env)
+static t_list	*expand(t_list *list, char **env)
 {
 	t_node	*tmp;
 
@@ -68,7 +60,7 @@ static t_list	*expaned(t_list *list, char **env)
 	while (tmp)
 	{
 		if (tmp->type == SIGN)
-			expaned_sign(list, tmp, env);
+			expand_sign(list, tmp, env);
 		tmp = tmp->next;
 	}
 	combaine_words(list);
@@ -94,7 +86,7 @@ t_list	*lexer(char *line, char **env)
 
 	if (!(list = tokenizer(line)))
 		return (NULL);
-	list = expaned(list, env);
+	list = expand(list, env);
 	if (!check_syntax(list))
 		return (NULL);
 	return (list);

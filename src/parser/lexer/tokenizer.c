@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/04 21:46:11 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/05 17:12:51 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,20 @@ static char	*is_quote(t_list *list, char *line)
 		if (ft_strchr(line + 1, '"'))
 			line = is_dquote(list, line);
 		else
+		{
 			printf("minishell: unclosed double quotes\n");
+			return  (NULL);
+		}
 	}
 	else
 	{	
 		if (ft_strchr(line + 1, '\''))
 			line = is_word(list, line + 1, "'");
 		else
+		{
 			printf("minishell: unclosed singel quotes\n");
+			return  (NULL);
+		}
 	}
 	line++;
 	return (line);
@@ -90,17 +96,16 @@ t_list	*tokenizer(char *line)
 		if (ft_strchr(" \t", *line))
 			line = is_wspace(list, line);
 		else if (*line == '\'' || *line == '"')
-			line = is_quote(list, line);
+		{
+			if (!(line = is_quote(list, line)))
+					return (NULL);
+		}
 		else if (*line == '$')
 			line = is_sing(list, line);
 		else if (ft_strchr("|<>", *line))
 		 	line = is_metacharacters(list, line);
 		else if (*line == '~')
-		{
-			push_back(list, SIGN, "$");
-			push_back(list, WORD, "HOME");
-			line++;
-		}
+			line = is_tilde(list, line);
 		else
 			line = is_word(list, line, " \t\v\f\r\"'$|<>");
 	}

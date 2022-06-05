@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/04 15:13:53 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/05 17:14:58 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_list	*lexer(char *line, char **env); // lexical analyser
 t_list	*tokenizer(char *line);// converts the line into list of tokens 
 char	*is_word(t_list *list, char *line, char *stop);
 char	*is_metacharacters(t_list *list, char *line);
+char	*is_tilde(t_list *list,char *line);
 //fnc utils in list
 t_node	*new_node(int type, char *val);
 void	push_back(t_list *list, int type, char *val);

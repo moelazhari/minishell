@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:39:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/04 23:51:28 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/05 14:41:02 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,9 @@ static int  is_metachar(t_node *tmp)
 int	check_syntax(t_list *list)
 {
 	t_node	*tmp;
-
+	
 	tmp = list->head;
-	if (ft_strchr("<|>", list->tail->val[0]))
-	{
-			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);	
-			return (0);
-	}
-	while (tmp)
+	while (tmp != list->tail)
 	{
 		if (tmp->type == WORD && ft_strchr(tmp->val, ';'))
 		{
@@ -44,6 +39,13 @@ int	check_syntax(t_list *list)
 			if (!is_metachar(tmp))
 				return (0);
 		tmp = tmp->next;
+	}
+	if (list->tail->val[0] == 0)
+		return (1);
+	if (ft_strchr("<|>", list->tail->val[0]))
+	{
+			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);	
+			return (0);
 	}
 	return (1);
 }
