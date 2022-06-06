@@ -46,7 +46,7 @@ void execute(t_cmd *cmds)
     char    *path;
     char    **splited_path;
     
-    // printf("%s\n",path[1]);
+
     path = getenv("PATH");
     splited_path = ft_split(path, ':');
     node = cmds->head;

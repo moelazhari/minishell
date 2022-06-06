@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/05 17:37:47 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/06 21:32:56 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 
 void   join_nodes(t_list *list, t_node *tmp)
 { 
-    char *forfree;
-
     if (list->n == 0 || list->n == 1)
         return ;
     if (tmp->type == PIPE)
         tmp = tmp->prev;
 	while (tmp != list->head)
 	{
-        forfree = ft_strjoin(tmp->prev->val , " ");
-        tmp->prev->val = ft_strjoin(forfree, tmp->val);
+        tmp->prev->val = ft_strjoin(ft_strjoin(tmp->prev->val , " "), tmp->val);
         // free(tmp->val);
         // free(forfree);
         tmp = tmp->prev;	
@@ -33,9 +30,6 @@ void   join_nodes(t_list *list, t_node *tmp)
 
 t_node  *remove_red(t_list *list, t_node *tmp)
 {
-    t_node *ret;
-
-    ret = tmp;
     if (list->n == 0 || list->n == 1)
         return (NULL);
     while (tmp != list->head)
@@ -48,7 +42,9 @@ t_node  *remove_red(t_list *list, t_node *tmp)
     }
     if (ft_strchr("<>", list->head->val[0]))
         del_node(list, tmp);
-    join_nodes(list, ret);
+    while (tmp != list->tail && tmp->type != PIPE)
+        tmp = tmp->next;
+    join_nodes(list, tmp);
     return (tmp);
 }
 
