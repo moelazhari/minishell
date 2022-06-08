@@ -1,18 +1,15 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/mazhari/Desktop/minishell'
 /Library/Developer/CommandLineTools/usr/bin/make -C libft
- 
 make[1]: Entering directory `/Users/mazhari/Desktop/minishell/libft'
 gcc -Wall -Wextra -Werror  -c ft_atoi.c -o ft_atoi.o
 gcc -Wall -Wextra -Werror  -c ft_bzero.c -o ft_bzero.o
 gcc -Wall -Wextra -Werror  -c ft_isalnum.c -o ft_isalnum.o
 gcc -Wall -Wextra -Werror  -c ft_isalpha.c -o ft_isalpha.o
 gcc -Wall -Wextra -Werror  -c ft_isascii.c -o ft_isascii.o
- 
 gcc -Wall -Wextra -Werror  -c ft_isdigit.c -o ft_isdigit.o
 gcc -Wall -Wextra -Werror  -c ft_isprint.c -o ft_isprint.o
 gcc -Wall -Wextra -Werror  -c ft_memcmp.c -o ft_memcmp.o
- 
 gcc -Wall -Wextra -Werror  -c ft_memcpy.c -o ft_memcpy.o
 gcc -Wall -Wextra -Werror  -c ft_memmove.c -o ft_memmove.o
 gcc -Wall -Wextra -Werror  -c ft_memchr.c -o ft_memchr.o
@@ -47,7 +44,6 @@ mkdir -p build/src
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/exec.c -o build/src/exec.o
 mkdir -p build/src/prompt
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/prompt/prompt.c -o build/src/prompt/prompt.o
- 
 mkdir -p build/src/parser
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/parser/parser.c -o build/src/parser/parser.o
 mkdir -p build/src/parser
@@ -57,6 +53,7 @@ gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar
 mkdir -p build/src/parser/lexer
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/parser/lexer/lexer.c -o build/src/parser/lexer/lexer.o
 mkdir -p build/src/parser/lexer
+ 
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/parser/lexer/tokenizer.c -o build/src/parser/lexer/tokenizer.o
 mkdir -p build/src/parser/lexer
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/parser/lexer/tokenizer1.c -o build/src/parser/lexer/tokenizer1.o
