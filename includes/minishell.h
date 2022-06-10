@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/05 17:14:58 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/10 18:38:55 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 # define REDOUT -4 // >
 # define APPEND -5// >>
 # define HEREDOC -6 // <<
-# define SQUOTES -7// '
-# define DQUOTES -8// "
 # define SIGN -9 // $
 # define EXIT_STATUS -10 // $?
 # define WORD -11 // 	
@@ -91,9 +89,9 @@ t_red		*new_red(void);
 t_red_node	*new_red_node(int type, char *filename);
 void		push_back_red(t_red *red, int type, char *filename);
 // lexical analyser
-t_list	*lexer(char *line, char **env); // lexical analyser
+t_list	*lexer(char *line, char **env, int *status); // lexical analyser
 //fnc utils in tokenizer
-t_list	*tokenizer(char *line);// converts the line into list of tokens 
+t_list	*tokenizer(char *line, int *status);// converts the line into list of tokens 
 char	*is_word(t_list *list, char *line, char *stop);
 char	*is_metacharacters(t_list *list, char *line);
 char	*is_tilde(t_list *list,char *line);
@@ -103,9 +101,9 @@ void	push_back(t_list *list, int type, char *val);
 t_list	*new_list(void);
 void	del_node(t_list *list, t_node *node);
 //syntax fnc
-int	check_syntax(t_list *list);
+int	check_syntax(t_list *list, int *status);
 //exec fnc
-void execute(t_cmd *cmds);
+void execute(t_cmd *cmds, int *status);
 //fnc exit
 
 #endif

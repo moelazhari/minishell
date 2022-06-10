@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/05 17:12:51 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/10 18:40:27 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*is_dquote(t_list *list, char *line)
 	return (line);	
 }
 
-static char	*is_quote(t_list *list, char *line)
+static char	*is_quote(t_list *list, char *line, int *status)
 {
 	if (*line == '"')
 	{
@@ -69,6 +69,7 @@ static char	*is_quote(t_list *list, char *line)
 		else
 		{
 			printf("minishell: unclosed double quotes\n");
+			*status = 258;
 			return  (NULL);
 		}
 	}
@@ -79,6 +80,7 @@ static char	*is_quote(t_list *list, char *line)
 		else
 		{
 			printf("minishell: unclosed singel quotes\n");
+			*status = 258;
 			return  (NULL);
 		}
 	}
@@ -86,7 +88,7 @@ static char	*is_quote(t_list *list, char *line)
 	return (line);
 }
 
-t_list	*tokenizer(char *line)
+t_list	*tokenizer(char *line, int *status)
 {
 	t_list	*list;
 
@@ -97,7 +99,7 @@ t_list	*tokenizer(char *line)
 			line = is_wspace(list, line);
 		else if (*line == '\'' || *line == '"')
 		{
-			if (!(line = is_quote(list, line)))
+			if (!(line = is_quote(list, line, status)))
 					return (NULL);
 		}
 		else if (*line == '$')

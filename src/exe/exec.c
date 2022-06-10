@@ -34,7 +34,7 @@ int redir_out(t_red *redir, int fd_out)
     return fd_out;
 }
 
-void execute(t_cmd *cmds)
+void execute(t_cmd *cmds, int *status)
 {
     t_cmd_node *node;
     int     fd[2];
@@ -43,7 +43,6 @@ void execute(t_cmd *cmds)
     int     tmp_in;
     int     tmp_out;
     int     r;
-    int     sign;
     char    *path;
     char    **splited_path;
     
@@ -68,8 +67,6 @@ void execute(t_cmd *cmds)
         if (r == 0)
         {
             signal(SIGQUIT, SIG_DFL);
-            if (signal(SIGQUIT, SIG_DFL))
-                    sign = 1;
             if (fd_out == 1 && node->next)
                 dup2(fd[1], 1);
             else if (fd_out != 1)
@@ -89,7 +86,8 @@ void execute(t_cmd *cmds)
             dup2(fd[0], fd_in);
         }
     }
-    while (cmds->n--)
+    waitpid(r, status, 0);
+    while (--cmds->n)
         wait(0);
     dup2(tmp_in,0);
     dup2(tmp_out,1);

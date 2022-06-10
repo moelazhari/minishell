@@ -6,7 +6,7 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/06/04 15:13:28 by mazhari          ###   ########.fr        #
+#    Updated: 2022/06/10 18:37:21 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,9 @@ B_DIR= build
 PROMPT= $(addprefix prompt/, prompt)
 LEXER= $(addprefix lexer/, lexer tokenizer tokenizer1 list_utils check_syntax)
 PARSER= $(addprefix parser/, parser list_red_utils list_cmd_utils $(LEXER))
-#UTILS= $(addprefix src/, $(addprefix utils/, utils))
+EXE= $(addprefix EXE/, exec)
 
-FILES= $(addprefix src/, main exec $(PROMPT) $(PARSER))
+FILES= $(addprefix src/, main $(PROMPT) $(PARSER) $(EXE))
 OBJS= $(addprefix $(B_DIR)/, $(FILES:=.o))
 
 all: $(NAME)

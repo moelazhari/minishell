@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/05 16:58:50 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/10 18:40:03 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	combaine_words(t_list *list)
 	}
 }
 
-static t_list	*expand(t_list *list, char **env)
+static t_list	*expand(t_list *list, char **env, int *status)
 {
 	t_node	*tmp;
 
@@ -61,33 +61,32 @@ static t_list	*expand(t_list *list, char **env)
 	{
 		if (tmp->type == SIGN)
 			expand_sign(list, tmp, env);
+		else if (tmp->type == EXIT_STATUS)
+		{
+			tmp->type = WORD;
+			tmp->val  = ft_itoa(*status);
+		}
 		tmp = tmp->next;
 	}
 	combaine_words(list);
-	tmp = list->tail;
-	while (tmp != list->head)
+	tmp = list->head;
+	while (tmp)
 	{
 		if (tmp->type == WSPACE)
-		{
-			tmp = tmp->prev;
-			del_node(list, tmp->next);
-		}
-		else
-			tmp = tmp->prev;
+			del_node(list, tmp);
+		tmp = tmp->next;
 	}
-	if (list->head->type == WSPACE)
-		del_node(list, list->head);
 	return (list);
 }
 
-t_list	*lexer(char *line, char **env)
+t_list	*lexer(char *line, char **env, int *status)
 { 
 	t_list	*list;
 
-	if (!(list = tokenizer(line)))
+	if (!(list = tokenizer(line, status)))
 		return (NULL);
-	list = expand(list, env);
-	if (!check_syntax(list))
+	list = expand(list, env, status);
+	if (!check_syntax(list, status))
 		return (NULL);
 	return (list);
 }

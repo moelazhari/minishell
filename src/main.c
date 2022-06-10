@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/04 16:16:03 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/10 18:38:33 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,21 @@ int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	char	*line;
 	t_list	*list;
 	t_cmd	*cmd;
+	char	*line;
+	int		status;
 	
+	status = 0;
 	while(1)
 	{
 		cmd = new_cmd();
 		line = prompt();
 		if (line[0] == 0 || is_all_wspace(line))
 			continue ;
-		if ((list = lexer(line, env)))
+		if ((list = lexer(line, env, &status)))
 		{
-			execute(paser(list, cmd));
+			execute(paser(list, cmd), &status);
 			free_cmd(cmd);
 		}
 	}	
