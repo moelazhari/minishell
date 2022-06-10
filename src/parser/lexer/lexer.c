@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/10 18:40:03 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/10 18:51:00 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ static t_list	*expand(t_list *list, char **env, int *status)
 	while (tmp)
 	{
 		if (tmp->type == WSPACE)
+			del_node(list, tmp);
+		if (tmp->val[0] == 0)
 			del_node(list, tmp);
 		tmp = tmp->next;
 	}
