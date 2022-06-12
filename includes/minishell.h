@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/10 18:38:55 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/12 21:52:14 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 #include <readline/history.h>
 #include <termios.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 # define WSPACE -1 // ' '
 # define PIPE -2 // |
@@ -30,8 +33,9 @@
 # define HEREDOC -6 // <<
 # define SIGN -9 // $
 # define EXIT_STATUS -10 // $?
-# define WORD -11 // 	
+# define WORD -11 // 
 
+char **g_env;
 typedef struct	s_node
 {
 	int				type;
@@ -103,7 +107,14 @@ void	del_node(t_list *list, t_node *node);
 //syntax fnc
 int	check_syntax(t_list *list, int *status);
 //exec fnc
-void execute(t_cmd *cmds, int *status);
+void	execute(t_cmd *cmds, int *status);
+int		cd_builtin(char **args, int fd_out);
+void	set_env_var(char *key, char *value);
+char	*get_env_var(char *var);
+char	**realloc_envv(int new_size);
+int		find_env_var(char *var);
+int		cd_builtin(char **args, int fd_out);
+void	ft_freearr(char **arr);
 //fnc exit
 
 #endif

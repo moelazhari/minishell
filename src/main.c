@@ -6,11 +6,57 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/10 18:38:33 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/12 21:04:39 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_freearr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
+
+void	exit_shell(void)
+{
+	ft_freearr(g_env);
+	write(1, "\n", 1);
+	exit(0);
+}
+
+// static int		env_len(char **env)
+// {
+// 	int		i;
+// 	int		count;
+
+// 	i = -1;
+// 	count = 0;
+// 	while (env[++i])
+// 		count++;
+// 	return (count);
+// }
+
+void			init_envv(char **env)
+{
+	int		i;
+	
+	i = 0;
+	while (env[i])
+		i++;
+	g_env = (char **)malloc(sizeof(char *) * (i + 1));
+	i = -1;
+	while (env[++i])
+		if (!(g_env[i] = ft_strdup(env[i])))
+			exit_shell();
+	g_env[i] = NULL; 
+}
 
 void free_red(t_red *red)
 {
@@ -35,11 +81,7 @@ void	free_cmd(t_cmd *cmd)
 	{
 		i = -1; 
 		if (tmp->args)
-		{
-	        while (tmp->args[++i])
-	        	free (tmp->args[i]);
-			free(tmp->args);
-		}
+			ft_freearr(tmp->args);
 		if (tmp->red)
 			free_red(tmp->red);
 		tmp = tmp->next;
@@ -65,6 +107,7 @@ int	main(int ac, char **av, char **env)
 	char	*line;
 	int		status;
 	
+	init_envv(env);
 	status = 0;
 	while(1)
 	{
@@ -74,6 +117,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		if ((list = lexer(line, env, &status)))
 		{
+			free(line);
 			execute(paser(list, cmd), &status);
 			free_cmd(cmd);
 		}

@@ -25,7 +25,7 @@ B_DIR= build
 PROMPT= $(addprefix prompt/, prompt)
 LEXER= $(addprefix lexer/, lexer tokenizer tokenizer1 list_utils check_syntax)
 PARSER= $(addprefix parser/, parser list_red_utils list_cmd_utils $(LEXER))
-EXE= $(addprefix EXE/, exec)
+EXE= $(addprefix EXE/, exec cd set)
 
 FILES= $(addprefix src/, main $(PROMPT) $(PARSER) $(EXE))
 OBJS= $(addprefix $(B_DIR)/, $(FILES:=.o))

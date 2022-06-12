@@ -26,8 +26,8 @@ void	expand_sign(t_list *list, t_node *tmp, char **env)
 	}
 	else 
 	{
-		if (getenv(tmp->val))
-			tmp->val = getenv(tmp->val);
+		if (get_env_var(tmp->val))
+			tmp->val = get_env_var(tmp->val);
 		else
 			del_node(list, tmp);
 		del_node(list, tmp->prev);

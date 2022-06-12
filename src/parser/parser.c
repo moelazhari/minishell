@@ -6,24 +6,27 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/06 21:32:56 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/12 22:40:53 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void   join_nodes(t_list *list, t_node *tmp)
-{ 
+{
+    char    *forfree;
+
     if (list->n == 0 || list->n == 1)
         return ;
     if (tmp->type == PIPE)
         tmp = tmp->prev;
 	while (tmp != list->head)
 	{
-        tmp->prev->val = ft_strjoin(ft_strjoin(tmp->prev->val , " "), tmp->val);
-        // free(tmp->val);
-        // free(forfree);
-        tmp = tmp->prev;	
+        forfree = tmp->prev->val;
+        tmp->prev->val = ft_strjoin2(tmp->prev->val , " ", tmp->val);
+		free(tmp->val);
+        free(forfree);
+        tmp = tmp->prev;
 		del_node(list, tmp->next);
     }
 }

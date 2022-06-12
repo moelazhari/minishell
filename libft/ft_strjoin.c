@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 23:07:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/02 14:07:05 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/12 22:32:10 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,15 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	str[i + j] = '\0';
 	return (str);
+}
+
+char	*ft_strjoin2(char const *s1, char const *s2, char const *s3)
+{
+	char	*tmp;
+	char	*ret;
+
+	tmp = ft_strjoin(s1, s2);
+	ret = ft_strjoin(tmp, s3);
+	free(tmp);
+	return (ret);
 }
