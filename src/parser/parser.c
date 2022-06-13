@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/12 22:40:53 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/13 19:09:16 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,13 @@
 
 void   join_nodes(t_list *list, t_node *tmp)
 {
-    char    *forfree;
-
     if (list->n == 0 || list->n == 1)
         return ;
     if (tmp->type == PIPE)
         tmp = tmp->prev;
 	while (tmp != list->head)
 	{
-        forfree = tmp->prev->val;
         tmp->prev->val = ft_strjoin2(tmp->prev->val , " ", tmp->val);
-		free(tmp->val);
-        free(forfree);
         tmp = tmp->prev;
 		del_node(list, tmp->next);
     }
