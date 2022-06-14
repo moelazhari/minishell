@@ -6,16 +6,20 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/14 14:39:59 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 20:22:07 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void   join_nodes(t_list *list, t_node *tmp)
+void   join_nodes(t_list *list)
 {
+	t_node	*tmp;
 	char	*str;
 
+	tmp = list->head;
+	while (tmp != list->tail && tmp->type != PIPE)
+		tmp = tmp->next;
 	if (list->n == 0 || list->n == 1)
 		return ;
 	if (tmp->type == PIPE)
@@ -44,9 +48,6 @@ t_node  *remove_red(t_list *list, t_node *tmp)
 	}
 	if (ft_strchr("<>", list->head->val[0]))
 		del_node(list, tmp);
-	while (tmp != list->tail && tmp->type != PIPE)
-		tmp = tmp->next;
-	join_nodes(list, tmp);
 	return (tmp);
 }
 
@@ -82,6 +83,7 @@ t_cmd  *paser(t_list *list, t_cmd *cmd)
 	char    **args;
 
 	red = get_red(list);
+	join_nodes(list);
 	if (!list->n)
 		args = NULL;
 	else

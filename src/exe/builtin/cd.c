@@ -28,7 +28,7 @@ void			change_dir(char *path, int print_path, int fd_out)
 	}
 }
 
-int	cd_builtin(char **args, int fd_out)
+int	cd(char **args, int fd_out)
 {
 	char	*home_path;
 

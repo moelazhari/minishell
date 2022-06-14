@@ -79,3 +79,22 @@ void	set_env_var(char *key, char *value)
 	}
 	free(tmp);
 }
+
+void	init_envv(char **env)
+{
+	int		i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	g_env = (char **)malloc(sizeof(char *) * (i + 1));
+	i = -1;
+	while (env[++i])
+		if (!(g_env[i] = ft_strdup(env[i])))
+			{
+				ft_freearr(g_env);
+				ft_putstr_fd("malloc error\n", 2);
+				exit(0);
+			}
+	g_env[i] = NULL; 
+}

@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:21:15 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/13 22:11:10 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 21:24:13 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	sig_int_handler(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("\n", 1);
 	rl_replace_line("", 0);
+	ft_putstr_fd("\n", 1);
 	rl_on_new_line();
 	rl_redisplay();
 }

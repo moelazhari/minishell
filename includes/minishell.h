@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/14 00:24:38 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 23:15:38 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct	s_cmd
 }				t_cmd;
 
 // fnc of the prompt
-char	*prompt(void); // display prompt and get commandline
+char	*prompt(void);
 void	sig_int_handler(int sig);
 // fnc of the parser
 t_cmd  *paser(t_list *list, t_cmd *cmd);
@@ -93,9 +93,9 @@ t_red		*new_red(void);
 t_red_node	*new_red_node(int type, char *filename);
 void		push_back_red(t_red *red, int type, char *filename);
 // lexical analyser
-t_list	*lexer(char *line, int *status); // lexical analyser
+t_list	*lexer(char *line, int *status);
 //fnc utils in tokenizer
-t_list	*tokenizer(char *line, int *status);// converts the line into list of tokens 
+t_list	*tokenizer(char *line, int *status);
 char	*is_word(t_list *list, char *line, char *stop);
 char	*is_metacharacters(t_list *list, char *line);
 char	*is_tilde(t_list *list,char *line);
@@ -109,13 +109,19 @@ t_list	*clear_list(t_list *list);
 int	check_syntax(t_list *list, int *status);
 //exec fnc
 void	execute(t_cmd *cmds, int *status);
-int		cd_builtin(char **args, int fd_out);
+//builtin fnc
+int		echo(char **args, int fd_out);
+int		cd(char **args, int fd_out);
+void    exit_shell(t_cmd *cmds);
+int		print_env();
+//env fnc
 void	set_env_var(char *key, char *value);
 char	*get_env_var(char *var);
 char	**realloc_envv(int new_size);
 int		find_env_var(char *var);
-int		cd_builtin(char **args, int fd_out);
+void	init_envv(char **env);
+//free fnc
 void	ft_freearr(char **arr);
-//fnc exit
-
+void	free_red(t_red *red);
+void	free_cmd(t_cmd *cmd);
 #endif

@@ -6,7 +6,7 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/06/10 18:37:21 by mazhari          ###   ########.fr        #
+#    Updated: 2022/06/14 22:41:11 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,16 @@ HEDEAR= $(INCLUDES)/minishell.h
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 B_DIR= build
-
 PROMPT= $(addprefix prompt/, prompt)
-LEXER= $(addprefix lexer/, lexer tokenizer tokenizer1 list_utils check_syntax)
+TOKENIZER= $(addprefix	tokenizer/, tokenizer tokenizer1 list_utils)
+SYNTAX= $(addprefix syntax/, syntax)
+LEXER= $(addprefix lexer/, lexer $(TOKENIZER) $(SYNTAX))
 PARSER= $(addprefix parser/, parser list_red_utils list_cmd_utils $(LEXER))
-EXE= $(addprefix EXE/, exec cd set)
+BUILTIN= $(addprefix builtin/, builtin cd)
+ENV= $(addprefix env/, env)
+EXE= $(addprefix exe/, $(BUILTIN) $(ENV) exec)
 
-FILES= $(addprefix src/, main $(PROMPT) $(PARSER) $(EXE))
+FILES= $(addprefix src/, main ft_free $(PROMPT) $(PARSER) $(EXE))
 OBJS= $(addprefix $(B_DIR)/, $(FILES:=.o))
 
 all: $(NAME)

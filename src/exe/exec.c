@@ -1,27 +1,38 @@
 #include "minishell.h"
 
-void	proc_signal_handler(int sig)
+void	exit_status(int *status)
 {
-	if (sig == SIGINT)
-		write(1,"\n",1);
+	if (*status == 3)
+	{
+		ft_putstr_fd("Quit: 3\n", 2);
+		*status = 131;
+	}
+	else if (*status == 2)
+	{
+		write(2, "\n", 1);
+		*status = 130;
+	}
+	else if (*status == 126 || *status == 127)
+		return ;
+	else
+		*status = WEXITSTATUS(*status);
 }
 
-static int		run_cmd(char *bin_path, char **args, int fd_out, int *status)
+static int		run_cmd(char *bin_path, char **args, int fd_out)
 {
 	pid_t	pid;
 
 	pid = fork();
-
-	if (signal(SIGINT, proc_signal_handler))
-		*status = 130;
+	signal(SIGINT, SIG_IGN);
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
         dup2(fd_out, 1);
 		execve(bin_path, args, g_env);
         exit(0);
 	}
-	free(bin_path);
+	//free(bin_path);
 	return (pid);
 }
 
@@ -30,28 +41,26 @@ static int		check_builtins(char **command, int fd_out)
     (void)fd_out;
 	if (ft_strequ(command[0], "exit"))
 		return (-1);
-	// else if (ft_strequ(command[0], "echo"))
-	// 	return (echo_builtin(command + 1, fd_out));
+	else if (ft_strequ(command[0], "echo"))
+		return (echo(command + 1, fd_out));
 	else if (ft_strequ(command[0], "cd"))
-		return (cd_builtin(command + 1, fd_out));
-	// else if (ft_strequ(command[0], "setenv"))
-	// 	return (setenv_builtin(command + 1));
+		return (cd(command + 1, fd_out));
+	// else if (ft_strequ(command[0], "export"))
+	// 	return (export(command + 1));
 	// else if (ft_strequ(command[0], "unsetenv"))
-	// 	return (unsetenv_builtin(command + 1));
-	// else if (ft_strequ(command[0], "env"))
-	// {
-	// 	print_env();
-	// 	return (1);
-	// }
-	 return (0);
+	// 	return (unset(command + 1));
+	else if (ft_strequ(command[0], "env"))
+		return (print_env());
+	return (0);
 }
 
 static int		is_executable(char *bin_path, struct stat f, char **command, int fd_out, int *status)
 {
 	if (f.st_mode & S_IXUSR)
-		return (run_cmd(bin_path, command, fd_out, status));
+		return (run_cmd(bin_path, command, fd_out));
 	else
 	{
+		*status = 126;
 		ft_putstr_fd("minishell: ", 1);
 		ft_putstr_fd(bin_path, 1);
 		ft_putendl_fd(": Permission denied", 1);
@@ -141,7 +150,7 @@ int redir_out(t_cmd_node *noeud, int fd1)
     return fd_out;
 }
 
-int	exec_command(t_cmd_node *command, int *fd, int *status)
+int	exec_command(t_cmd_node *command, int *fd, int	*status)
 {
 	//struct stat	f;
 	int	is_builtin;
@@ -150,23 +159,27 @@ int	exec_command(t_cmd_node *command, int *fd, int *status)
 
 	redir_in(command, fd[0]);
 	fd_out = redir_out(command, fd[1]);
-	if ((is_builtin = check_builtins(command->args, fd_out)) == 1)
-		return (0);
-	if ((pid = check_bins(command->args, fd_out, status)))
-		return (pid);
+	is_builtin = check_builtins(command->args, fd_out);
 	if (is_builtin < 0)
 		return (-1);
-	ft_putendl_fd("minishell: command not found: ", 1);
-	ft_putendl_fd(command->args[0], 1);
+	if (is_builtin == 1)
+		return (0);
+	pid = check_bins(command->args, fd_out, status);
+	if (pid)
+		return (pid);
+	*status = 127;
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(command->args[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
 	return (pid);
 }
 
-void execute(t_cmd *cmds, int *status)
+void	execute(t_cmd *cmds, int *status)
 {
-    t_cmd_node *node;
-    int     fd[2];
-    int     tmp_in_out[2];
-	int 	pid;
+    t_cmd_node	*node;
+    int     	fd[2];
+    int     	tmp_in_out[2];
+	int			pid;
 
     node = cmds->head;
     tmp_in_out[0] = dup(0);
@@ -175,12 +188,14 @@ void execute(t_cmd *cmds, int *status)
     while (node)
     {
         pid = exec_command(node, fd, status);
+		if (pid == -1)
+			exit_shell(cmds);
         close(fd[1]);
         node = node->next;
-    }
-	//waitpid(pid, status, 0);
+	}
     while (cmds->n--)
-        wait(0);
+        wait(status);
+	exit_status(status);
     dup2(tmp_in_out[0],0);
     dup2(tmp_in_out[1],1);
-} 
+}
