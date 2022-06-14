@@ -51,7 +51,6 @@ char	*get_env_var(char *var)
 		}
 		free(tmp);
 	}
-	free(var);
 	return (NULL);
 }
 

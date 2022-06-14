@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/14 00:00:45 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 16:02:21 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ char	*is_word(t_list *list, char *line, char *stop)
 	int		i;
 
 	i = 0;
-	val = NULL;
-	val = malloc(sizeof(char) * (i + 1));
+	while (!(ft_strchr(stop, line[i])))
+		i++;
+	val = malloc(sizeof(char) * (i));
 	i = 0;
 	while (!(ft_strchr(stop, *line)))
 	{
