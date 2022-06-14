@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/14 02:39:21 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:49:09 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	expand_sign(t_list *list, t_node *tmp)
 {
 	int		i;
-	char	*str;
 
 	i = -1;
 	tmp = tmp->next;
@@ -27,11 +26,9 @@ void	expand_sign(t_list *list, t_node *tmp)
 	}
 	else 
 	{
-		str = ft_strdup(get_env_var(tmp->val));
-		if (!str)
+		tmp->val = ft_strdup(get_env_var(tmp->val));
+		if (!tmp->val)
 			del_node(list, tmp);
-		else
-			tmp->val = str;
 		del_node(list, tmp->prev);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:51:26 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/14 02:15:41 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:24:32 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	del_node(t_list *list, t_node *node)
 	}
 	(list->n)--;
 	if (node->val && node->type == WORD)
-		free(node->val);
+	 	free(node->val);
 	free(node);
 }
 

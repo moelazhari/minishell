@@ -1,6 +1,7 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/mazhari/Desktop/minishell'
 /Library/Developer/CommandLineTools/usr/bin/make -C libft
+ 
 make[1]: Entering directory `/Users/mazhari/Desktop/minishell/libft'
 gcc -Wall -Wextra -Werror  -c ft_atoi.c -o ft_atoi.o
 gcc -Wall -Wextra -Werror  -c ft_bzero.c -o ft_bzero.o
@@ -47,7 +48,6 @@ mkdir -p build/src/parser
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/parser/parser.c -o build/src/parser/parser.o
 mkdir -p build/src/parser
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/parser/list_red_utils.c -o build/src/parser/list_red_utils.o
- 
 mkdir -p build/src/parser
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/parser/list_cmd_utils.c -o build/src/parser/list_cmd_utils.o
 mkdir -p build/src/parser/lexer
@@ -66,7 +66,6 @@ mkdir -p build/src/EXE
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/EXE/cd.c -o build/src/EXE/cd.o
 mkdir -p build/src/EXE
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/EXE/set.c -o build/src/EXE/set.o
- 
 gcc -Wall -Werror -Wextra -g libft/libft.a -L /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/lib -lreadline build/src/main.o build/src/prompt/prompt.o build/src/parser/parser.o build/src/parser/list_red_utils.o build/src/parser/list_cmd_utils.o build/src/parser/lexer/lexer.o build/src/parser/lexer/tokenizer.o build/src/parser/lexer/tokenizer1.o build/src/parser/lexer/list_utils.o build/src/parser/lexer/check_syntax.o build/src/EXE/exec.o build/src/EXE/cd.o build/src/EXE/set.o -o minishell
 make: Leaving directory `/Users/mazhari/Desktop/minishell'
  
