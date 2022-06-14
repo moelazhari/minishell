@@ -17,7 +17,7 @@ void			change_dir(char *path, int print_path, int fd_out)
 	}
 	else
 	{
-		ft_putstr_fd("minishell: cd: ", 1);
+		ft_putstr_fd("Minishell: cd: ", 1);
 		ft_putstr_fd(path,1);
 		if (access(path, F_OK) == -1)
 			ft_putendl_fd(": no such file or directory", 1);

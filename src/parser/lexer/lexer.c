@@ -6,42 +6,51 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/13 19:07:49 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 02:39:21 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_sign(t_list *list, t_node *tmp, char **env)
+void	expand_sign(t_list *list, t_node *tmp)
 {
-	(void)env;
-	int	i;
+	int		i;
+	char	*str;
 
 	i = -1;
 	tmp = tmp->next;
 	if (tmp->val[0] == 0)
 	{
 		tmp->prev->type = WORD;
+		tmp->prev->val	= ft_strdup("$");
 		del_node(list, tmp);
 	}
 	else 
 	{
-		if (!(tmp->val = get_env_var(tmp->val)))
+		str = ft_strdup(get_env_var(tmp->val));
+		if (!str)
 			del_node(list, tmp);
+		else
+			tmp->val = str;
 		del_node(list, tmp->prev);
 	}
 }
 
 void	combaine_words(t_list *list)
 {
-	t_node *tmp;
+	t_node	*tmp;
+	char	*str;
 
+	if (list->n <= 1)
+		return ;
 	tmp = list->tail;
 	while (tmp != list->head)
 	{
 		if (tmp->type == WORD && tmp->prev->type == WORD)
 		{
-			tmp->prev->val = ft_strjoin(tmp->prev->val, tmp->val);
+			free(tmp->prev->val);
+			str = ft_strjoin(tmp->prev->val, tmp->val);
+			tmp->prev->val = str;
 			tmp = tmp->prev;
 			del_node(list, tmp->next);
 		}
@@ -50,7 +59,22 @@ void	combaine_words(t_list *list)
 	}
 }
 
-static t_list	*expand(t_list *list, char **env, int *status)
+void	del_space(t_list *list)
+{
+	t_node	*tmp;
+
+	tmp = list->head;
+	while (tmp != list->tail)
+	{
+		if (tmp->type == WSPACE)
+			del_node(list, tmp);
+		if (tmp->val[0] == 0)
+			del_node(list, tmp);		
+		tmp = tmp->next;
+	}
+}
+
+static t_list	*expand(t_list *list, int *status)
 {
 	t_node	*tmp;
 
@@ -58,7 +82,7 @@ static t_list	*expand(t_list *list, char **env, int *status)
 	while (tmp)
 	{
 		if (tmp->type == SIGN)
-			expand_sign(list, tmp, env);
+			expand_sign(list, tmp);
 		else if (tmp->type == EXIT_STATUS)
 		{
 			tmp->type = WORD;
@@ -66,27 +90,25 @@ static t_list	*expand(t_list *list, char **env, int *status)
 		}
 		tmp = tmp->next;
 	}
-	combaine_words(list);
-	tmp = list->head;
-	while (tmp)
+	if (list->n)
 	{
-		if (tmp->type == WSPACE)
-			del_node(list, tmp);
-		if (tmp->val[0] == 0)
-			del_node(list, tmp);
-		tmp = tmp->next;
+		combaine_words(list);
+		del_space(list);
 	}
 	return (list);
 }
 
-t_list	*lexer(char *line, char **env, int *status)
+t_list	*lexer(char *line, int *status)
 { 
 	t_list	*list;
 
-	if (!(list = tokenizer(line, status)))
-		return (NULL);
-	list = expand(list, env, status);
+	list = tokenizer(line, status);
+	if (!list)
+		return (clear_list(list));
+	list = expand(list, status);
+	if (!list || !list->n)
+		return (clear_list(list));
 	if (!check_syntax(list, status))
-		return (NULL);
+		return (clear_list(list));
 	return (list);
 }

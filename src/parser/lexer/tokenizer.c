@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/10 18:40:27 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 00:24:23 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static char	*is_quote(t_list *list, char *line, int *status)
 		{
 			printf("minishell: unclosed double quotes\n");
 			*status = 258;
+			clear_list(list);
 			return  (NULL);
 		}
 	}
@@ -81,6 +82,7 @@ static char	*is_quote(t_list *list, char *line, int *status)
 		{
 			printf("minishell: unclosed singel quotes\n");
 			*status = 258;
+			clear_list(list);
 			return  (NULL);
 		}
 	}

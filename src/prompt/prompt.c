@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:21:15 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/03 19:21:26 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/13 22:11:10 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	*prompt(void)
 
 	signal(SIGINT,	sig_int_handler);
 	signal(SIGQUIT, SIG_IGN);
-	if (!(line = readline("Minishell$> ")))
+	line = readline("Minishell$> ");
+	if (!line)
 	{
 		ft_putstr_fd("exit\n", 1);
 		exit(0);

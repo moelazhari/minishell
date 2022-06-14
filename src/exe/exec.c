@@ -8,14 +8,14 @@ void	proc_signal_handler(int sig)
 
 static int		run_cmd(char *bin_path, char **args, int fd_out, int *status)
 {
+	(void)status;
 	pid_t	pid;
 
 	pid = fork();
 
-	if (signal(SIGINT, proc_signal_handler))
-		*status = 130;
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
         dup2(fd_out, 1);
 		execve(bin_path, args, g_env);
@@ -69,7 +69,12 @@ static int		check_bins(char **command, int fd_out, int *status)
 
 	if (ft_strchr(command[0], '/'))
 		if (lstat(command[0], &f) != -1)
+		{
+			// ft_putstr_fd("Minishell: cd: ", 2);
+			// ft_putstr_fd(command[0], 2);
+			// ft_putendl_fd("command not found", 2);
 			return (is_executable(command[0], f, command, fd_out, status));
+		}
 	path = ft_split(get_env_var("PATH"), ':');
 	i = -1;
 	while (path && path[++i])
@@ -84,7 +89,6 @@ static int		check_bins(char **command, int fd_out, int *status)
 		}
 	}
 	ft_freearr(path);
-	free(bin_path);
 	return (0);
 }
 

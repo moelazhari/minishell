@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/12 21:52:14 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 00:24:38 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_red		*new_red(void);
 t_red_node	*new_red_node(int type, char *filename);
 void		push_back_red(t_red *red, int type, char *filename);
 // lexical analyser
-t_list	*lexer(char *line, char **env, int *status); // lexical analyser
+t_list	*lexer(char *line, int *status); // lexical analyser
 //fnc utils in tokenizer
 t_list	*tokenizer(char *line, int *status);// converts the line into list of tokens 
 char	*is_word(t_list *list, char *line, char *stop);
@@ -104,6 +104,7 @@ t_node	*new_node(int type, char *val);
 void	push_back(t_list *list, int type, char *val);
 t_list	*new_list(void);
 void	del_node(t_list *list, t_node *node);
+t_list	*clear_list(t_list *list);
 //syntax fnc
 int	check_syntax(t_list *list, int *status);
 //exec fnc

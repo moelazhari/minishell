@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/12 21:04:39 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/14 02:51:24 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,7 @@ void	ft_freearr(char **arr)
 	free(arr);
 }
 
-void	exit_shell(void)
-{
-	ft_freearr(g_env);
-	write(1, "\n", 1);
-	exit(0);
-}
-
-// static int		env_len(char **env)
-// {
-// 	int		i;
-// 	int		count;
-
-// 	i = -1;
-// 	count = 0;
-// 	while (env[++i])
-// 		count++;
-// 	return (count);
-// }
-
-void			init_envv(char **env)
+void	init_envv(char **env)
 {
 	int		i;
 	
@@ -54,7 +35,11 @@ void			init_envv(char **env)
 	i = -1;
 	while (env[++i])
 		if (!(g_env[i] = ft_strdup(env[i])))
-			exit_shell();
+			{
+				ft_freearr(g_env);
+				ft_putstr_fd("malloc error\n", 2);
+				exit(0);
+			}
 	g_env[i] = NULL; 
 }
 
@@ -102,25 +87,32 @@ int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
+	(void)env;
 	t_list	*list;
 	t_cmd	*cmd;
 	char	*line;
 	int		status;
 	
+	cmd = NULL;
 	init_envv(env);
 	status = 0;
 	while(1)
 	{
-		cmd = new_cmd();
 		line = prompt();
 		if (line[0] == 0 || is_all_wspace(line))
-			continue ;
-		if ((list = lexer(line, env, &status)))
 		{
 			free(line);
-			execute(paser(list, cmd), &status);
-			free_cmd(cmd);
+			continue ;
 		}
+		list = lexer(line, &status);
+		if (list)
+		{
+				cmd = paser(list, cmd);
+				clear_list(list);
+				execute(cmd, &status);
+				free_cmd(cmd);
+		}
+		free(line);
 	}	
 	return (0);
 }
