@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/14 20:22:07 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/15 17:37:01 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void   join_nodes(t_list *list)
 	t_node	*tmp;
 	char	*str;
 
+	if (list->n < 1)
+		return ;
 	tmp = list->head;
 	while (tmp != list->tail && tmp->type != PIPE)
 		tmp = tmp->next;

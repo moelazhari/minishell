@@ -94,7 +94,10 @@ static int		check_bins(char **command, int fd_out, int *status)
 	{
 		bin_path = ft_strjoin2(path[i], "/", command[0]);
 		if (lstat(bin_path, &f) == -1)
+		{
+			*status = 127;
 			free(bin_path);
+		}
 		else
 		{
 			ft_freearr(path);
@@ -152,13 +155,14 @@ int redir_out(t_cmd_node *noeud, int fd1)
 
 int	exec_command(t_cmd_node *command, int *fd, int	*status)
 {
-	//struct stat	f;
 	int	is_builtin;
 	int pid;
 	int	fd_out;
 
 	redir_in(command, fd[0]);
 	fd_out = redir_out(command, fd[1]);
+	if(!command->args)
+		return (0);
 	is_builtin = check_builtins(command->args, fd_out);
 	if (is_builtin < 0)
 		return (-1);
