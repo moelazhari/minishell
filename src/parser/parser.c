@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/15 17:37:01 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/16 01:30:31 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,19 @@ void   join_nodes(t_list *list)
 	t_node	*tmp;
 	char	*str;
 
-	if (list->n < 1)
-		return ;
 	tmp = list->head;
+	if (list->n <= 1)
+		return ;
 	while (tmp != list->tail && tmp->type != PIPE)
 		tmp = tmp->next;
-	if (list->n == 0 || list->n == 1)
-		return ;
 	if (tmp->type == PIPE)
 		tmp = tmp->prev;
 	while (tmp != list->head)
 	{
-		str = ft_strjoin2(tmp->prev->val , " ", tmp->val);
-		free(tmp->prev->val);
-		tmp->prev->val = str;
-		tmp = tmp->prev;	
+		str = tmp->prev->val;
+		tmp->prev->val = ft_strjoin2(tmp->prev->val , " ", tmp->val);
+		free(str);
+		tmp = tmp->prev;
 		del_node(list, tmp->next);
 	}
 }
@@ -94,7 +92,7 @@ t_cmd  *paser(t_list *list, t_cmd *cmd)
 	if (list->n == 0 || list->n == 1)
 	{
 		if (list->n == 1)
-			del_node(list, list->head);
+			clear_list(list);
 		return (cmd);
 	}
 	else
@@ -103,6 +101,5 @@ t_cmd  *paser(t_list *list, t_cmd *cmd)
 		del_node(list, list->head);
 		paser(list, cmd);
 	}
-	clear_list(list);
 	return (cmd);
 }
