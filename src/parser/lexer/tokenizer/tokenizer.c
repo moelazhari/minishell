@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/16 00:13:22 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/17 17:34:17 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*is_wspace(t_list *list, char *line)
 {
-	while (*line && ft_strchr(" \t", *line))
+	while (*line && ft_strchr(" \t\n\v\f\r", *line))
 		line++;
 	push_back(list, WSPACE, " ");
 	return (line);
@@ -23,21 +23,29 @@ static char	*is_wspace(t_list *list, char *line)
 static char	*is_sing(t_list *list, char *line)
 {
 	line++;
+	char *str;
+	
+	str = NULL;
 	if (*line == '?')
 	{
 		push_back(list, EXIT_STATUS, "$?");
 		line++;
 	}
-	else if (*line == '{' && ft_strchr(line + 1, '}'))
-	{
-		push_back(list, SIGN, "$");
-		line = is_word(list, line + 1, "}");
-		line++;
-	}
+	else if (*line == '"' || *line == '\'')
+		return (line);
 	else
-	{
+	{	
 		push_back(list, SIGN, "$");
-		line = is_word(list, line, " \t!\"$%'()*+,-./:;<=>?@[\\]^`{|}~");
+		if(*line <= '9' && *line >= '0')
+		{
+			str = malloc(sizeof(char) * 2);
+			str[0] = *line;
+			str[1] = '\0';
+			push_back(list, WORD, str);
+			line++;
+		}
+		else
+			line = is_word(list, line, " \t\n!\"$%'()*+,-./:;<=>?@[\\]^`|~");
 	}
 	return (line);
 }
@@ -53,8 +61,7 @@ static char	*is_dquote(t_list *list, char *line)
 	}
 	else if (*line == '~')
 	{
-		push_back(list, SIGN, "$");
-		push_back(list, WORD, "HOME");
+		is_tilde(list, line);
 		line++;
 	}
 	return (line);	
@@ -80,7 +87,7 @@ static char	*is_quote(t_list *list, char *line, int *status)
 			line = is_word(list, line + 1, "'");
 		else
 		{
-			printf("minishell: unclosed singel quotes\n");
+			printf("minishell: unclosed single quotes\n");
 			*status = 258;
 			clear_list(list);
 			return  (NULL);
@@ -97,7 +104,7 @@ t_list	*tokenizer(char *line, int *status)
 	list = new_list();
 	while (*line)
 	{
-		if (ft_strchr(" \t", *line))
+		if (ft_strchr(" \t\n\v\f\r", *line))
 			line = is_wspace(list, line);
 		else if (*line == '\'' || *line == '"')
 		{
@@ -111,7 +118,7 @@ t_list	*tokenizer(char *line, int *status)
 		else if (*line == '~')
 			line = is_tilde(list, line);
 		else
-			line = is_word(list, line, " \t\v\f\r\"'$|<>");
+			line = is_word(list, line, " \t\n\v\f\r\"'$|<>");
 	}
 	return (list);
 }

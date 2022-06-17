@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:51:26 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/16 00:40:30 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/17 16:41:55 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_list	*clear_list(t_list *list)
 		del_node(list, node);
 		node = node->next;
 	}
+	free(list);
 	list = NULL;
 	return (list);
 }

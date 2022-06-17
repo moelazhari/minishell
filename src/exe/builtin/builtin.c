@@ -7,11 +7,14 @@ int	echo(char **args, int fd_out)
 
 	i = 0;
 	n = 0;
-	if (!(ft_strncmp(args[0] , "-n", 2)))
+	if (!args[0])
 	{
-		i++;
-		n++;
+		ft_putstr_fd("\n", 1);
+		return(1);
 	}
+	while (args[i] && !(ft_strncmp(args[i++] , "-n", 2)))
+		n++;
+	i = n;
 	while (args[i])
 	{
 		ft_putstr_fd(args[i++], fd_out);

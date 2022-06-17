@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/16 00:03:40 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/17 16:26:36 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*is_metacharacters(t_list *list, char *line)
 char	*is_tilde(t_list *list,char *line)
 {
 	push_back(list, SIGN, "$");
-	push_back(list, WORD, "HOME");
+	push_back(list, WORD, ft_strdup("HOME"));
 	line++;
 	return (line);
 }

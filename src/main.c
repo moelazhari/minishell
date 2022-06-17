@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/16 01:32:41 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/17 16:43:46 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int is_all_wspace(char *line)
 {
-	while (*line && ft_strchr(" \t\v\r", *line))
+	while (*line && ft_strchr(" \t\v\r\n", *line))
 		line++;
 	if (*line == 0)
 		return (1);
