@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/14 23:15:38 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/19 14:55:42 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,15 @@ t_list	*new_list(void);
 void	del_node(t_list *list, t_node *node);
 t_list	*clear_list(t_list *list);
 //syntax fnc
-int	check_syntax(t_list *list, int *status);
+int		check_syntax(t_list *list, int *status);
 //exec fnc
 void	execute(t_cmd *cmds, int *status);
 //builtin fnc
-int		echo(char **args, int fd_out);
-int		cd(char **args, int fd_out);
+int		echo(char **args, int fd_out, int *status);
+int		ft_pwd(int *status);
+int		cd(char **args, int fd_out, int *status);
 void    exit_shell(t_cmd *cmds);
-int		print_env();
+int		print_env(int *status);
 //env fnc
 void	set_env_var(char *key, char *value);
 char	*get_env_var(char *var);

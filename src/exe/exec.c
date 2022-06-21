@@ -36,21 +36,22 @@ static int		run_cmd(char *bin_path, char **args, int fd_out)
 	return (pid);
 }
 
-static int		check_builtins(char **command, int fd_out)
+static int		check_builtins(char **command, int fd_out, int *status)
 {
-    (void)fd_out;
 	if (ft_strequ(command[0], "exit"))
 		return (-1);
 	else if (ft_strequ(command[0], "echo"))
-		return (echo(command + 1, fd_out));
+		return (echo(command + 1, fd_out, status));
 	else if (ft_strequ(command[0], "cd"))
-		return (cd(command + 1, fd_out));
+		return (cd(command + 1, fd_out, status));
+	else if (ft_strequ(command[0], "pwd"))
+		return (ft_pwd(status));
 	// else if (ft_strequ(command[0], "export"))
-	// 	return (export(command + 1));
+	//  	return (export(command + 1, status));
 	// else if (ft_strequ(command[0], "unsetenv"))
-	// 	return (unset(command + 1));
+	// 	return (unset(command + 1), status);
 	else if (ft_strequ(command[0], "env"))
-		return (print_env());
+		return (print_env(status));
 	return (0);
 }
 
@@ -163,7 +164,7 @@ int	exec_command(t_cmd_node *command, int *fd, int	*status)
 	fd_out = redir_out(command, fd[1]);
 	if(!command->args)
 		return (0);
-	is_builtin = check_builtins(command->args, fd_out);
+	is_builtin = check_builtins(command->args, fd_out, status);
 	if (is_builtin < 0)
 		return (-1);
 	if (is_builtin == 1)
@@ -188,7 +189,8 @@ void	execute(t_cmd *cmds, int *status)
     node = cmds->head;
     tmp_in_out[0] = dup(0);
     tmp_in_out[1] = dup(1);
-    pipe(fd);
+	if (cmds->n > 1)
+    	pipe(fd);
     while (node)
     {
         pid = exec_command(node, fd, status);
