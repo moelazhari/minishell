@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 17:58:39 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/02 16:42:28 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/25 17:58:00 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_red_node	*new_red_node(int type, char *filename)
 {
 	t_red_node *new;
 
-	new = malloc(sizeof(t_node));
+	new = malloc(sizeof(t_red_node));
 	new->type = type;
 	new->filename = filename;
 	new->prev = NULL;

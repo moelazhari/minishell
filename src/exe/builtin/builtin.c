@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	echo(char **args, int fd_out, int *status)
+int	echo(char **args, int *status)
 {
 	int	i;
 	int	n;
@@ -18,12 +18,12 @@ int	echo(char **args, int fd_out, int *status)
 	i = n;
 	while (args[i])
 	{
-		ft_putstr_fd(args[i++], fd_out);
+		ft_putstr_fd(args[i++], 1);
 		if (args[i]) 
-			ft_putstr_fd(" ", fd_out);
+			ft_putstr_fd(" ", 1);
 	}
 	if (!n)
-		ft_putstr_fd("\n", fd_out);	
+		ft_putstr_fd("\n", 1);	
 	status = 0;
 	return (1);
 }
@@ -31,12 +31,12 @@ int	echo(char **args, int fd_out, int *status)
 int	ft_pwd(int *status)
 {
 	char	*pwd;
-	char	buff[4097];
+	char	buff[4096];
 
 	pwd = getcwd(buff, 4096);
-	ft_putstr_fd(pwd, 1);
-	status = 0;
-	return (0);
+	ft_putendl_fd(pwd, 1);
+	*status = 0;
+	return (1);
 }
 
 int	print_env(int *status)
@@ -53,12 +53,5 @@ int	print_env(int *status)
 	}
 	status = 0;
 	return(1);
-}
-
-void    exit_shell(t_cmd *cmds)
-{
-	free_cmd(cmds);
-	ft_freearr(g_env);
-	exit(0);
 }
 

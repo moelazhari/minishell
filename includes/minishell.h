@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/19 14:55:42 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/25 19:40:48 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct	s_red
 
 typedef struct s_cmd_node
 {
+	int					*prev_pipe;
+	int					*next_pipe;
 	char				**args;
 	t_red				*red;
 	struct s_cmd_node	*prev;
@@ -110,10 +112,10 @@ int		check_syntax(t_list *list, int *status);
 //exec fnc
 void	execute(t_cmd *cmds, int *status);
 //builtin fnc
-int		echo(char **args, int fd_out, int *status);
+int		echo(char **args, int *status);
 int		ft_pwd(int *status);
-int		cd(char **args, int fd_out, int *status);
-void    exit_shell(t_cmd *cmds);
+int		cd(char **args, int *status);
+void    exit_shell(t_cmd *cmds, char **args, int *status);
 int		print_env(int *status);
 //env fnc
 void	set_env_var(char *key, char *value);

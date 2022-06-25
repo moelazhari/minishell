@@ -6,7 +6,7 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/06/14 22:41:11 by mazhari          ###   ########.fr        #
+#    Updated: 2022/06/25 17:53:43 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,13 @@ HEDEAR= $(INCLUDES)/minishell.h
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 B_DIR= build
+
 PROMPT= $(addprefix prompt/, prompt)
 TOKENIZER= $(addprefix	tokenizer/, tokenizer tokenizer1 list_utils)
 SYNTAX= $(addprefix syntax/, syntax)
 LEXER= $(addprefix lexer/, lexer $(TOKENIZER) $(SYNTAX))
 PARSER= $(addprefix parser/, parser list_red_utils list_cmd_utils $(LEXER))
-BUILTIN= $(addprefix builtin/, builtin cd)
+BUILTIN= $(addprefix builtin/, builtin cd exit)
 ENV= $(addprefix env/, env)
 EXE= $(addprefix exe/, $(BUILTIN) $(ENV) exec)
 

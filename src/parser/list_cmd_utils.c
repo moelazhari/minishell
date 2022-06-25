@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:38:53 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/02 20:01:33 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/25 19:41:14 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ t_cmd_node	*new_cmd_node(char **args, t_red *red)
 {
 	t_cmd_node *new;
 
-	new = malloc(sizeof(t_node));
+	new = malloc(sizeof(t_cmd_node));
 	new->args = args;
 	new->red = red;
 	new->prev = NULL;
 	new->next = NULL;
+	new->prev_pipe = NULL;
+	new->next_pipe = NULL;
 	return (new);
 }
 

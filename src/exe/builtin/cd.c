@@ -1,12 +1,11 @@
 #include "minishell.h"
 
-int	change_dir(char *path, int print_path, int fd_out, int *status)
+int	change_dir(char *path, int print_path, int *status)
 {
 	char	*cwd;
 	char	buff[4097];
 
 	cwd = getcwd(buff, 4096);
-	dup2(fd_out, 1);
 	set_env_var("OLDPWD", cwd);
     if (!chdir(path))
 	{
@@ -31,20 +30,20 @@ int	change_dir(char *path, int print_path, int fd_out, int *status)
 	return (1);
 }
 
-int	cd(char **args, int fd_out, int *status)
+int	cd(char **args, int *status)
 {
 	char	*home_path;
 
 	home_path = get_env_var("HOME");
 	if (!args[0])
-		return (change_dir(home_path, 0, fd_out, status));
+		return (change_dir(home_path, 0, status));
 	else
 	{
 		if (ft_strequ(args[0], "--"))
-			return (change_dir(home_path, 0, fd_out, status));
+			return (change_dir(home_path, 0, status));
 		else if (args[0][0] == '-' && !args[0][2])
-			return (change_dir(get_env_var("OLDPWD"), 1, fd_out, status));
-		return(change_dir(args[0], 0, fd_out, status));
+			return (change_dir(get_env_var("OLDPWD"), 1, status));
+		return(change_dir(args[0], 0, status));
 	}
 	return (1);
 }
