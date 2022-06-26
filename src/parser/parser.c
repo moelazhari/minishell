@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/26 16:58:50 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/26 20:55:26 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,19 @@ t_node  *remove_red(t_list *list, t_node *tmp)
 		return (NULL);
 	while (tmp != list->head)
 	{
-		if (tmp->type == WORD && ft_strchr("<>", tmp->prev->val[0]))
-			del_node(list, tmp);
-		else if (ft_strchr("<>", tmp->val[0]))
-			del_node(list, tmp);
-	   tmp = tmp->prev;
+		if (tmp->type == WORD)
+		{
+			tmp = tmp->prev;
+			if (tmp->type == REDIN ||tmp->type == REDOUT || tmp->type == PIPE\
+				|| tmp->type == APPEND || tmp->type == HEREDOC)
+			{
+				del_node(list, tmp->next);
+				tmp = tmp->prev;
+				del_node(list, tmp->next);
+			}
+		}
+		else
+	  	 tmp = tmp->prev;
 	}
 	if (ft_strchr("<>", list->head->val[0]))
 		del_node(list, tmp);

@@ -6,7 +6,7 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/06/26 16:35:51 by mazhari          ###   ########.fr        #
+#    Updated: 2022/06/26 20:35:25 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ $(B_DIR)/src/%.o: src/%.c $(LIBFT_LIB) $(HEDEAR)
 	$(CC) -I$(INCLUDES) $(CFLAGS) -I /Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/include -c $< -o $@
 
 $(NAME): $(OBJS) $(HEDEAR)
-	$(CC) -fsanitize=address $(CFLAGS) $(LIBFT_LIB) -L /Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/lib -lreadline $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(LIBFT_LIB) -L /Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/lib -lreadline $(OBJS) -o $(NAME)
 
 $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
