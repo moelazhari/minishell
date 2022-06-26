@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/25 20:39:13 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/26 14:24:05 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static char	*is_dquote(t_list *list, char *line)
 	{	
 		line = is_sing(list, line);
 		if (*line != '"')
-			line = is_word(list, line, " \t\n!\"$%'()*+,-./:;<=>?@[\\]^`|~");
+		{
+			*(line - 1) = '"';
+			line--;
+		}
 	}
 	else if (*line == '~')
 	{
@@ -93,7 +96,6 @@ static char	*is_quote(t_list *list, char *line, int *status)
 			return  (NULL);
 		}
 	}
-	line++;
 	return (line);
 }
 
