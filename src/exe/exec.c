@@ -60,6 +60,21 @@ int redir_out(t_cmd_node *noeud)
     return fd_out;
 }
 
+// void hair_dog(t_cmd_node *command)
+// {
+// 	char *line;
+// 	t_red_node *node;
+
+// 	node = command->red->head;
+// 	while (node)
+// 	{
+// 		if (node->type == HEREDOC)
+// 			line = node->filename;
+// 		node = node->next; 
+// 	}
+// 	while ()
+// }
+
 void	reset_in_out(t_cmd_node *command)
 {
 	int	*fd;
@@ -67,32 +82,31 @@ void	reset_in_out(t_cmd_node *command)
 
 	fd = malloc(8);
 	fd_redir = malloc(8);
-	
 	if ((fd_redir[1] = redir_out(command)) != 1)
 	{
 		dup2(fd_redir[1], STDOUT_FILENO);
 		close(fd_redir[1]);
 	}
 	if ((fd_redir[0] = redir_in(command)) != 0)
+	{
 		dup2(fd_redir[0], STDIN_FILENO);
-	return ;
+		close(fd_redir[0]);
+	}
 	if (command->next)
 	{
 		pipe(fd);
 		command->next_pipe = fd;
-		dup2(command->next_pipe[1], STDOUT_FILENO);
+		if (fd_redir[1] == 1)
+			dup2(command->next_pipe[1], STDOUT_FILENO);
 		close(command->next_pipe[1]);
 	}
-	else
-		command->next_pipe = NULL;
 	if (command->prev)
 	{
 		command->prev_pipe = command->prev->next_pipe;
-		dup2(command->prev_pipe[0], STDIN_FILENO);
+		if (fd_redir[0] == 0)
+			dup2(command->prev_pipe[0], STDIN_FILENO);
 		close(command->prev_pipe[0]);
 	}
-	else
-		command->prev_pipe = NULL;
 }
 
 static int		run_cmd(char *bin_path, t_cmd_node *command)
@@ -100,7 +114,6 @@ static int		run_cmd(char *bin_path, t_cmd_node *command)
 	pid_t	pid;
 
 	signal(SIGINT, SIG_IGN);
-	// reset_in_out(command);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -113,14 +126,12 @@ static int		run_cmd(char *bin_path, t_cmd_node *command)
 		execve(bin_path, command->args, g_env);
         exit(0);
 	}
-
 	//free(bin_path);
 	return (pid);
 }
 
 static int		check_builtins(t_cmd_node *command, int *status)
 {
-	reset_in_out(command);
 	if (ft_strequ(command->args[0], "exit"))
 		return (-1);
 	else if (ft_strequ(command->args[0], "echo"))
@@ -221,12 +232,10 @@ void	execute(t_cmd *cmds, int *status)
 		if (pid == -1)
 			exit_shell(cmds, node->args, status);
         node = node->next;
+		dup2(tmp_in_out[0],STDIN_FILENO);
+		dup2(tmp_in_out[1],STDOUT_FILENO);
 	}
     while (cmds->n--)
         wait(status);
-	dup2(tmp_in_out[0],STDIN_FILENO);
-	close(tmp_in_out[0]);
-	dup2(tmp_in_out[1],STDOUT_FILENO);
-	close(tmp_in_out[1]);
 	exit_status(status);
 }

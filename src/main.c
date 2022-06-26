@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/25 19:52:00 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/26 18:32:09 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,23 @@ int is_all_wspace(char *line)
 		line++;
 	if (*line == 0)
 		return (1);
+	return (0);
+}
+
+int	is_list(t_list *list)
+{
+	t_node *tmp;
+
+	if (!list)
+		return 0;
+	tmp = list->head;
+	while (tmp)
+	{
+		if (tmp->val[0] == 0)
+			tmp = tmp->next;
+		else
+			return (1);
+	}
 	return (0);
 }
 
@@ -41,7 +58,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		list = lexer(line, &status);
-		if (list)
+		if (is_list(list))
 		{
 				cmd = new_cmd();
 				cmd = paser(list, cmd);

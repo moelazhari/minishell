@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:39:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/25 20:08:56 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/26 19:07:23 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int  is_metachar(t_node *tmp, int *status)
 {
 	if (!tmp->next)
 		return (1);
-	if ( tmp->type == PIPE)
+	if (tmp->type == PIPE)
 	{
-		if (!tmp->prev)
+		if (!tmp->prev || tmp->next->type == PIPE)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
 			*status = 258;
@@ -29,12 +29,21 @@ static int  is_metachar(t_node *tmp, int *status)
 	{
 		if (tmp->next->type != WORD)
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token", 2);
+			ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
 			*status = 258;
 			return (0);
 		}
 	}
 	return (1);
+}
+
+int is_all_wspace1(char *line)
+{
+	while (*line && ft_strchr(" \t\n\v\f\r", *line))
+		line++;
+	if (*line == 0)
+		return (1);
+	return (0);
 }
 
 int	check_syntax(t_list *list, int *status)
@@ -43,7 +52,14 @@ int	check_syntax(t_list *list, int *status)
 	char	*ptr;
 
 	tmp = list->head;
-	while (tmp)
+	if (list->tail->type == REDIN ||list->tail->type == REDOUT || list->tail->type == PIPE\
+		 || list->tail->type == APPEND || list->tail->type == HEREDOC)
+	{
+			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+			*status = 258;	
+			return (0);
+	}
+	while (tmp != list->tail)
 	{
 		if (tmp->type == WORD && ft_strchr(tmp->val, ';'))
 		{
@@ -55,16 +71,11 @@ int	check_syntax(t_list *list, int *status)
 				return (0);
 			}
 		}
-		else if (tmp->type == REDIN ||tmp->type == REDOUT || tmp->type == PIPE)
-			if (!is_metachar(tmp, status))
-				return (0);
+		if (tmp->type == REDIN ||tmp->type == REDOUT || tmp->type == PIPE\
+				|| tmp->type == APPEND || tmp->type == HEREDOC)
+				if (!is_metachar(tmp, status))
+					return (0);
 		tmp = tmp->next;
-	}
-	if (list->tail->type == REDIN ||list->tail->type == REDOUT || list->tail->type == PIPE)
-	{
-			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
-			*status = 258;	
-			return (0);
 	}
 	return (1);
 }

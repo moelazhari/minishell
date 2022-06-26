@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/17 16:26:36 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/26 18:27:02 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ char	*is_metacharacters(t_list *list, char *line)
 		if (*(line + 1) == '>')
 		{
 			push_back(list, APPEND, ">>");
-			line++;
+			while (*(line + 1) == '>') 
+				line++;
 		}
 		else
 			push_back(list, REDOUT, ">");
@@ -49,7 +50,8 @@ char	*is_metacharacters(t_list *list, char *line)
 		if (*(line + 1) == '<')
 		{
 			push_back(list, HEREDOC, "<<");
-			line++;
+			while (*(line + 1) == '<') 
+				line++;
 		}
 		else
 			push_back(list, REDIN, "<");
