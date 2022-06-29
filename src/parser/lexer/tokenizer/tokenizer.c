@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/29 15:13:11 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/29 15:38:00 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static char	*is_sing(t_list *list, char *line)
 		push_back(list, EXIT_STATUS, "$?");
 		line++;
 	}
-	else if (*line == '"' || *line == '\'')
-		return (line);
 	else
 	{	
 		push_back(list, SIGN, "$");
@@ -115,7 +113,10 @@ t_list	*tokenizer(char *line, int *status)
 					return (NULL);
 		}
 		else if (*line == '$')
-			line = is_sing(list, line);
+			if (*(line + 1) == '"' || *(line + 1) == '\'')
+				line++;
+			else
+				line = is_sing(list, line);
 		else if (ft_strchr("|<>", *line))
 		 	line = is_metacharacters(list, line);
 		else if (*line == '~')
@@ -123,12 +124,5 @@ t_list	*tokenizer(char *line, int *status)
 		else
 			line = is_word(list, line, " \t\n\v\f\r\"'$|<>");
 	}
-	// t_node  *node;
-	// node = list->head;
-	// while (node)
-	// {
-	// 	printf("%d,%s\n", node->type, node->val);
-	// 	node = node->next;
-	// }
 	return (list);
 }

@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/26 19:02:31 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/29 16:08:11 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ void	expand_sign(t_list *list, t_node *tmp)
 	
 	i = -1;
 	tmp = tmp->next;
-	if (tmp->val[0] == 0)
+	if (tmp->prev->prev->type == HEREDOC)
+	{
+		tmp->prev->val = ft_strjoin("$", tmp->val);
+		del_node(list, tmp);
+	}
+	else if (tmp->val[0] == 0)
 	{
 		tmp->prev->type = WORD;
 		tmp->prev->val	= ft_strdup("$");
@@ -68,8 +73,8 @@ void	del_space(t_list *list)
 	{
 		if (tmp->type == WSPACE)
 			del_node(list, tmp);
-		if (tmp->val[0] == 0)
-			del_node(list, tmp);		
+		// if (tmp->val[0] == 0)
+		// 	del_node(list, tmp);	
 		tmp = tmp->next;
 	}
 }

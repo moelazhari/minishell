@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:39:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/26 19:07:23 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/29 15:52:13 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int  is_metachar(t_node *tmp, int *status)
 	}
 	else
 	{
-		if (tmp->next->type != WORD)
+		if (tmp->next->type != WORD && tmp->next->type != SIGN)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
 			*status = 258;
