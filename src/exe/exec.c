@@ -60,20 +60,25 @@ int redir_out(t_cmd_node *noeud)
     return fd_out;
 }
 
-// void hair_dog(t_cmd_node *command)
-// {
-// 	char *line;
-// 	t_red_node *node;
+void    heredoc(t_cmd_node *command)
+{
+    t_red_node	*node;
+    char		*line;
+    char    	*rline;
 
-// 	node = command->red->head;
-// 	while (node)
-// 	{
-// 		if (node->type == HEREDOC)
-// 			line = node->filename;
-// 		node = node->next; 
-// 	}
-// 	while ()
-// }
+    node = command->red->head;
+    while (node)
+    {
+        if (node->type == HEREDOC)
+        {
+            line = node->filename;
+            rline = readline("> ");
+            while (!ft_strcmp(line, rline))
+                rline = readline("> ");
+        }
+        node = node->next;
+    }
+}
 
 void	reset_in_out(t_cmd_node *command)
 {
@@ -82,6 +87,7 @@ void	reset_in_out(t_cmd_node *command)
 
 	fd = malloc(8);
 	fd_redir = malloc(8);
+	heredoc(command);
 	if ((fd_redir[1] = redir_out(command)) != 1)
 	{
 		dup2(fd_redir[1], STDOUT_FILENO);

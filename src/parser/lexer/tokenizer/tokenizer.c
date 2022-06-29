@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/26 20:36:38 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/29 15:13:11 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static char	*is_wspace(t_list *list, char *line)
 
 static char	*is_sing(t_list *list, char *line)
 {
-	line++;
 	char *str;
-	
+	line++;
+
 	str = NULL;
 	if (*line == '?')
 	{
@@ -45,7 +45,7 @@ static char	*is_sing(t_list *list, char *line)
 			line++;
 		}
 		else
-			line = is_word(list, line, " \t\n!\"$%'()*+,-./:;<=>?@[\\]^`|~");
+			line = is_word(list, line, " \t\n!\"%'()*+,-./:;<=>?@[\\]^`|~$");
 	}
 	return (line);
 }
@@ -123,5 +123,12 @@ t_list	*tokenizer(char *line, int *status)
 		else
 			line = is_word(list, line, " \t\n\v\f\r\"'$|<>");
 	}
+	// t_node  *node;
+	// node = list->head;
+	// while (node)
+	// {
+	// 	printf("%d,%s\n", node->type, node->val);
+	// 	node = node->next;
+	// }
 	return (list);
 }

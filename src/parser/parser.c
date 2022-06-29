@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/26 20:55:26 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/29 14:58:42 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ void   join_nodes(t_list *list)
 	t_node	*tmp;
 	char	*str;
 
-	tmp = list->head;
-	if (list->n <= 1)
+	if (!list || list->n <= 1)
 		return ;
+	tmp = list->head;
 	while (tmp != list->tail && tmp->type != PIPE)
 		tmp = tmp->next;
 	if (tmp->type == PIPE)
 		tmp = tmp->prev;
+	if (!tmp)
+		return ;
 	while (tmp != list->head)
 	{
 		str = tmp->prev->val;
@@ -36,26 +38,24 @@ void   join_nodes(t_list *list)
 
 t_node  *remove_red(t_list *list, t_node *tmp)
 {
-	if (list->n == 0 || list->n == 1)
-		return (NULL);
 	while (tmp != list->head)
 	{
-		if (tmp->type == WORD)
+		if (tmp->type == REDIN ||tmp->type == REDOUT
+			|| tmp->type == APPEND || tmp->type == HEREDOC)
 		{
+			del_node(list, tmp->next);
 			tmp = tmp->prev;
-			if (tmp->type == REDIN ||tmp->type == REDOUT || tmp->type == PIPE\
-				|| tmp->type == APPEND || tmp->type == HEREDOC)
-			{
-				del_node(list, tmp->next);
-				tmp = tmp->prev;
-				del_node(list, tmp->next);
-			}
+			del_node(list, tmp->next);
 		}
 		else
-	  	 tmp = tmp->prev;
+  			tmp = tmp->prev;
 	}
-	if (ft_strchr("<>", list->head->val[0]))
-		del_node(list, tmp);
+	if (tmp->type == REDIN ||tmp->type == REDOUT
+		|| tmp->type == APPEND || tmp->type == HEREDOC)
+		{
+			del_node(list, tmp->next);
+			del_node(list, tmp);
+		}
 	return (tmp);
 }
 
@@ -68,8 +68,6 @@ static  t_red   *get_red(t_list *list)
 	tmp = list->head;
 	while (tmp != list->tail && tmp->type != PIPE)
 	{
-		if (ft_strchr("<>", tmp->val[0]))
-		{
 			if (tmp->type == REDIN)
 				push_back_red(red, REDIN, ft_strdup(tmp->next->val));
 			else if (tmp->type == REDOUT)
@@ -78,7 +76,6 @@ static  t_red   *get_red(t_list *list)
 				push_back_red(red, APPEND, ft_strdup(tmp->next->val));
 			else if (tmp->type == HEREDOC)
 				push_back_red(red, HEREDOC, ft_strdup(tmp->next->val));
-		}
 		tmp = tmp->next;
 	}
 	remove_red(list, tmp);
@@ -92,7 +89,7 @@ t_cmd  *paser(t_list *list, t_cmd *cmd)
 
 	red = get_red(list);
 	join_nodes(list);
-	if (!list->n)
+	if (!list->n || list->head->type == PIPE)
 		args = NULL;
 	else
 		args = ft_split(list->head->val, ' ');
@@ -105,7 +102,8 @@ t_cmd  *paser(t_list *list, t_cmd *cmd)
 	}
 	else
 	{
-		del_node(list, list->head);
+		if (list->head->type != PIPE)
+			del_node(list, list->head);
 		del_node(list, list->head);
 		paser(list, cmd);
 	}
