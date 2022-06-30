@@ -3,7 +3,7 @@
 void free_exit(t_cmd *cmds, int status)
 {
 	free_cmd(cmds);
-	ft_freearr(g_env);
+	ft_freearr(g_data.env);
 	ft_putstr_fd("exit\n", 1);
 	exit(status);
 }
@@ -20,14 +20,14 @@ int check_arg(char *arg)
 	return (0);
 }
 
-void    exit_shell(t_cmd *cmds, char **args, int *status)
+void    exit_shell(t_cmd *cmds, char **args)
 {
 	if (args[1])
 	{
 		if (args[2])
         {
 			ft_putstr_fd("minishel: exit: too many arguments\n", 2);
-            *status = 256;
+            g_data.status = 256;
         }
 		else
 		{

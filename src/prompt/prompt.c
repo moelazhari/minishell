@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:21:15 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/26 14:53:55 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/29 20:40:15 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	sig_int_handler(int sig)
 	ft_putstr_fd("\n", 1);
 	rl_on_new_line();
 	rl_redisplay();
+	g_data.status = 1;
 }
 
 char	*prompt(void)
@@ -33,7 +34,7 @@ char	*prompt(void)
 		ft_putstr_fd("exit\n", 1);
 		exit(0);
 	}
-	if (line)
+	if (line && line[0] != 0)
 		add_history(line);
 	rl_on_new_line();
 	return (line);

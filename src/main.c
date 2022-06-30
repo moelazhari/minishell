@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/29 15:41:54 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/30 20:39:12 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,9 @@ int	main(int ac, char **av, char **env)
 	t_list	*list;
 	t_cmd	*cmd;
 	char	*line;
-	int		status;
 
+	g_data.status = 0;
 	init_envv(env);
-	status = 0;
 	while(1)
 	{
 		line = prompt();
@@ -57,16 +56,16 @@ int	main(int ac, char **av, char **env)
 			free(line);
 			continue ;
 		}
-		list = lexer(line, &status);
+		list = lexer(line);
 		if (is_list(list))
 		{
 				cmd = new_cmd();
 				cmd = paser(list, cmd);
-				execute(cmd, &status);
+				execute(cmd);
 				free_cmd(cmd);
 		}
 		free(line);
 	}
-	ft_freearr(g_env);
+	ft_freearr(g_data.env);
 	return (0);
 }

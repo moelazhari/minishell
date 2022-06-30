@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/26 18:27:02 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/30 21:14:29 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	*is_metacharacters(t_list *list, char *line)
 		if (*(line + 1) == '>')
 		{
 			push_back(list, APPEND, ">>");
-			while (*(line + 1) == '>') 
 				line++;
 		}
 		else
@@ -49,15 +48,24 @@ char	*is_metacharacters(t_list *list, char *line)
 	{
 		if (*(line + 1) == '<')
 		{
+			line++;
 			push_back(list, HEREDOC, "<<");
-			while (*(line + 1) == '<') 
-				line++;
+			if (*(line + 1) != '<' && *(line + 1) != '>' && *(line + 1) != '|')
+			{
+				while (ft_strchr(" \t\n\v\f\r", *(line + 1)))
+						line++;
+				line = is_word(list, line + 1, " ");
+			}
 		}
 		else
 			push_back(list, REDIN, "<");
 	}
 	else if (*line == '|')
+	{
+		if (*(line + 1) == '|')
+			line++;
 		push_back(list, PIPE, "|");
+	}
 	line++;
 	return (line);
 }

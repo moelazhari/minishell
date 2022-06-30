@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	echo(char **args, int *status)
+int	echo(char **args)
 {
 	int	i;
 	int	n;
@@ -10,7 +10,7 @@ int	echo(char **args, int *status)
 	if (!args[0])
 	{
 		ft_putstr_fd("\n", 1);
-		*status = 0;
+		g_data.status = 0;
 		return(1);
 	}
 	while (args[i] && !(ft_strncmp(args[i++] , "-n", 2)))
@@ -24,34 +24,34 @@ int	echo(char **args, int *status)
 	}
 	if (!n)
 		ft_putstr_fd("\n", 1);	
-	status = 0;
+	g_data.status = 0;
 	return (1);
 }
 
-int	ft_pwd(int *status)
+int	ft_pwd(void)
 {
 	char	*pwd;
 	char	buff[4096];
 
 	pwd = getcwd(buff, 4096);
 	ft_putendl_fd(pwd, 1);
-	*status = 0;
+	g_data.status = 0;
 	return (1);
 }
 
-int	print_env(int *status)
+int	print_env(void)
 {
 	int i;
 
 	i = 0;
-	while(g_env[i++])
+	while(g_data.env[i++])
 	{
-		if (!g_env[i + 1])
-			ft_putstr_fd(g_env[i], 1);
+		if (!g_data.env[i + 1])
+			ft_putstr_fd(g_data.env[i], 1);
 		else
-			ft_putendl_fd(g_env[i], 1);
+			ft_putendl_fd(g_data.env[i], 1);
 	}
-	status = 0;
+	g_data.status = 0;
 	return(1);
 }
 

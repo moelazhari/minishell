@@ -4,9 +4,11 @@ make: Entering directory `/Users/mazhari/Desktop/minishell'
  
 make[1]: Entering directory `/Users/mazhari/Desktop/minishell/libft'
 gcc -Wall -Wextra -Werror  -c ft_atoi.c -o ft_atoi.o
+ 
 gcc -Wall -Wextra -Werror  -c ft_bzero.c -o ft_bzero.o
 gcc -Wall -Wextra -Werror  -c ft_isalnum.c -o ft_isalnum.o
 gcc -Wall -Wextra -Werror  -c ft_isalpha.c -o ft_isalpha.o
+ 
 gcc -Wall -Wextra -Werror  -c ft_isascii.c -o ft_isascii.o
 gcc -Wall -Wextra -Werror  -c ft_isdigit.c -o ft_isdigit.o
 gcc -Wall -Wextra -Werror  -c ft_isprint.c -o ft_isprint.o
@@ -70,7 +72,6 @@ mkdir -p build/src/exe/builtin
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/exe/builtin/exit.c -o build/src/exe/builtin/exit.o
 mkdir -p build/src/exe/env
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/exe/env/env.c -o build/src/exe/env/env.o
- 
 mkdir -p build/src/exe
 gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/exe/exec.c -o build/src/exe/exec.o
 gcc -Wall -Werror -Wextra -g libft/libft.a -L /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/lib -lreadline build/src/main.o build/src/ft_free.o build/src/prompt/prompt.o build/src/parser/parser.o build/src/parser/list_red_utils.o build/src/parser/list_cmd_utils.o build/src/parser/lexer/lexer.o build/src/parser/lexer/tokenizer/tokenizer.o build/src/parser/lexer/tokenizer/tokenizer1.o build/src/parser/lexer/tokenizer/list_utils.o build/src/parser/lexer/syntax/syntax.o build/src/exe/builtin/builtin.o build/src/exe/builtin/cd.o build/src/exe/builtin/exit.o build/src/exe/env/env.o build/src/exe/exec.o -o minishell

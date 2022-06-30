@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	change_dir(char *path, int print_path, int *status)
+int	change_dir(char *path, int print_path)
 {
 	char	*cwd;
 	char	buff[4097];
@@ -13,7 +13,7 @@ int	change_dir(char *path, int print_path, int *status)
 		set_env_var("PWD", cwd);
 		if (print_path)
 			ft_putendl_fd(get_env_var("PWD"), 1);
-		*status = 0;
+		g_data.status = 0;
 	}
 	else
 	{
@@ -25,25 +25,25 @@ int	change_dir(char *path, int print_path, int *status)
 			ft_putendl_fd(": permission denied", 1);
 		else
 			ft_putendl_fd(": not a directory", 1);
-		*status = 256;
+		g_data.status = 256;
 	}
 	return (1);
 }
 
-int	cd(char **args, int *status)
+int	cd(char **args)
 {
 	char	*home_path;
 
 	home_path = get_env_var("HOME");
 	if (!args[0])
-		return (change_dir(home_path, 0, status));
+		return (change_dir(home_path, 0));
 	else
 	{
 		if (ft_strequ(args[0], "--"))
-			return (change_dir(home_path, 0, status));
+			return (change_dir(home_path, 0));
 		else if (args[0][0] == '-' && !args[0][2])
-			return (change_dir(get_env_var("OLDPWD"), 1, status));
-		return(change_dir(args[0], 0, status));
+			return (change_dir(get_env_var("OLDPWD"), 1));
+		return(change_dir(args[0], 0));
 	}
 	return (1);
 }

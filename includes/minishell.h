@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/25 19:40:48 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/29 20:41:00 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,14 @@
 # define EXIT_STATUS -10 // $?
 # define WORD -11 // 
 
-char **g_env;
+typedef struct s_data
+{
+	char	**env;
+	int		status;
+}				t_data;
+
+t_data g_data;
+
 typedef struct	s_node
 {
 	int				type;
@@ -95,9 +102,9 @@ t_red		*new_red(void);
 t_red_node	*new_red_node(int type, char *filename);
 void		push_back_red(t_red *red, int type, char *filename);
 // lexical analyser
-t_list	*lexer(char *line, int *status);
+t_list	*lexer(char *line);
 //fnc utils in tokenizer
-t_list	*tokenizer(char *line, int *status);
+t_list	*tokenizer(char *line);
 char	*is_word(t_list *list, char *line, char *stop);
 char	*is_metacharacters(t_list *list, char *line);
 char	*is_tilde(t_list *list,char *line);
@@ -108,15 +115,15 @@ t_list	*new_list(void);
 void	del_node(t_list *list, t_node *node);
 t_list	*clear_list(t_list *list);
 //syntax fnc
-int		check_syntax(t_list *list, int *status);
+int		check_syntax(t_list *list);
 //exec fnc
-void	execute(t_cmd *cmds, int *status);
+void	execute(t_cmd *cmds);
 //builtin fnc
-int		echo(char **args, int *status);
-int		ft_pwd(int *status);
-int		cd(char **args, int *status);
-void    exit_shell(t_cmd *cmds, char **args, int *status);
-int		print_env(int *status);
+int		echo(char **args);
+int		ft_pwd(void);
+int		cd(char **args);
+void    exit_shell(t_cmd *cmds, char **args);
+int		print_env(void);
 //env fnc
 void	set_env_var(char *key, char *value);
 char	*get_env_var(char *var);

@@ -6,25 +6,25 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/29 16:08:11 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/30 21:18:10 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_sign(t_list *list, t_node *tmp)
+int	expand_sign(t_list *list, t_node *tmp)
 {
 	int		i;
 	char	*str;
 	
 	i = -1;
 	tmp = tmp->next;
-	if (tmp->prev->prev->type == HEREDOC)
-	{
-		tmp->prev->val = ft_strjoin("$", tmp->val);
-		del_node(list, tmp);
-	}
-	else if (tmp->val[0] == 0)
+	// if (tmp->prev->prev && tmp->prev->prev->type == HEREDOC)
+	// {
+	// 	tmp->prev->val = ft_strjoin("$", tmp->val);
+	// 	del_node(list, tmp);
+	// }
+	if (tmp->val[0] == 0)
 	{
 		tmp->prev->type = WORD;
 		tmp->prev->val	= ft_strdup("$");
@@ -36,9 +36,18 @@ void	expand_sign(t_list *list, t_node *tmp)
 		tmp->val = ft_strdup(get_env_var(tmp->val));
 		free(str);
 		if (!tmp->val)
+		{
+			if (tmp->prev->prev && (tmp->prev->prev->type == REDOUT ||\
+			tmp->prev->prev->type == REDIN || tmp->prev->prev->type == APPEND))
+			{
+				ft_putstr_fd("bash: ambiguous redirect\n", 2);
+				return (0);
+			}	
 			del_node(list, tmp);
+		}
 		del_node(list, tmp->prev);
 	}
+	return (1);
 }
 
 void	combaine_words(t_list *list)
@@ -79,7 +88,7 @@ void	del_space(t_list *list)
 	}
 }
 
-static t_list	*expand(t_list *list, int *status)
+static t_list	*expand(t_list *list)
 {
 	t_node	*tmp;
 
@@ -87,11 +96,14 @@ static t_list	*expand(t_list *list, int *status)
 	while (tmp)
 	{
 		if (tmp->type == SIGN)
-			expand_sign(list, tmp);
+		{
+			if (!expand_sign(list, tmp))
+				return (NULL);
+		}
 		else if (tmp->type == EXIT_STATUS)
 		{
 			tmp->type = WORD;
-			tmp->val  = ft_itoa(*status);
+			tmp->val  = ft_itoa(g_data.status);
 		}
 		tmp = tmp->next;
 	}
@@ -103,17 +115,24 @@ static t_list	*expand(t_list *list, int *status)
 	return (list);
 }
 
-t_list	*lexer(char *line, int *status)
+t_list	*lexer(char *line)
 { 
 	t_list	*list;
 
-	list = tokenizer(line, status);
+	list = tokenizer(line);
 	if (!list)
 		return (clear_list(list));
-	list = expand(list, status);
+	list = expand(list);
 	if (!list || !list->n)
 		return (clear_list(list));
-	if (!check_syntax(list, status))
+	if (!check_syntax(list))
 		return (clear_list(list));
+	// t_node	*node;
+	// node = list->head;
+	// while (node)
+	// {
+	// 	printf("%d:%s\n", node->type, node->val);
+	// 	node = node->next;
+	// }
 	return (list);
 }

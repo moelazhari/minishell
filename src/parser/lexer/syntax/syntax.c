@@ -6,13 +6,13 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:39:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/29 15:52:13 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/06/30 20:36:55 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int  is_metachar(t_node *tmp, int *status)
+static int  is_metachar(t_node *tmp)
 {
 	if (!tmp->next)
 		return (1);
@@ -21,7 +21,7 @@ static int  is_metachar(t_node *tmp, int *status)
 		if (!tmp->prev || tmp->next->type == PIPE)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
-			*status = 258;
+			g_data.status = 258;
 			return (0);
 		}
 	}
@@ -30,7 +30,7 @@ static int  is_metachar(t_node *tmp, int *status)
 		if (tmp->next->type != WORD && tmp->next->type != SIGN)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
-			*status = 258;
+			g_data.status = 258;
 			return (0);
 		}
 	}
@@ -46,7 +46,7 @@ int is_all_wspace1(char *line)
 	return (0);
 }
 
-int	check_syntax(t_list *list, int *status)
+int	check_syntax(t_list *list)
 {
 	t_node	*tmp;
 	char	*ptr;
@@ -56,10 +56,10 @@ int	check_syntax(t_list *list, int *status)
 		 || list->tail->type == APPEND || list->tail->type == HEREDOC)
 	{
 			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
-			*status = 258;	
+			g_data.status = 258;	
 			return (0);
 	}
-	while (tmp != list->tail)
+	while (tmp)
 	{
 		if (tmp->type == WORD && ft_strchr(tmp->val, ';'))
 		{
@@ -67,13 +67,13 @@ int	check_syntax(t_list *list, int *status)
 			if (*(ptr + 1) == ';')
 			{
 				ft_putstr_fd("minishell: syntax error near unexpected token `;;'\n", 2);
-				*status = 258;
+				g_data.status = 258;
 				return (0);
 			}
 		}
 		if (tmp->type == REDIN ||tmp->type == REDOUT || tmp->type == PIPE\
 				|| tmp->type == APPEND || tmp->type == HEREDOC)
-				if (!is_metachar(tmp, status))
+				if (!is_metachar(tmp))
 					return (0);
 		tmp = tmp->next;
 	}
