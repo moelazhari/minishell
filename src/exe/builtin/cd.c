@@ -1,13 +1,14 @@
 #include "minishell.h"
 
-int	change_dir(char *path, int print_path)
+void	change_dir(char *path, int print_path)
 {
 	char	*cwd;
 	char	buff[4097];
 
 	cwd = getcwd(buff, 4096);
+	// printf("%s", cwd);
 	set_env_var("OLDPWD", cwd);
-    if (!chdir(path))
+    if (!chdir(path) && cwd)
 	{
         cwd = getcwd(buff, 4096);
 		set_env_var("PWD", cwd);
@@ -27,10 +28,10 @@ int	change_dir(char *path, int print_path)
 			ft_putendl_fd(": not a directory", 1);
 		g_data.status = 256;
 	}
-	return (1);
+	return ;
 }
 
-int	cd(char **args)
+void	cd(char **args)
 {
 	char	*home_path;
 
@@ -45,5 +46,4 @@ int	cd(char **args)
 			return (change_dir(get_env_var("OLDPWD"), 1));
 		return(change_dir(args[0], 0));
 	}
-	return (1);
 }

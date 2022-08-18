@@ -3,22 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/30 20:39:12 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/18 18:27:03 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_all_wspace(char *line)
+void	exit_status(void)
 {
-	while (*line && ft_strchr(" \t\n\v\f\r", *line))
-		line++;
-	if (*line == 0)
-		return (1);
-	return (0);
+	if (g_data.status == 3)
+	{
+		ft_putstr_fd("Quit: 3\n", 2);
+		g_data.status = 131;
+	}
+	else if (g_data.status == 2)
+	{
+		write(2, "\n", 1);
+		g_data.status = 130;
+	}
+	else if (g_data.status == 126 || g_data.status == 127)
+		return ;
+	else
+		g_data.status = WEXITSTATUS(g_data.status);
 }
 
 int	is_list(t_list *list)
@@ -45,17 +54,15 @@ int	main(int ac, char **av, char **env)
 	t_list	*list;
 	t_cmd	*cmd;
 	char	*line;
-
+	
+	rl_catch_signals = 0;
 	g_data.status = 0;
 	init_envv(env);
 	while(1)
 	{
 		line = prompt();
-		if (line[0] == 0 || is_all_wspace(line))
-		{
-			free(line);
+		if (!line)
 			continue ;
-		}
 		list = lexer(line);
 		if (is_list(list))
 		{
