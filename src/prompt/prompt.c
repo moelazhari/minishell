@@ -6,11 +6,20 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:21:15 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/29 20:40:15 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/12 15:07:31 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_all_wspace(char *line)
+{
+	while (*line && ft_strchr(" \t\n\v\f\r", *line))
+		line++;
+	if (*line == 0)
+		return (1);
+	return (0);
+}
 
 void	sig_int_handler(int sig)
 {
@@ -34,7 +43,12 @@ char	*prompt(void)
 		ft_putstr_fd("exit\n", 1);
 		exit(0);
 	}
-	if (line && line[0] != 0)
+	else if (line[0] == 0 || is_all_wspace(line))
+	{
+		free(line);
+		line = NULL;
+	}
+	else
 		add_history(line);
 	rl_on_new_line();
 	return (line);

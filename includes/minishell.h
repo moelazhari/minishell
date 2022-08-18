@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/29 20:41:00 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/12 15:44:48 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_data
 	int		status;
 }				t_data;
 
-t_data g_data;
+t_data	g_data;
 
 typedef struct	s_node
 {

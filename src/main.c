@@ -6,20 +6,11 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/30 20:39:12 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/12 16:11:06 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int is_all_wspace(char *line)
-{
-	while (*line && ft_strchr(" \t\n\v\f\r", *line))
-		line++;
-	if (*line == 0)
-		return (1);
-	return (0);
-}
 
 int	is_list(t_list *list)
 {
@@ -51,16 +42,22 @@ int	main(int ac, char **av, char **env)
 	while(1)
 	{
 		line = prompt();
-		if (line[0] == 0 || is_all_wspace(line))
-		{
-			free(line);
-			continue ;
-		}
+		if (!line)
+			continue;
 		list = lexer(line);
 		if (is_list(list))
 		{
 				cmd = new_cmd();
 				cmd = paser(list, cmd);
+	
+				// t_cmd_node	*node;
+				// node = cmd->head;
+				// while (node)
+				// {
+				// 	printf("%s\n", node->args[0]);
+				// 	printf("%s\n", node->args[1]);
+				// 	node = node->next;
+				// }
 				execute(cmd);
 				free_cmd(cmd);
 		}
