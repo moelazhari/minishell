@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/12 16:11:06 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/18 18:27:03 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	exit_status(void)
+{
+	if (g_data.status == 3)
+	{
+		ft_putstr_fd("Quit: 3\n", 2);
+		g_data.status = 131;
+	}
+	else if (g_data.status == 2)
+	{
+		write(2, "\n", 1);
+		g_data.status = 130;
+	}
+	else if (g_data.status == 126 || g_data.status == 127)
+		return ;
+	else
+		g_data.status = WEXITSTATUS(g_data.status);
+}
 
 int	is_list(t_list *list)
 {
@@ -36,28 +54,20 @@ int	main(int ac, char **av, char **env)
 	t_list	*list;
 	t_cmd	*cmd;
 	char	*line;
-
+	
+	rl_catch_signals = 0;
 	g_data.status = 0;
 	init_envv(env);
 	while(1)
 	{
 		line = prompt();
 		if (!line)
-			continue;
+			continue ;
 		list = lexer(line);
 		if (is_list(list))
 		{
 				cmd = new_cmd();
 				cmd = paser(list, cmd);
-	
-				// t_cmd_node	*node;
-				// node = cmd->head;
-				// while (node)
-				// {
-				// 	printf("%s\n", node->args[0]);
-				// 	printf("%s\n", node->args[1]);
-				// 	node = node->next;
-				// }
 				execute(cmd);
 				free_cmd(cmd);
 		}

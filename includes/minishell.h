@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/12 15:44:48 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/18 19:27:23 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_data
 	int		status;
 }				t_data;
 
-t_data	g_data;
+t_data g_data;
 
 typedef struct	s_node
 {
@@ -53,7 +53,7 @@ typedef struct	s_node
 
 typedef struct	s_list
 {
-	int		n; // number of node;
+	int		n; // number of nodes;
 	t_node	*head; // the beginning of the list
 	t_node	*tail; // the end of the list
 }				t_list;
@@ -75,8 +75,8 @@ typedef struct	s_red
 
 typedef struct s_cmd_node
 {
-	int					*prev_pipe;
-	int					*next_pipe;
+	int					prev_pipe[2];
+	int					next_pipe[2];
 	char				**args;
 	t_red				*red;
 	struct s_cmd_node	*prev;
@@ -117,13 +117,17 @@ t_list	*clear_list(t_list *list);
 //syntax fnc
 int		check_syntax(t_list *list);
 //exec fnc
+void	reset_in_out(t_cmd_node *command);
 void	execute(t_cmd *cmds);
 //builtin fnc
-int		echo(char **args);
-int		ft_pwd(void);
-int		cd(char **args);
+int		check_builtins(t_cmd_node *command);
+void	echo(char **args);
+void	ft_pwd(void);
+void	cd(char **args);
 void    exit_shell(t_cmd *cmds, char **args);
-int		print_env(void);
+void	print_env(void);
+void	ft_export(char **args);
+void	unset(char *var);
 //env fnc
 void	set_env_var(char *key, char *value);
 char	*get_env_var(char *var);

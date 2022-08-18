@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:21:15 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/12 15:07:31 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/18 15:06:46 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 int	is_all_wspace(char *line)
 {
-	while (*line && ft_strchr(" \t\n\v\f\r", *line))
-		line++;
-	if (*line == 0)
+	int	i;
+
+	i = 0;
+	while (line[i] && ft_strchr(" \t\n\v\f\r", line[i]))
+		i++;
+	if (line[i] == '\0')
 		return (1);
 	return (0);
 }

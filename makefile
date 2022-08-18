@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
+#    By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/06/26 20:35:25 by mazhari          ###   ########.fr        #
+#    Updated: 2022/08/18 19:29:06 by yel-khad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,9 @@ TOKENIZER= $(addprefix	tokenizer/, tokenizer tokenizer1 list_utils)
 SYNTAX= $(addprefix syntax/, syntax)
 LEXER= $(addprefix lexer/, lexer $(TOKENIZER) $(SYNTAX))
 PARSER= $(addprefix parser/, parser list_red_utils list_cmd_utils $(LEXER))
-BUILTIN= $(addprefix builtin/, builtin cd exit)
+BUILTIN= $(addprefix builtin/, builtin cd exit export)
 ENV= $(addprefix env/, env)
-EXE= $(addprefix exe/, $(BUILTIN) $(ENV) exec)
+EXE= $(addprefix exe/, $(BUILTIN) $(ENV) exec redir)
 
 FILES= $(addprefix src/, main ft_free $(PROMPT) $(PARSER) $(EXE))
 OBJS= $(addprefix $(B_DIR)/, $(FILES:=.o))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:38:53 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/25 19:41:14 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/18 15:02:43 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ t_cmd_node	*new_cmd_node(char **args, t_red *red)
 	new->red = red;
 	new->prev = NULL;
 	new->next = NULL;
-	new->prev_pipe = NULL;
-	new->next_pipe = NULL;
 	return (new);
 }
 

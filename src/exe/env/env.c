@@ -25,11 +25,12 @@ char	**realloc_envv(int new_size)
 	int		i;
 
 	new = (char **)malloc(sizeof(char *) * (new_size + 1));
-	i = -1;
-	while (g_data.env[++i] && i < new_size)
+	i = 0;
+	while (g_data.env[i] && i < new_size)
 	{
 		new[i] = ft_strdup(g_data.env[i]);
 		free(g_data.env[i]);
+		i++;
 	}
 	free(g_data.env);
 	return (new);
@@ -60,24 +61,16 @@ void	set_env_var(char *key, char *value)
 	char	*tmp;
 
 	pos = find_env_var(key);
-	tmp = ft_strjoin("=", value);
-	if (g_data.env[pos])
+	if (g_data.env[pos] && value)
 	{
+		tmp = ft_strjoin("=", value);
 		free(g_data.env[pos]);
 		if (value)
 			g_data.env[pos] = ft_strjoin(key, tmp);
 		else
 			g_data.env[pos] = ft_strjoin(key, "=");
+		free(tmp);
 	}
-	else
-	{
-		g_data.env = realloc_envv(pos + 1);
-		if (value)
-			g_data.env[pos] = ft_strjoin(key, tmp);
-		else
-			g_data.env[pos] = ft_strjoin(key, "=");
-	}
-	free(tmp);
 }
 
 void	init_envv(char **env)
@@ -98,3 +91,8 @@ void	init_envv(char **env)
 			}
 	g_data.env[i] = NULL; 
 }
+ 
+// void	print_env(void)
+// {
+
+// }
