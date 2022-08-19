@@ -96,3 +96,8 @@ void	init_envv(char **env)
 			}
 	g_data.env[i] = NULL; 
 }
+ 
+// void	print_env(void)
+// {
+
+// }

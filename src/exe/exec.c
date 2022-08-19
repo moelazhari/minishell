@@ -112,6 +112,8 @@ void	execute(t_cmd *cmds)
 		 if (exec == -2)
 			break ;
 	}
+	dup2(tmp_in_out[0],STDIN_FILENO);
+	dup2(tmp_in_out[1],STDOUT_FILENO);
     while (cmds->n--)
         wait(&g_data.status);
 	exit_status();

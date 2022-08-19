@@ -6,6 +6,7 @@ void	change_dir(char *path, int print_path)
 	char	buff[4097];
 
 	cwd = getcwd(buff, 4096);
+	// printf("%s", cwd);
 	set_env_var("OLDPWD", cwd);
     if (!chdir(path) && cwd)
 	{
