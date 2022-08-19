@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   list_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:38:53 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/18 15:02:43 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/08/19 23:01:11 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd_node	*new_cmd_node(char **args, t_red *red)
+static t_cmd_node	*new_cmd_node(char **args, t_red *red)
 {
-	t_cmd_node *new;
+	t_cmd_node	*new;
 
 	new = malloc(sizeof(t_cmd_node));
 	new->args = args;
@@ -40,10 +40,10 @@ void	push_back_cmd(t_cmd *cmd, char **args, t_red *red)
 
 t_cmd	*new_cmd(void)
 {
-	t_cmd   *new;
+	t_cmd	*new;
 
 	new = malloc(sizeof(t_cmd));
-    new->n = 0;
+	new->n = 0;
 	new->head = NULL;
 	new->tail = NULL;
 	return (new);

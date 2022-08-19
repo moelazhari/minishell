@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 22:01:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/17 16:22:57 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/19 23:03:49 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_freearr(char **arr)
 	free(arr);
 }
 
-void free_red(t_red *red)
+static void	free_red(t_red *red)
 {
 	t_red_node	*tmp;
 	t_red_node	*forfree;
@@ -33,7 +33,7 @@ void free_red(t_red *red)
 	while (tmp)
 	{
 		forfree = tmp;
-		free(tmp->filename);		
+		free(tmp->filename);
 		tmp = tmp->next;
 		free(forfree);
 	}
@@ -47,7 +47,7 @@ void	free_cmd(t_cmd *cmd)
 
 	tmp = cmd->head;
 	while (tmp)
-	{ 
+	{
 		forfree = tmp;
 		if (tmp->args)
 			ft_freearr(tmp->args);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:21:15 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/18 15:06:46 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/08/19 12:57:24 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char	*prompt(void)
 {
 	char	*line;
 
-	signal(SIGINT,	sig_int_handler);
+	rl_catch_signals = 0;
+	signal(SIGINT, sig_int_handler);
 	signal(SIGQUIT, SIG_IGN);
 	line = readline("Minishell$> ");
 	if (!line)

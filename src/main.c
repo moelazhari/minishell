@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/18 18:27:03 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/08/19 22:28:31 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	exit_status(void)
 		g_data.status = WEXITSTATUS(g_data.status);
 }
 
-int	is_list(t_list *list)
+static int	is_list(t_list *list)
 {
-	t_node *tmp;
+	t_node	*tmp;
 
 	if (!list)
-		return 0;
+		return (0);
 	tmp = list->head;
 	while (tmp)
 	{
@@ -49,16 +49,15 @@ int	is_list(t_list *list)
 
 int	main(int ac, char **av, char **env)
 {
-	(void)ac;
-	(void)av;
 	t_list	*list;
 	t_cmd	*cmd;
 	char	*line;
-	
-	rl_catch_signals = 0;
+
+	(void)ac;
+	(void)av;
 	g_data.status = 0;
 	init_envv(env);
-	while(1)
+	while (1)
 	{
 		line = prompt();
 		if (!line)
@@ -66,10 +65,10 @@ int	main(int ac, char **av, char **env)
 		list = lexer(line);
 		if (is_list(list))
 		{
-				cmd = new_cmd();
-				cmd = paser(list, cmd);
-				execute(cmd);
-				free_cmd(cmd);
+			cmd = paser(list, new_cmd());
+			clear_list(list);
+			execute(cmd);
+			free_cmd(cmd);
 		}
 		free(line);
 	}

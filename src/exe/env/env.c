@@ -81,6 +81,11 @@ void	init_envv(char **env)
 	while (env[i])
 		i++;
 	g_data.env = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!g_data.env)
+	{
+		printf("malloc error\n");
+		exit(0);
+	}
 	i = -1;
 	while (env[++i])
 		if (!(g_data.env[i] = ft_strdup(env[i])))
@@ -91,8 +96,3 @@ void	init_envv(char **env)
 			}
 	g_data.env[i] = NULL; 
 }
- 
-// void	print_env(void)
-// {
-
-// }

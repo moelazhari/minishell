@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/12 14:58:25 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/19 22:55:47 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,65 +20,49 @@ static char	*is_wspace(t_list *list, char *line)
 	return (line);
 }
 
-static char	*is_sing(t_list *list, char *line)
+static char	*is_tilde(t_list *list, char *line)
 {
-	char *str;
+	push_back(list, SIGN, "$");
+	push_back(list, WORD, ft_strdup("HOME"));
 	line++;
-
-	str = NULL;
-	if (*line == '?')
-	{
-		push_back(list, EXIT_STATUS, "$?");
-		line++;
-	}
-	else
-	{	
-		push_back(list, SIGN, "$");
-		if(*line <= '9' && *line >= '0')
-		{
-			str = malloc(sizeof(char) * 2);
-			str[0] = *line;
-			str[1] = '\0';
-			push_back(list, WORD, str);
-			line++;
-		}
-		else
-			line = is_word(list, line, " \t\n!\"%'()*+,-./:;<=>?@[\\]^`|~$");
-	}
 	return (line);
 }
 
 static char	*is_dquote(t_list *list, char *line)
 {
-	line = is_word(list, line, "\"$~");
-	if (*line == '$')
-		line = is_sing(list, line);
-	else if (*line == '~')
+	if (ft_strchr(line, '"'))
 	{
-		is_tilde(list, line);
-		line++;
+		line = is_word(list, line, "\"$~");
+		if (*line == '$')
+			line = is_sing(list, line);
+		else if (*line == '~')
+		{
+			is_tilde(list, line);
+			line++;
+		}
+		if (*line != '"')
+		{
+			*(line - 1) = '"';
+			return (line - 1);
+		}
+		return (line + 1);
 	}
-	if (*line != '"')
+	else
 	{
-		*(line - 1) = '"';
-		return (line - 1);
+		printf("minishell: unclosed double quotes\n");
+		g_data.status = 258;
+		clear_list(list);
+		return (NULL);
 	}
-	return (line + 1);
 }
 
 static char	*is_quote(t_list *list, char *line)
 {
 	if (*line == '"')
 	{
-		if (ft_strchr(line + 1, '"'))
-			line = is_dquote(list, line + 1);
-		else
-		{
-			printf("minishell: unclosed double quotes\n");
-			g_data.status = 258;
-			clear_list(list);
-			return  (NULL);
-		}
+		line = is_dquote(list, line + 1);
+		if (!line)
+			return (NULL);
 	}
 	else
 	{	
@@ -92,7 +76,7 @@ static char	*is_quote(t_list *list, char *line)
 			printf("minishell: unclosed single quotes\n");
 			g_data.status = 258;
 			clear_list(list);
-			return  (NULL);
+			return (NULL);
 		}
 	}
 	return (line);
@@ -103,22 +87,22 @@ t_list	*tokenizer(char *line)
 	t_list	*list;
 
 	list = new_list();
+	if (!list)
+		return (NULL);
 	while (*line)
 	{
 		if (ft_strchr(" \t\n\v\f\r", *line))
 			line = is_wspace(list, line);
 		else if (*line == '\'' || *line == '"')
-		{
-			if (!(line = is_quote(list, line)))
-					return (NULL);
-		}
+			line = is_quote(list, line);
+		if (!line)
+			return (NULL);
 		else if (*line == '$')
-			if (*(line + 1) == '"' || *(line + 1) == '\'')
-				line++;
-			else
-				line = is_sing(list, line);
+			line = is_sing(list, line);
+		if (!line)
+			return (NULL);
 		else if (ft_strchr("|<>", *line))
-		 	line = is_metacharacters(list, line);
+			line = is_metacharacters(list, line);
 		else if (*line == '~')
 			line = is_tilde(list, line);
 		else

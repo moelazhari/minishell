@@ -106,12 +106,12 @@ void	execute(t_cmd *cmds)
 		exec = exec_command(node);
 		if (exec == -1)
 			exit_shell(cmds, node->args);
-		else if (exec == -2)
-			break ;
 		node = node->next;
-	}
 	dup2(tmp_in_out[0],STDIN_FILENO);
 	dup2(tmp_in_out[1],STDOUT_FILENO);
+		 if (exec == -2)
+			break ;
+	}
     while (cmds->n--)
         wait(&g_data.status);
 	exit_status();

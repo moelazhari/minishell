@@ -6,13 +6,13 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:39:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/30 20:36:55 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/19 16:10:40 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int  is_metachar(t_node *tmp)
+static int	check_metachar(t_node *tmp)
 {
 	if (!tmp->next)
 		return (1);
@@ -37,44 +37,43 @@ static int  is_metachar(t_node *tmp)
 	return (1);
 }
 
-int is_all_wspace1(char *line)
+static int	check_word(t_node *tmp)
 {
-	while (*line && ft_strchr(" \t\n\v\f\r", *line))
-		line++;
-	if (*line == 0)
-		return (1);
-	return (0);
+	char	*ptr;
+
+	ptr = ft_strchr(tmp->val, ';');
+	if (*(ptr + 1) == ';')
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `;;'\n", 2);
+		g_data.status = 258;
+		return (0);
+	}
+	return (1);
 }
 
 int	check_syntax(t_list *list)
 {
 	t_node	*tmp;
-	char	*ptr;
 
 	tmp = list->head;
-	if (list->tail->type == REDIN ||list->tail->type == REDOUT || list->tail->type == PIPE\
-		 || list->tail->type == APPEND || list->tail->type == HEREDOC)
+	if (list->tail->type == REDIN || list->tail->type == REDOUT || \
+		list->tail->type == PIPE || list->tail->type == APPEND || \
+		list->tail->type == HEREDOC)
 	{
-			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
-			g_data.status = 258;	
-			return (0);
+		ft_putstr_fd("minishell: syntax error near \
+		unexpected token `newline'", 2);
+		g_data.status = 258;
+		return (0);
 	}
 	while (tmp)
 	{
 		if (tmp->type == WORD && ft_strchr(tmp->val, ';'))
-		{
-			ptr = ft_strchr(tmp->val, ';');
-			if (*(ptr + 1) == ';')
-			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `;;'\n", 2);
-				g_data.status = 258;
+			if (!check_word(tmp))
 				return (0);
-			}
-		}
-		if (tmp->type == REDIN ||tmp->type == REDOUT || tmp->type == PIPE\
-				|| tmp->type == APPEND || tmp->type == HEREDOC)
-				if (!is_metachar(tmp))
-					return (0);
+		if (tmp->type == REDIN || tmp->type == REDOUT || tmp->type == PIPE \
+			|| tmp->type == APPEND || tmp->type == HEREDOC)
+			if (!check_metachar(tmp))
+				return (0);
 		tmp = tmp->next;
 	}
 	return (1);

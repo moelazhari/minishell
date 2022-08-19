@@ -6,15 +6,15 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:51:26 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/17 16:41:55 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/19 23:03:14 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_node	*new_node(int type, char *val)
+static t_node	*new_node(int type, char *val)
 {
-	t_node *new;
+	t_node	*new;
 
 	new = malloc(sizeof(t_node));
 	new->type = type;
@@ -40,9 +40,11 @@ void	push_back(t_list *list, int type, char *val)
 
 t_list	*new_list(void)
 {
-	t_list *list;	
+	t_list	*list;	
 
 	list = malloc(sizeof(t_list));
+	if (!list)
+		return (NULL);
 	list->n = 0;
 	list->head = NULL;
 	list->tail = NULL;
@@ -51,20 +53,20 @@ t_list	*new_list(void)
 
 void	del_node(t_list *list, t_node *node)
 {
-    if (list->n == 0 || !node)
-		return	;
+	if (list->n == 0 || !node)
+		return ;
 	if (!node->prev)
-    {
-        list->head = list->head->next;
-	    if (list->head)
-		    list->head->prev = NULL;
-    }
+	{
+		list->head = list->head->next;
+		if (list->head)
+			list->head->prev = NULL;
+	}
 	else if (!node->next)
-    {
-        list->tail = list->tail->prev;
-	    if (list->tail)
-		    list->tail->next = NULL;
-    }
+	{
+		list->tail = list->tail->prev;
+		if (list->tail)
+			list->tail->next = NULL;
+	}
 	else
 	{
 		node->prev->next = node->next;
@@ -72,7 +74,7 @@ void	del_node(t_list *list, t_node *node)
 	}
 	(list->n)--;
 	if (node->val && node->type == WORD)
-	 	free(node->val);
+		free(node->val);
 	free(node);
 }
 
@@ -80,11 +82,13 @@ t_list	*clear_list(t_list *list)
 {
 	t_node	*node;
 
-	if (!list || !list->n)
+	if (!list)
+		return (NULL);
+	if (list && !list->n)
 	{
 		free(list);
-		return(NULL);
-	}	
+		return (NULL);
+	}
 	node = list->head;
 	while (node)
 	{
