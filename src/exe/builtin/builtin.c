@@ -13,17 +13,17 @@ void	echo(char **args)
 		g_data.status = 0;
 		return ;
 	}
-	while (args[i] && !(ft_strncmp(args[i++] , "-n", 2)))
+	while (args[i] && !(ft_strncmp(args[i++], "-n", 2)))
 		n++;
 	i = n;
 	while (args[i])
 	{
 		ft_putstr_fd(args[i++], 1);
-		if (args[i]) 
+		if (args[i])
 			ft_putstr_fd(" ", 1);
 	}
 	if (!n)
-		ft_putstr_fd("\n", 1);	
+		ft_putstr_fd("\n", 1);
 	g_data.status = 0;
 	return ;
 }
@@ -41,10 +41,10 @@ void	ft_pwd(void)
 
 void	print_env(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(g_data.env[i])
+	while (g_data.env[i])
 	{
 		ft_putendl_fd(g_data.env[i], 1);
 		i++;
@@ -74,18 +74,18 @@ void	unset(char *var)
 				g_data.env[i] = g_data.env[i + 1];
 				i++;
 			}
-			break;
+			break ;
 		}
 		i++;
 	}
 	return ;
 }
 
-int		check_builtins(t_cmd_node *command)
+int	check_builtins(t_cmd_node *command)
 {
 	char	*rayan;
 
-	if (ft_strequ(command->args[0], "exit")) 	
+	if (ft_strequ(command->args[0], "exit"))
 		return (-1);
 	rayan = ft_strlower(command->args[0]);
 	if (ft_strequ(rayan, "echo"))
@@ -95,7 +95,7 @@ int		check_builtins(t_cmd_node *command)
 	else if (ft_strequ(rayan, "pwd"))
 		ft_pwd();
 	else if (ft_strequ(rayan, "export"))
-	 	ft_export(command->args);
+		ft_export(command->args);
 	else if (ft_strequ(rayan, "unset"))
 		unset(command->args[1]);
 	else if (ft_strequ(rayan, "env"))

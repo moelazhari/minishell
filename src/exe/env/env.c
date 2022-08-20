@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int		find_env_var(char *var)
+int	find_env_var(char *var)
 {
 	int		i;
 	char	*tmp;
@@ -88,16 +88,14 @@ void	init_envv(char **env)
 	}
 	i = -1;
 	while (env[++i])
-		if (!(g_data.env[i] = ft_strdup(env[i])))
-			{
-				ft_freearr(g_data.env);
-				ft_putstr_fd("malloc error\n", 2);
-				exit(0);
-			}
-	g_data.env[i] = NULL; 
+	{
+		g_data.env[i] = ft_strdup(env[i]);
+		if (!g_data.env[i])
+		{
+			ft_freearr(g_data.env);
+			ft_putstr_fd("malloc error\n", 2);
+			exit(0);
+		}
+	}
+	g_data.env[i] = NULL;
 }
- 
-// void	print_env(void)
-// {
-
-// }

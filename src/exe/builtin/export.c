@@ -36,7 +36,7 @@ void	sorted_env(void)
 
 	ps = sort_index();
 	i = 0;
-	while(g_data.env[i])
+	while (g_data.env[i])
 	{
 		j = 0;
 		while (ps[j] != i)
@@ -76,7 +76,8 @@ void	ft_export(char **args)
 	i = 0;
 	if (!args[1])
 		sorted_env();
-	else if (args[1][0] < 'A' || args[1][0] > 'z' || (args[1][0] > 'Z' && args[1][0] < 'a'))
+	else if (args[1][0] < 'A' || args[1][0] > 'z' || \
+	(args[1][0] > 'Z' && args[1][0] < 'a'))
 	{
 		ft_putendl_fd("Minishell: export: not a valid identifier", 2);
 		g_data.status = 256;

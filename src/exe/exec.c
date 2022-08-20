@@ -7,7 +7,7 @@ static int	run_cmd(char *bin_path, t_cmd_node *command)
 	pid = fork();
 	if (pid == -1)
 	{
- 		free(bin_path);
+		free(bin_path);
 		ft_putendl_fd("Minishell: fork: Resource temporarily unavailable", 2);
 		return (-2);
 	}
@@ -20,13 +20,13 @@ static int	run_cmd(char *bin_path, t_cmd_node *command)
 		if (command->prev)
 			close(command->prev_pipe[1]);
 		execve(bin_path, command->args, g_data.env);
-        exit(0);
+		exit(0);
 	}
 	free(bin_path);
 	return (pid);
 }
 
-static int		is_executable(char *bin_path, struct stat f, t_cmd_node *command)
+static int	is_executable(char *bin_path, struct stat f, t_cmd_node *command)
 {
 	if (f.st_mode & S_IXUSR)
 		return (run_cmd(bin_path, command));
@@ -41,7 +41,7 @@ static int		is_executable(char *bin_path, struct stat f, t_cmd_node *command)
 	return (1);
 }
 
-static int		check_bins(t_cmd_node *command)
+static int	check_bins(t_cmd_node *command)
 {
 	struct stat		f;
 	char			*bin_path;
@@ -75,7 +75,7 @@ int	exec_command(t_cmd_node *command)
 	int	is_builtin;
 	int	is_bin;
 
-	if(!command->args || command->args[0] == 0)
+	if (!command->args || command->args[0] == 0)
 		return (0);
 	is_builtin = check_builtins(command);
 	if (is_builtin != 0)
@@ -92,29 +92,29 @@ int	exec_command(t_cmd_node *command)
 
 void	execute(t_cmd *cmds)
 {
-    t_cmd_node	*node;
+	t_cmd_node	*node;
 	int			exec;
-	int     	tmp_in_out[2];
+	int			tmp_in_out[2];
 
 	signal(SIGINT, SIG_IGN);
 	tmp_in_out[0] = dup(STDIN_FILENO);
-    tmp_in_out[1] = dup(STDOUT_FILENO);
-    node = cmds->head;
-    while (node)
-    {
+	tmp_in_out[1] = dup(STDOUT_FILENO);
+	node = cmds->head;
+	while (node)
+	{
 		reset_in_out(node);
 		exec = exec_command(node);
 		if (exec == -1)
 			exit_shell(cmds, node->args);
 		node = node->next;
-	dup2(tmp_in_out[0],STDIN_FILENO);
-	dup2(tmp_in_out[1],STDOUT_FILENO);
-		 if (exec == -2)
+		dup2(tmp_in_out[0], STDIN_FILENO);
+		dup2(tmp_in_out[1], STDOUT_FILENO);
+		if (exec == -2)
 			break ;
 	}
-	dup2(tmp_in_out[0],STDIN_FILENO);
-	dup2(tmp_in_out[1],STDOUT_FILENO);
-    while (cmds->n--)
-        wait(&g_data.status);
+	dup2(tmp_in_out[0], STDIN_FILENO);
+	dup2(tmp_in_out[1], STDOUT_FILENO);
+	while (cmds->n--)
+		wait(&g_data.status);
 	exit_status();
 }
