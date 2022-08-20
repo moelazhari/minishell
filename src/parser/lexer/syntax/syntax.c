@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 12:39:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/19 16:10:40 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 20:50:06 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	check_syntax(t_list *list)
 		list->tail->type == PIPE || list->tail->type == APPEND || \
 		list->tail->type == HEREDOC)
 	{
-		ft_putstr_fd("minishell: syntax error near \
-		unexpected token `newline'", 2);
+		ft_putendl_fd("minishell: syntax error near \
+unexpected token `newline'", 2);
 		g_data.status = 258;
 		return (0);
 	}

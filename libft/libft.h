@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 13:23:41 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/18 19:29:52 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/08/20 20:54:39 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-int     ft_startcmp(char *s1, char *s2);
+int		ft_startcmp(char *s1, char *s2);
 int		ft_strequ(char const *s1, char const *s2);
-int	    ft_strcmp(char *s1,char *s2);
+int		ft_strcmp(char *s1, char *s2);
 int		ft_asciicmp(char *s1, char *s2);
 char	*ft_strlower(char *str);
 void	exit_status(void);

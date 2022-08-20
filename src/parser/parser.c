@@ -6,13 +6,13 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/20 18:40:40 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 20:48:51 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_args(t_list *list, char **args)
+static char	**malooc_args(t_list *list, char **args)
 {
 	t_node	*tmp;
 	int		i;
@@ -24,15 +24,33 @@ char	**get_args(t_list *list, char **args)
 		i++;
 		tmp = tmp->next;
 	}
-	if (tmp && tmp->type == PIPE)
-		tmp = tmp->prev;
-	else
+	if (tmp == list->tail)
 		i++;
 	args = malloc(sizeof(char *) * (i + 1));
-	if(!args)
+	if (!args)
 		malloc_error();
 	args[i] = NULL;
-	while (--i >= 0)
+	return (args);
+}
+
+char	**get_args(t_list *list, char **args)
+{
+	t_node	*tmp;
+	int		i;
+
+	i = 0;
+	args = malooc_args(list, args);
+	tmp = list->head;
+	while (tmp != list->tail && tmp->type != PIPE)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	if (tmp->type == PIPE)
+		tmp = tmp->prev;
+	if (tmp == list->tail)
+		i++;
+	while (--(i) >= 0)
 	{
 		args[i] = ft_strdup(tmp->val);
 		tmp = tmp->prev;

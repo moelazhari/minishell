@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 12:54:01 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/20 18:28:15 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 20:56:42 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ char	*ft_strdup(char *s)
 {
 	char	*dest;
 	int		i;
-	
+
 	if (!s)
-		return (NULL);	
+		return (NULL);
 	dest = malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!dest)
 	{

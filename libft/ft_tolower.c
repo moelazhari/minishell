@@ -19,14 +19,13 @@ int	ft_tolower(int c)
 	return (c);
 }
 
-char *ft_strlower(char *str)
+char	*ft_strlower(char *str)
 {
 	char	*ret;
 	int		i;
 
 	i = 0;
 	ret = malloc(sizeof(char) * ft_strlen(str));
-
 	while (str[i])
 	{
 		ret[i] = (char)ft_tolower(str[i]);

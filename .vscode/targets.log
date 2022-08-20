@@ -8,11 +8,10 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Sat Aug 20 18:44:07 2022
+# Make data base, printed on Sat Aug 20 20:22:49 2022
 
 # Variables
 
- 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -48,13 +47,13 @@ VSCODE_VERBOSE_LOGGING = true
 # makefile (from `makefile', line 35)
 OBJS = $(addprefix $(B_DIR)/, $(FILES:=.o))
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cf7w0033jz/T/vscode-ipc-0d9a336a-3be9-40c3-9864-13e99ef4ac73.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cf7w0033jz/T/vscode-ipc-c92e70fe-50f0-445e-af6c-ed452d9e75fa.sock
 # makefile (from `makefile', line 27)
 SYNTAX = $(addprefix syntax/, syntax)
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.56K8KeIicN/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.jotCTORisg/Render
 # environment
 PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Frameworks/Mono.framework/Versions/Current/Commands
 # makefile (from `makefile', line 28)
@@ -70,7 +69,7 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `makefile', line 21)
 LIBFT_DIR = libft
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.JRxeDdoUgE/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.awKSEeHelu/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -142,7 +141,7 @@ MFLAGS = -Rrqp
 # environment
 NVM_DIR = /Users/mazhari/.nvm
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000002.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000003.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -178,7 +177,7 @@ ENV = $(addprefix env/, env)
 # environment
 LANG = C
 # environment
-VSCODE_PID = 6818
+VSCODE_PID = 1261
 # makefile (from `makefile', line 22)
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 # makefile (from `makefile', line 29)
@@ -240,7 +239,7 @@ all: minishell
 build/src/parser/parser.o: src/parser/parser.c libft/libft.a includes/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `parser/parser'
-#  Last modified 2022-08-20 18:40:28
+#  Last modified 2022-08-20 18:53:19
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
@@ -302,9 +301,9 @@ build/src/exe/redir.o:
 #  File has not been updated.
 
 # Not a target:
+ 
 build/src/parser/list_cmd_utils.o:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -346,7 +345,7 @@ build/src/exe/builtin/builtin.o:
 
 minishell: build/src/main.o build/src/ft_free.o build/src/prompt/prompt.o build/src/parser/parser.o build/src/parser/list_red_utils.o build/src/parser/list_cmd_utils.o build/src/parser/lexer/lexer.o build/src/parser/lexer/tokenizer/tokenizer.o build/src/parser/lexer/tokenizer/tokenizer1.o build/src/parser/lexer/tokenizer/list_utils.o build/src/parser/lexer/syntax/syntax.o build/src/exe/builtin/builtin.o build/src/exe/builtin/cd.o build/src/exe/builtin/exit.o build/src/exe/builtin/export.o build/src/exe/env/env.o build/src/exe/exec.o build/src/exe/redir.o includes/minishell.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-08-20 18:40:28
+#  Last modified 2022-08-20 18:53:19
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
@@ -357,7 +356,7 @@ minishell: build/src/main.o build/src/ft_free.o build/src/prompt/prompt.o build/
 
 libft/libft.a:
 #  Implicit rule search has not been done.
-#  Last modified 2022-08-20 18:32:28
+#  Last modified 2022-08-20 18:49:52
 #  File has been updated.
 #  Successfully updated.
 #  commands to execute (from `makefile', line 47):
@@ -406,7 +405,7 @@ src/main.c:
 build/src/ft_free.o: src/ft_free.c libft/libft.a includes/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `ft_free'
-#  Last modified 2022-08-20 18:32:28
+#  Last modified 2022-08-20 18:49:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -436,7 +435,7 @@ clean:
 build/src/prompt/prompt.o: src/prompt/prompt.c libft/libft.a includes/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `prompt/prompt'
-#  Last modified 2022-08-20 18:36:15
+#  Last modified 2022-08-20 18:49:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -449,7 +448,7 @@ build/src/prompt/prompt.o: src/prompt/prompt.c libft/libft.a includes/minishell.
 build/src/main.o: src/main.c libft/libft.a includes/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `main'
-#  Last modified 2022-08-20 18:32:28
+#  Last modified 2022-08-20 18:49:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -468,7 +467,7 @@ build/src/exe/exec.o:
 # Not a target:
 src/parser/parser.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-20 18:40:40
+#  Last modified 2022-08-20 19:36:04
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -514,6 +513,6 @@ build/src/parser/lexer/tokenizer/tokenizer.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Aug 20 18:44:07 2022
+# Finished Make data base on Sat Aug 20 20:22:49 2022
 
  
