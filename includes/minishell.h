@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/19 23:16:34 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 18:09:23 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,5 @@ int			find_env_var(char *var);
 void		init_envv(char **env);
 void		ft_freearr(char **arr);
 void		free_cmd(t_cmd *cmd);
+void		malloc_error();
 #endif		

@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 23:07:43 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/12 22:32:10 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 18:31:36 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	j = 0;
 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (str == NULL)
-		return (NULL);
+	if (!str)
+	{
+		ft_putendl_fd("malloc error", 2);
+		exit(0);
+	}
 	while (s1[i] != '\0')
 	{
 		str[i] = s1[i];

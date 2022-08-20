@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mazhari <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/13 15:15:37 by mazhari           #+#    #+#              #
-#    Updated: 2021/11/14 15:41:34 by mazhari          ###   ########.fr        #
+#    Updated: 2022/08/20 18:41:45 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ $(NAME): $(OBJS)
 bouns : all
 	$(CC) $(FLAGS) $(BOUNS)
 	$(LIB) $(NAME) $(OBJS_BOUNS)
+
 clean:
 	rm -f $(OBJS)
 	rm -f $(OBJS_BOUNS)

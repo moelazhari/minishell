@@ -26,6 +26,7 @@ char *ft_strlower(char *str)
 
 	i = 0;
 	ret = malloc(sizeof(char) * ft_strlen(str));
+
 	while (str[i])
 	{
 		ret[i] = (char)ft_tolower(str[i]);

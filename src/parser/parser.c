@@ -6,20 +6,11 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/19 23:14:08 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 18:40:40 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**one_arg(t_list *list, char **args)
-{
-	args = malloc(sizeof(char *) * 2);
-	args[1] = NULL;
-	args[0] = ft_strdup(list->head->val);
-	del_node(list, list->head);
-	return (args);
-}
 
 char	**get_args(t_list *list, char **args)
 {
@@ -38,6 +29,8 @@ char	**get_args(t_list *list, char **args)
 	else
 		i++;
 	args = malloc(sizeof(char *) * (i + 1));
+	if(!args)
+		malloc_error();
 	args[i] = NULL;
 	while (--i >= 0)
 	{
@@ -105,8 +98,6 @@ t_cmd	*paser(t_list *list, t_cmd *cmd)
 	red = get_red(list);
 	if (!list || !list->n)
 		args = NULL;
-	else if (list->n == 1)
-		args = one_arg(list, args);
 	else
 		args = get_args(list, args);
 	push_back_cmd(cmd, args, red);

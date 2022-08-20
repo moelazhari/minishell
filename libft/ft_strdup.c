@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 12:54:01 by mazhari           #+#    #+#             */
-/*   Updated: 2022/06/14 16:00:48 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 18:28:15 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ char	*ft_strdup(char *s)
 		return (NULL);	
 	dest = malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!dest)
-		return (NULL);
+	{
+		ft_putendl_fd("malloc error", 2);
+		exit(1);
+	}
 	i = 0;
 	while (s[i])
 	{
@@ -32,4 +35,3 @@ char	*ft_strdup(char *s)
 	dest[i] = '\0';
 	return (dest);
 }
-

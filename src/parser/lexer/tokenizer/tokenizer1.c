@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/19 23:17:30 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 17:57:45 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*is_sing1(t_list *list, char *line)
 	{
 		str = malloc(sizeof(char) * 2);
 		if (!str)
-			return (NULL);
+			malloc_error();
 		str[0] = *line;
 		str[1] = '\0';
 		push_back(list, WORD, str);
@@ -62,6 +62,8 @@ char	*is_word(t_list *list, char *line, char *stop)
 	while (!(ft_strchr(stop, line[i])))
 		i++;
 	val = malloc(sizeof(char) * (i));
+	if (!val)
+		malloc_error();
 	i = 0;
 	while (!(ft_strchr(stop, *line)))
 	{

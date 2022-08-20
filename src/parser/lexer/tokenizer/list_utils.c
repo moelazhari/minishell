@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:51:26 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/19 23:03:14 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 18:05:47 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static t_node	*new_node(int type, char *val)
 	t_node	*new;
 
 	new = malloc(sizeof(t_node));
+	if (!new)
+		malloc_error();
 	new->type = type;
 	new->val = val;
 	new->prev = NULL;
@@ -44,7 +46,7 @@ t_list	*new_list(void)
 
 	list = malloc(sizeof(t_list));
 	if (!list)
-		return (NULL);
+		malloc_error();
 	list->n = 0;
 	list->head = NULL;
 	list->tail = NULL;
@@ -96,6 +98,5 @@ t_list	*clear_list(t_list *list)
 		node = node->next;
 	}
 	free(list);
-	list = NULL;
-	return (list);
+	return (NULL);
 }

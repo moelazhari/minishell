@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 22:01:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/19 23:03:49 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 17:52:54 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,10 @@ void	free_cmd(t_cmd *cmd)
 		free(forfree);
 	}
 	free(cmd);
+}
+
+void	malloc_error()
+{
+	ft_putendl_fd("malloc error", 2);
+	exit(1);
 }

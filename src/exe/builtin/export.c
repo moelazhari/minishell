@@ -11,6 +11,8 @@ static int	*sort_index(void)
 	while (g_data.env[i])
 		i++;
 	ptr = malloc(i * sizeof(int));
+	if (!ptr)
+		malloc_error();
 	i = 0;
 	while (g_data.env[i])
 	{

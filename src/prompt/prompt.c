@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:21:15 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/19 23:16:58 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 18:34:41 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ char	*prompt(void)
 	if (!line)
 	{
 		ft_putstr_fd("exit\n", 1);
+		clear_history();
 		exit(0);
 	}
-	else if (line[0] == 0 || is_all_wspace(line))
+	else if (is_all_wspace(line))
 	{
 		free(line);
 		line = NULL;

@@ -1,0 +1,8 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory `/Users/mazhari/Desktop/minishell'
+mkdir -p build/src/parser
+gcc -I./includes -Wall -Werror -Wextra -g -I /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/include -c src/parser/parser.c -o build/src/parser/parser.o
+ 
+gcc -Wall -Werror -Wextra -g libft/libft.a -L /Users/mazhari/goinfre/.brew/Cellar/readline/8.1.2/lib -lreadline build/src/main.o build/src/ft_free.o build/src/prompt/prompt.o build/src/parser/parser.o build/src/parser/list_red_utils.o build/src/parser/list_cmd_utils.o build/src/parser/lexer/lexer.o build/src/parser/lexer/tokenizer/tokenizer.o build/src/parser/lexer/tokenizer/tokenizer1.o build/src/parser/lexer/tokenizer/list_utils.o build/src/parser/lexer/syntax/syntax.o build/src/exe/builtin/builtin.o build/src/exe/builtin/cd.o build/src/exe/builtin/exit.o build/src/exe/builtin/export.o build/src/exe/env/env.o build/src/exe/exec.o build/src/exe/redir.o -o minishell
+make: Leaving directory `/Users/mazhari/Desktop/minishell'
+ 

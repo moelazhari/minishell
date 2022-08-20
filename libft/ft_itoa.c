@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 00:08:54 by mazhari           #+#    #+#             */
-/*   Updated: 2022/01/02 20:17:27 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/20 18:27:50 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ char	*ft_itoa(int c)
 	len_str += len_c(n) + 1;
 	str = (char *)malloc(len_str * sizeof(char));
 	if (!str)
-		return (NULL);
+	{
+		ft_putendl_fd("malloc error", 2);
+		exit(1);
+	}
 	str = fill_str(str, len_str, n, sing);
 	return (str);
 }
