@@ -1,10 +1,10 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/mazhari/Desktop/minishell'
-/Applications/Xcode.app/Contents/Developer/usr/bin/make -C libft
+ 
+/Library/Developer/CommandLineTools/usr/bin/make -C libft
  
 make[1]: Entering directory `/Users/mazhari/Desktop/minishell/libft'
 gcc -Wall -Wextra -Werror  -c ft_atoi.c -o ft_atoi.o
- 
 gcc -Wall -Wextra -Werror  -c ft_bzero.c -o ft_bzero.o
 gcc -Wall -Wextra -Werror  -c ft_isalnum.c -o ft_isalnum.o
 gcc -Wall -Wextra -Werror  -c ft_isalpha.c -o ft_isalpha.o
@@ -18,7 +18,6 @@ gcc -Wall -Wextra -Werror  -c ft_memchr.c -o ft_memchr.o
 gcc -Wall -Wextra -Werror  -c ft_memset.c -o ft_memset.o
 gcc -Wall -Wextra -Werror  -c ft_strchr.c -o ft_strchr.o
 gcc -Wall -Wextra -Werror  -c ft_strlcat.c -o ft_strlcat.o
- 
 gcc -Wall -Wextra -Werror  -c ft_strlcpy.c -o ft_strlcpy.o
 gcc -Wall -Wextra -Werror  -c ft_strlen.c -o ft_strlen.o
 gcc -Wall -Wextra -Werror  -c ft_strncmp.c -o ft_strncmp.o

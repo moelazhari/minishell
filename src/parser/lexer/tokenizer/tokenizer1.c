@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/20 17:57:45 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/22 15:43:38 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,16 @@ char	*is_herdoc(t_list *list, char *line)
 	{
 		line++;
 		push_back(list, HEREDOC, "<<");
-		if (*(line + 1) != '<' && *(line + 1) != '>' && *(line + 1) != '|')
+		if (*(line + 1) && (*(line + 1) != '<' && *(line + 1) != '>' \
+			&& *(line + 1) != '|'))
 		{
-			while (ft_strchr(" \t\n\v\f\r", *(line + 1)))
+			line++;
+			while (ft_strchr(" \t\n\v\f\r", *line))
 					line++;
-			line = is_word(list, line + 1, " ");
+			if (*line == '\'' || *line == '\"')
+				line = is_quote(list, line);
+			else
+				line = is_word(list, line, " ");
 		}
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/20 17:56:49 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/22 15:03:36 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*is_dquote(t_list *list, char *line)
 	}
 }
 
-static char	*is_quote(t_list *list, char *line)
+char	*is_quote(t_list *list, char *line)
 {
 	if (*line == '"')
 	{

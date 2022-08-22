@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/20 18:09:23 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/22 15:46:07 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_list		*tokenizer(char *line);
 char		*is_word(t_list *list, char *line, char *stop);
 char		*is_sing(t_list *list, char *line);
 char		*is_metacharacters(t_list *list, char *line);
+char		*is_quote(t_list *list, char *line);
 void		push_back(t_list *list, int type, char *val);
 t_list		*new_list(void);
 void		del_node(t_list *list, t_node *node);
@@ -125,5 +126,5 @@ int			find_env_var(char *var);
 void		init_envv(char **env);
 void		ft_freearr(char **arr);
 void		free_cmd(t_cmd *cmd);
-void		malloc_error();
+void		malloc_error(void);
 #endif		
