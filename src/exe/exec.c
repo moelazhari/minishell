@@ -22,7 +22,8 @@ static int	run_cmd(char *bin_path, t_cmd_node *command)
 		execve(bin_path, command->args, g_data.env);
 		exit(0);
 	}
-	free(bin_path);
+	if (!ft_strcmp(bin_path, command->args[0]))
+		free(bin_path);
 	return (pid);
 }
 
@@ -102,6 +103,8 @@ void	execute(t_cmd *cmds)
 	node = cmds->head;
 	while (node)
 	{
+		if (heredoc(node) == -1)
+			break;
 		reset_in_out(node);
 		exec = exec_command(node);
 		if (exec == -1)
@@ -112,8 +115,6 @@ void	execute(t_cmd *cmds)
 		if (exec == -2)
 			break ;
 	}
-	dup2(tmp_in_out[0], STDIN_FILENO);
-	dup2(tmp_in_out[1], STDOUT_FILENO);
 	while (cmds->n--)
 		wait(&g_data.status);
 	exit_status();

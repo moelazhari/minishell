@@ -53,8 +53,7 @@ int	redir_out(t_cmd_node *noeud)
 	}
 	return (fd_out);
 }
-
-int	rl_write_fd(char *filename)
+void	rl_write_fd(char *filename)
 {
 	char		*line;
 	char		*rline;
@@ -63,20 +62,20 @@ int	rl_write_fd(char *filename)
 	p = open("/tmp/.heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	line = filename;
 	rline = readline("> ");
-	while (!ft_strcmp(line, rline))
+	while (rline && !ft_strcmp(line, rline))
 	{
 		ft_putendl_fd(rline, p);
 		rline = readline("> ");
 	}
 	close(p);
-	return (p);
 }
 
-void	heredoc(t_cmd_node *command)
+int	heredoc(t_cmd_node *command)
 {
 	t_red_node	*node;
 	int			pid;
 	int			p;
+	int			status;
 
 	node = command->red->head;
 	while (node && node->type != HEREDOC)
@@ -88,22 +87,24 @@ void	heredoc(t_cmd_node *command)
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
-			p = rl_write_fd(node->filename);
+			rl_write_fd(node->filename);
 			exit(0);
 		}
-		wait(&pid);
+		waitpid(pid, &status, 0);
 		p = open("/tmp/.heredoc", O_RDONLY, 0777);
 		unlink("/tmp/.heredoc");
+		if (WIFSIGNALED(status))
+			return (-1);
 		dup2(p, STDIN_FILENO);
 		close(p);
 	}
+	return (0);
 }
 
 void	reset_in_out(t_cmd_node *command)
 {
 	int	fd_redir[2];
 
-	heredoc(command);
 	fd_redir[0] = redir_in(command);
 	fd_redir[1] = redir_out(command);
 	if (fd_redir[1] != -1 && fd_redir[0] != -1)

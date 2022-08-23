@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 22:01:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/20 17:52:54 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/23 17:10:13 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,13 @@ void	ft_freearr(char **arr)
 	if (!arr)
 		return ;
 	while (arr[i])
-		free(arr[i++]);
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
 	free(arr);
+	arr = NULL;
 }
 
 static void	free_red(t_red *red)

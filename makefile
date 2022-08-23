@@ -3,16 +3,15 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+         #
+#    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/08/18 19:29:06 by yel-khad         ###   ########.fr        #
+#    Updated: 2022/08/23 18:17:45 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC= gcc
-CFLAGS = -Wall -Werror -Wextra -g
-
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 NAME= minishell
 
 INCLUDES= ./includes

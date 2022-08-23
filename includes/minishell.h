@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/22 15:46:07 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/23 18:14:27 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void		del_node(t_list *list, t_node *node);
 t_list		*clear_list(t_list *list);
 int			check_syntax(t_list *list);
 void		reset_in_out(t_cmd_node *command);
+int			heredoc(t_cmd_node *command);
 void		execute(t_cmd *cmds);
 int			check_builtins(t_cmd_node *command);
 void		echo(char **args);

@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/22 15:43:38 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/23 16:29:42 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*is_word(t_list *list, char *line, char *stop)
 	i = 0;
 	while (!(ft_strchr(stop, line[i])))
 		i++;
-	val = malloc(sizeof(char) * (i));
+	val = malloc(sizeof(char) * (i+1) );
 	if (!val)
 		malloc_error();
 	i = 0;
@@ -90,7 +90,7 @@ char	*is_herdoc(t_list *list, char *line)
 			if (*line == '\'' || *line == '\"')
 				line = is_quote(list, line);
 			else
-				line = is_word(list, line, " ");
+				line = is_word(list, line, " \t\n\v\f\r\"'|<>");
 		}
 	}
 	else
@@ -111,7 +111,7 @@ char	*is_metacharacters(t_list *list, char *line)
 			push_back(list, REDOUT, ">");
 	}
 	else if (*line == '<')
-		line = is_herdoc(list, line);
+		return (is_herdoc(list, line));
 	else if (*line == '|')
 	{
 		if (*(line + 1) == '|')
