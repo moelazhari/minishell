@@ -8,14 +8,16 @@ void	free_exit(t_cmd *cmds, int status)
 	exit(status);
 }
 
-int	check_arg(char *arg)
+int	check_arg(char *args)
 {
 	int	i;
 
 	i = 0;
-	while (arg[i] >= '0' && arg[i] <= '9')
+	if (args[i] == '-' || args[i] == '+')
 		i++;
-	if (arg[i] == '\0')
+	while (args[i] >= '0' && args[i] <= '9')
+		i++;
+	if (args[i] == '\0')
 		return (1);
 	return (0);
 }

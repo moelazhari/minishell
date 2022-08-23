@@ -6,12 +6,12 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/08/23 18:17:45 by mazhari          ###   ########.fr        #
+#    Updated: 2022/08/23 22:36:24 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC= gcc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 NAME= minishell
 
 INCLUDES= ./includes
@@ -48,11 +48,11 @@ $(LIBFT_LIB):
 clean:
 	rm -f $(OBJS)
 	rm -rf $(B_DIR)
-	$(MAKE) fclean -C $(LIBFT_DIR)
+	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) clean -C $(LIBFT_DIR)
+	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
 

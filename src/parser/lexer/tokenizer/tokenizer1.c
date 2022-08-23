@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/23 16:29:42 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/23 19:14:08 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ char	*is_herdoc(t_list *list, char *line)
 			line++;
 			while (ft_strchr(" \t\n\v\f\r", *line))
 					line++;
-			if (*line == '\'' || *line == '\"')
-				line = is_quote(list, line);
-			else
-				line = is_word(list, line, " \t\n\v\f\r\"'|<>");
+			line = is_word(list, line, " \t\n\v\f\r\"'|<>");
 		}
 	}
 	else
+	{
 		push_back(list, REDIN, "<");
+		line++;
+	}
 	return (line);
 }
 

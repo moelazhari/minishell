@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/23 18:14:27 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/23 22:00:14 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 # include <sys/stat.h>
 # include <unistd.h>
 
-# define WSPACE -1
+# define WSPACE -1 
 # define PIPE -2
-# define REDIN -3
-# define REDOUT -4
-# define APPEND -5
-# define HEREDOC -6
+# define REDIN -3 // <
+# define REDOUT -4 // >
+# define APPEND -5 // >>
+# define HEREDOC -6 // <<
 # define SIGN -9
-# define EXIT_STATUS -10
+# define EXIT_STATUS -10 // $?
 # define WORD -11
 
 typedef struct s_data
