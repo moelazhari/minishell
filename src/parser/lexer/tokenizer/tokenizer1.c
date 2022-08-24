@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/23 19:14:08 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/24 12:27:53 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ char	*is_sing(t_list *list, char *line)
 	else if (ft_strchr(" \t\n!\"%'()*+,-./:;<=>?@[\\]^`|~$", *line))
 	{
 		if (*line == '"' || *line == '\'')
+		{	
+			push_back(list, WORD, ft_strdup("$"));
 			return (line);
+		}
 		line++;
 	}
 	else

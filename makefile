@@ -6,12 +6,12 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/08/23 22:36:24 by mazhari          ###   ########.fr        #
+#    Updated: 2022/08/23 22:44:04 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC= gcc
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g
 NAME= minishell
 
 INCLUDES= ./includes
@@ -19,7 +19,7 @@ HEDEAR= $(INCLUDES)/minishell.h
 
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
-B_DIR= build
+B_DIR = build
 
 PROMPT= $(addprefix prompt/, prompt)
 TOKENIZER= $(addprefix	tokenizer/, tokenizer tokenizer1 list_utils)

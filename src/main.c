@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/23 19:14:22 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/24 12:53:38 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,22 @@ void	exit_status(void)
 		g_data.status = WEXITSTATUS(g_data.status);
 }
 
-static int	is_list(t_list *list)
-{
-	t_node	*tmp;
+// static int	is_list(t_list *list)
+// {
+// 	t_node	*tmp;
 
-	if (!list)
-		return (0);
-	tmp = list->head;
-	while (tmp)
-	{
-		if (tmp->val[0] == 0)
-			tmp = tmp->next;
-		else
-			return (1);
-	}
-	return (0);
-}
+// 	if (!list)
+// 		return (0);
+// 	tmp = list->head;
+// 	while (tmp)
+// 	{
+// 		if (tmp->val[0] == 0)
+// 			tmp = tmp->next;
+// 		else
+// 			return (1);
+// 	}
+// 	return (0);
+// }
 
 int	main(int ac, char **av, char **env)
 {
@@ -63,7 +63,7 @@ int	main(int ac, char **av, char **env)
 		if (!line)
 			continue ;
 		list = lexer(line);
-		if (is_list(list))
+		if (list)
 		{
 			cmd = paser(list, new_cmd());
 			clear_list(list);

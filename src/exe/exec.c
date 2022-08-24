@@ -49,6 +49,8 @@ static int	check_bins(t_cmd_node *command)
 	char			**path;
 	int				i;
 
+	if (command->args[0][0] == '\0')
+		return (0);
 	if (ft_strchr(command->args[0], '/'))
 		if (lstat(command->args[0], &f) != -1)
 			return (is_executable(command->args[0], f, command));
@@ -76,7 +78,7 @@ int	exec_command(t_cmd_node *command)
 	int	is_builtin;
 	int	is_bin;
 
-	if (!command->args || command->args[0] == 0)
+	if (!command->args)
 		return (0);
 	is_builtin = check_builtins(command);
 	if (is_builtin != 0)
