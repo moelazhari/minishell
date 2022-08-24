@@ -3,29 +3,32 @@
 void	echo(char **args)
 {
 	int	i;
+	int	j;
 	int	n;
 
 	i = 0;
 	n = 0;
-	if (!args[0])
-	{
-		ft_putstr_fd("\n", 1);
-		g_data.status = 0;
-		return ;
-	}
-	while (args[i] && !(ft_strncmp(args[i++], "-n", 2)))
-		n++;
-	i = n;
 	while (args[i])
 	{
+		j = 1;
+		if (!ft_strncmp(args[i], "-n", 2))
+		{
+			while (args[i][j] == 'n')
+				j++;
+			if (!args[i][j])
+			{
+				n = 1;
+				i++;
+				continue ;
+			}
+		}
 		ft_putstr_fd(args[i++], 1);
 		if (args[i])
-			ft_putstr_fd(" ", 1);
+				ft_putstr_fd(" ", 1);
 	}
 	if (!n)
 		ft_putstr_fd("\n", 1);
 	g_data.status = 0;
-	return ;
 }
 
 void	ft_pwd(void)
