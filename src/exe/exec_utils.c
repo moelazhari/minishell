@@ -100,7 +100,7 @@ int	check_builtin(t_cmd_node *command, int n)
 
 	x = 0;
 	tmp = ft_strlower(command->args[0]);
-	if (ft_strequ(command->args[0], "exit"))//x
+	if (ft_strequ(command->args[0], "exit"))
 		x = 1;
 	if (ft_strequ(tmp, "echo"))
 		x = 1;
@@ -112,7 +112,7 @@ int	check_builtin(t_cmd_node *command, int n)
 		x = 1;
 	else if (ft_strequ(command->args[0], "unset"))
 		x = 1;
-	else if (ft_strequ(tmp, "env"))// x
+	else if (ft_strequ(tmp, "env"))
 		x = 1;
 	free(tmp);
 	if (x && n > 1)

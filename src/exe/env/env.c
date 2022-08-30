@@ -102,7 +102,7 @@ void	init_envv(char **env, int ac, char **av)
 	while (env[i])
 		i++;
 	g_data.env = malloc(sizeof(char *) * (i + 1 + 3 * (i == 0)));
-	if(!g_data.env)
+	if (!g_data.env)
 		malloc_error();
 	if (i == 0)
 	{

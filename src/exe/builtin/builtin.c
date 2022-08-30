@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 int	no_newline(char **args)
 {
 	int	i;
@@ -23,13 +24,14 @@ int	no_newline(char **args)
 		if (ft_strncmp(args[i], "-n", 2))
 			return (i);
 		while (args[i][j] == 'n')
-			j++;	
+			j++;
 		if (args[i][j])
 			return (i);
 		i++;
 	}
 	return (i);
 }
+
 void	echo(char **args)
 {
 	int	i;
@@ -41,7 +43,7 @@ void	echo(char **args)
 	{
 		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
-				ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (n == 0)
@@ -53,7 +55,7 @@ void	print_env(int n)
 {
 	char	*pwd;
 	char	buff[4096];
-	int	i;
+	int		i;
 
 	i = 0;
 	if (n == 1)
@@ -73,9 +75,9 @@ void	print_env(int n)
 
 void	unset(char **args)
 {
-	int	i;
-	int	j;
-	char *var;
+	int		i;
+	int		j;
+	char	*var;
 
 	i = -1;
 	var = args[0];
@@ -99,7 +101,6 @@ void	unset(char **args)
 	}
 	unset(args + 1);
 }
-
 
 int	builtins(t_cmd_node *command)
 {

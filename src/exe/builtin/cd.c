@@ -14,15 +14,15 @@
 
 void	cd_error(char *path)
 {
-		ft_putstr_fd("Minishell: cd: ", 2);
-		ft_putstr_fd(path, 2);
-		if (access(path, F_OK) == -1)
-			ft_putendl_fd(": no such file or directory", 2);
-		else if (access(path, R_OK) == -1)
-			ft_putendl_fd(": permission denied", 2);
-		else
-			ft_putendl_fd(": not a directory", 2);
-		g_data.status = 256;
+	ft_putstr_fd("Minishell: cd: ", 2);
+	ft_putstr_fd(path, 2);
+	if (access(path, F_OK) == -1)
+		ft_putendl_fd(": no such file or directory", 2);
+	else if (access(path, R_OK) == -1)
+		ft_putendl_fd(": permission denied", 2);
+	else
+		ft_putendl_fd(": not a directory", 2);
+	g_data.status = 256;
 }
 
 void	change_dir(char *path, int print_path)

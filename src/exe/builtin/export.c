@@ -109,11 +109,11 @@ void	ft_export(char **args)
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	j = 1;
 	if (!args[1])
-		return(sorted_env());
+		return (sorted_env());
 	while (args[j])
 	{
 		if (!check_args(args[j]))
