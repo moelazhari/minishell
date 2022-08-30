@@ -43,8 +43,8 @@ static int	run_cmd(char *bin_path, t_cmd_node *command, int is_builtin)
 	}
 	else if (pid == 0)
 		run_child(bin_path, command, is_builtin);
-	if (!ft_strcmp(bin_path, command->args[0]))
-		free(bin_path);
+	// if (!ft_strcmp(bin_path, command->args[0]))
+	free(bin_path);
 	return (pid);
 }
 
@@ -65,6 +65,7 @@ t_cmd_node *command, char **path)
 		else
 			ft_putendl_fd(": Permission denied", 2);
 	}
+	free(bin_path);
 	return (1);
 }
 
@@ -77,7 +78,7 @@ int	check_bins(t_cmd_node *command)
 
 	path = ft_split(get_env_var("PATH"), ':');
 	if (ft_strchr(command->args[0], '/') && lstat(command->args[0], &f) != -1)
-		return (is_executable(command->args[0], f, command, path));
+		return (is_executable(ft_strdup(command->args[0]), f, command, path));
 	i = -1;
 	while (path && path[++i])
 	{
@@ -94,23 +95,26 @@ int	check_bins(t_cmd_node *command)
 
 int	check_builtin(t_cmd_node *command, int n)
 {
-	int	x;
+	int		x;
+	char	*tmp;
 
 	x = 0;
+	tmp = ft_strlower(command->args[0]);
 	if (ft_strequ(command->args[0], "exit"))//x
 		x = 1;
-	if (ft_strequ(command->args[0], "echo"))
+	if (ft_strequ(tmp, "echo"))
 		x = 1;
 	else if (ft_strequ(command->args[0], "cd"))
 		x = 1;
-	else if (ft_strequ(command->args[0], "pwd"))
+	else if (ft_strequ(tmp, "pwd"))
 		x = 1;
 	else if (ft_strequ(command->args[0], "export"))
 		x = 1;
 	else if (ft_strequ(command->args[0], "unset"))
 		x = 1;
-	else if (ft_strequ(command->args[0], "env"))// x
+	else if (ft_strequ(tmp, "env"))// x
 		x = 1;
+	free(tmp);
 	if (x && n > 1)
 		return (run_cmd(command->args[0], command, 1));
 	return (builtins(command));

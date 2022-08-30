@@ -103,21 +103,27 @@ void	unset(char **args)
 
 int	builtins(t_cmd_node *command)
 {
+	int		i;
+	char	*tmp;
+
+	i = -11;
+	tmp = ft_strlower(command->args[0]);
 	if (ft_strequ(command->args[0], "exit"))
-		return (-1);
-	if (ft_strequ(command->args[0], "echo"))
+		i = -1;
+	if (ft_strequ(tmp, "echo"))
 		echo(command->args + 1);
 	else if (ft_strequ(command->args[0], "cd"))
 		cd(command->args + 1);
-	else if (ft_strequ(command->args[0], "pwd"))
+	else if (ft_strequ(tmp, "pwd"))
 		print_env(1);
 	else if (ft_strequ(command->args[0], "export"))
 		ft_export(command->args);
 	else if (ft_strequ(command->args[0], "unset"))
 		unset(command->args + 1);
-	else if (ft_strequ(command->args[0], "env"))
+	else if (ft_strequ(tmp, "env"))
 		print_env(0);
 	else
-		return (0);
-	return (-11);
+		i = 0;
+	free(tmp);
+	return (i);
 }

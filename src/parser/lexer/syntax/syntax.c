@@ -14,7 +14,7 @@
 
 static int	syntax_error(t_node *tmp, int i)
 {
-	t_red_node *red;
+	t_red_node	*red;
 	int			fd;
 
 	while (tmp)
@@ -45,7 +45,7 @@ static int	check_metachar(t_node *tmp)
 {
 	if (!tmp->next)
 		return (1);
-	else if (tmp->type == PIPE)
+	if (tmp->type == PIPE)
 	{
 		if (!tmp->prev || tmp->next->type == PIPE)
 			return (syntax_error(tmp, 0));
@@ -77,7 +77,11 @@ int	check_syntax(t_list *list)
 	if (list->tail->type == REDIN || list->tail->type == REDOUT || \
 		list->tail->type == PIPE || list->tail->type == APPEND || \
 		list->tail->type == HEREDOC)
-			return (syntax_error(list->tail, 2));
+	{
+		if (list->tail == tmp)
+			return (syntax_error(NULL, 2));
+		return (syntax_error(list->tail, 2));
+	}
 	while (tmp)
 	{
 		if (tmp->type == WORD && ft_strchr(tmp->val, ';'))

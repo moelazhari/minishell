@@ -81,7 +81,7 @@ static t_list	*expand(t_list *list)
 			tmp->type = WORD;
 			tmp->val = ft_itoa(g_data.status);
 		}
-		else if (tmp && tmp->type == HEREDOC)
+		else if (tmp && tmp->next && tmp->type == HEREDOC)
 			rm_char(tmp->next->val);
 		tmp = tmp->next;
 	}
