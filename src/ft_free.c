@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 22:01:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/23 17:10:13 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/24 17:36:09 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	free_cmd(t_cmd *cmd)
 	free(cmd);
 }
 
-void	malloc_error()
+void	malloc_error(void)
 {
 	ft_putendl_fd("malloc error", 2);
 	exit(1);

@@ -12,6 +12,32 @@
 
 #include "minishell.h"
 
+char	*rm_char(char *str)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = 0;
+	len = strlen(str);
+	while (i < len)
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			j = i;
+			while (j < len)
+			{
+				str[j] = str[j + 1];
+				j++;
+			}
+			len--;
+			i--;
+		}
+		i++;
+	}
+	return (str);
+}
+
 static t_cmd_node	*new_cmd_node(char **args, t_red *red)
 {
 	t_cmd_node	*new;

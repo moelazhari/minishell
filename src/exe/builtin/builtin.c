@@ -1,75 +1,92 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/25 14:57:11 by yel-khad          #+#    #+#             */
+/*   Updated: 2022/08/30 12:43:43 by yel-khad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	echo(char **args)
+#include "minishell.h"
+int	no_newline(char **args)
 {
 	int	i;
 	int	j;
-	int	n;
 
 	i = 0;
-	n = 0;
 	while (args[i])
 	{
-		j = 1;
-		if (!ft_strncmp(args[i], "-n", 2))
-		{
-			while (args[i][j] == 'n')
-				j++;
-			if (!args[i][j])
-			{
-				n = 1;
-				i++;
-				continue ;
-			}
-		}
-		ft_putstr_fd(args[i++], 1);
-		if (args[i])
-				ft_putstr_fd(" ", 1);
+		j = 2;
+		if (ft_strncmp(args[i], "-n", 2))
+			return (i);
+		while (args[i][j] == 'n')
+			j++;	
+		if (args[i][j])
+			return (i);
+		i++;
 	}
-	if (!n)
+	return (i);
+}
+void	echo(char **args)
+{
+	int	i;
+	int	n;
+
+	i = no_newline(args);
+	n = i;
+	while (args[i])
+	{
+		ft_putstr_fd(args[i], 1);
+		if (args[i + 1])
+				ft_putstr_fd(" ", 1);
+		i++;
+	}
+	if (n == 0)
 		ft_putstr_fd("\n", 1);
 	g_data.status = 0;
 }
 
-void	ft_pwd(void)
+void	print_env(int n)
 {
 	char	*pwd;
 	char	buff[4096];
-
-	pwd = getcwd(buff, 4096);
-	ft_putendl_fd(pwd, 1);
-	g_data.status = 0;
-	return ;
-}
-
-void	print_env(void)
-{
 	int	i;
 
 	i = 0;
-	while (g_data.env[i])
+	if (n == 1)
+	{
+		pwd = getcwd(buff, 4096);
+		ft_putendl_fd(pwd, 1);
+		g_data.status = 0;
+		return ;
+	}	
+	while (g_data.env[i] && ft_strrchr(g_data.env[i], '='))
 	{
 		ft_putendl_fd(g_data.env[i], 1);
 		i++;
 	}
 	g_data.status = 0;
-	return ;
 }
 
-void	unset(char *var)
+void	unset(char **args)
 {
 	int	i;
 	int	j;
+	char *var;
 
-	i = 0;
+	i = -1;
+	var = args[0];
 	if (!var)
 		return ;
-	while (g_data.env[i])
+	while (g_data.env[++i])
 	{
 		j = 0;
 		while (g_data.env[i][j] == var[j] && var[j] != '=' && var[j])
 			j++;
-		if (g_data.env[i][j] == '=' && var[j] == '\0')
+		if ((g_data.env[i][j] == '=' || !g_data.env[i][j]) && var[j] == '\0')
 		{
 			free(g_data.env[i]);
 			while (g_data.env[i])
@@ -79,35 +96,28 @@ void	unset(char *var)
 			}
 			break ;
 		}
-		i++;
 	}
-	return ;
+	unset(args + 1);
 }
 
-int	check_builtins(t_cmd_node *command)
-{
-	char	*rayan;
 
+int	builtins(t_cmd_node *command)
+{
 	if (ft_strequ(command->args[0], "exit"))
 		return (-1);
-	rayan = ft_strlower(command->args[0]);
-	if (ft_strequ(rayan, "echo"))
+	if (ft_strequ(command->args[0], "echo"))
 		echo(command->args + 1);
-	else if (ft_strequ(rayan, "cd"))
+	else if (ft_strequ(command->args[0], "cd"))
 		cd(command->args + 1);
-	else if (ft_strequ(rayan, "pwd"))
-		ft_pwd();
-	else if (ft_strequ(rayan, "export"))
+	else if (ft_strequ(command->args[0], "pwd"))
+		print_env(1);
+	else if (ft_strequ(command->args[0], "export"))
 		ft_export(command->args);
-	else if (ft_strequ(rayan, "unset"))
-		unset(command->args[1]);
-	else if (ft_strequ(rayan, "env"))
-		print_env();
+	else if (ft_strequ(command->args[0], "unset"))
+		unset(command->args + 1);
+	else if (ft_strequ(command->args[0], "env"))
+		print_env(0);
 	else
-	{
-		free(rayan);
 		return (0);
-	}
-	free(rayan);
-	return (1);
+	return (-11);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 13:23:41 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/20 20:54:39 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/25 15:10:06 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,5 @@ int		ft_strequ(char const *s1, char const *s2);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_asciicmp(char *s1, char *s2);
 char	*ft_strlower(char *str);
-void	exit_status(void);
 
 #endif

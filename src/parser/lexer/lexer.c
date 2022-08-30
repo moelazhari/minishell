@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:50:58 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/23 19:10:31 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/30 14:05:35 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,7 @@ int	expand_sign(t_list *list, t_node *tmp)
 	tmp->val = ft_strdup(get_env_var(tmp->val));
 	free(str);
 	if (!tmp->val)
-	{
-		if (tmp->prev->prev->prev && (tmp->prev->prev->prev->type == REDOUT || \
-tmp->prev->prev->prev->type == REDIN || tmp->prev->prev->prev->type == APPEND))
-		{
-			ft_putstr_fd("Minishell: ambiguous redirect\n", 2);
-			return (0);
-		}
-		del_node(list, tmp);
-	}
+		tmp->val = ft_strdup("");
 	del_node(list, tmp->prev);
 	return (1);
 }
@@ -89,6 +81,8 @@ static t_list	*expand(t_list *list)
 			tmp->type = WORD;
 			tmp->val = ft_itoa(g_data.status);
 		}
+		else if (tmp && tmp->type == HEREDOC)
+			rm_char(tmp->next->val);
 		tmp = tmp->next;
 	}
 	if (list->n)
@@ -106,8 +100,7 @@ t_list	*lexer(char *line)
 	list = tokenizer(line);
 	if (!list)
 		return (clear_list(list));
-	list = expand(list);
-	if (!list || !list->n)
+	if (!expand(list))
 		return (clear_list(list));
 	if (!check_syntax(list))
 		return (clear_list(list));

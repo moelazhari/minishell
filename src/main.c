@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/24 13:45:46 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/29 19:20:02 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_status(void)
+void	exit_status(int exit_stat)
 {
-	if (g_data.status == 3)
+	if (exit_stat == 3)
 	{
 		ft_putstr_fd("Quit: 3\n", 2);
 		g_data.status = 131;
 	}
-	else if (g_data.status == 2)
+	else if (exit_stat == 2)
 	{
 		write(2, "\n", 1);
 		g_data.status = 130;
@@ -27,7 +27,7 @@ void	exit_status(void)
 	else if (g_data.status == 126 || g_data.status == 127)
 		return ;
 	else
-		g_data.status = WEXITSTATUS(g_data.status);
+		g_data.status = WEXITSTATUS(exit_stat);
 }
 
 int	main(int ac, char **av, char **env)
@@ -36,10 +36,8 @@ int	main(int ac, char **av, char **env)
 	t_cmd	*cmd;
 	char	*line;
 
-	(void)ac;
-	(void)av;
-	g_data.status = 0;
-	init_envv(env);
+	g_data.env = NULL;
+	init_envv(env, ac, av);
 	while (1)
 	{
 		line = prompt();

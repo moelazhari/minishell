@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/24 12:27:53 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/30 14:11:26 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*is_word(t_list *list, char *line, char *stop)
 	i = 0;
 	while (!(ft_strchr(stop, line[i])))
 		i++;
-	val = malloc(sizeof(char) * (i+1) );
+	val = malloc(sizeof(char) * (i + 1));
 	if (!val)
 		malloc_error();
 	i = 0;
@@ -78,25 +78,16 @@ char	*is_word(t_list *list, char *line, char *stop)
 	return (line);
 }
 
-char	*is_herdoc(t_list *list, char *line)
+static char	*is_herdoc(t_list *list, char *line)
 {
-	if (*(line + 1) == '<')
+	push_back(list, HEREDOC, "<<");
+	line = line + 2;
+	if (*line && *line != '<' && *line != '>' \
+		&& *line != '|')
 	{
-		line++;
-		push_back(list, HEREDOC, "<<");
-		if (*(line + 1) && (*(line + 1) != '<' && *(line + 1) != '>' \
-			&& *(line + 1) != '|'))
-		{
-			line++;
-			while (ft_strchr(" \t\n\v\f\r", *line))
-					line++;
-			line = is_word(list, line, " \t\n\v\f\r\"'|<>");
-		}
-	}
-	else
-	{
-		push_back(list, REDIN, "<");
-		line++;
+		while (ft_strchr(" \t\n\v\f\r", *line))
+				line++;
+		line = is_word(list, line, " \t\n\v\f\r|<>");
 	}
 	return (line);
 }
@@ -114,13 +105,14 @@ char	*is_metacharacters(t_list *list, char *line)
 			push_back(list, REDOUT, ">");
 	}
 	else if (*line == '<')
-		return (is_herdoc(list, line));
-	else if (*line == '|')
 	{
-		if (*(line + 1) == '|')
-			line++;
-		push_back(list, PIPE, "|");
+		if (*(line + 1) == '<')
+			return (is_herdoc(list, line));
+		else
+			push_back(list, REDIN, "<");
 	}
+	else if (*line == '|')
+		push_back(list, PIPE, "|");
 	line++;
 	return (line);
 }

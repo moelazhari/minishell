@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/25 14:56:45 by yel-khad          #+#    #+#             */
+/*   Updated: 2022/08/29 17:47:13 by yel-khad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	*sort_index(void)
@@ -13,8 +25,8 @@ static int	*sort_index(void)
 	ptr = malloc(i * sizeof(int));
 	if (!ptr)
 		malloc_error();
-	i = 0;
-	while (g_data.env[i])
+	i = -1;
+	while (g_data.env[++i])
 	{
 		j = 0;
 		pos = 0;
@@ -25,7 +37,6 @@ static int	*sort_index(void)
 			j++;
 		}
 		ptr[i] = pos;
-		i++;
 	}
 	return (ptr);
 }
@@ -43,6 +54,7 @@ void	sorted_env(void)
 		j = 0;
 		while (ps[j] != i)
 			j++;
+		ft_putstr_fd("declare -x ", 1);
 		ft_putendl_fd(g_data.env[j], 1);
 		i++;
 	}
@@ -51,45 +63,73 @@ void	sorted_env(void)
 
 int	existing_var(char *var)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*tmp;
 
-	i = 0;
-	while (g_data.env[i])
+	i = -1;
+	while (g_data.env && g_data.env[++i])
 	{
 		j = 0;
-		while (g_data.env[i][j] == var[j] && var[j] != '=' && var[j])
+		tmp = g_data.env[i];
+		while (g_data.env[i][j] == var[j] && var[j] != '=' \
+		&& var[j] != '+' && var[j])
 			j++;
 		if ((var[j] == '=' || var[j] == '\0') && g_data.env[i][j] == var[j])
-		{
-			free(g_data.env[i]);
 			g_data.env[i] = ft_strdup(var);
+		else if (var[j] == '+')
+			g_data.env[i] = ft_strjoin(g_data.env[i], var + j + 2);
+		else
+			tmp = NULL;
+		free(tmp);
+		if (g_data.env[i][j] == var[j])
 			return (1);
-		}
-		i++;
 	}
 	return (0);
 }
 
-void	ft_export(char **args)
+int	check_args(char *args)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	if (!args[1])
-		sorted_env();
-	else if (args[1][0] < 'A' || args[1][0] > 'z' || \
-	(args[1][0] > 'Z' && args[1][0] < 'a'))
+	if (!ft_isalpha(args[0]) && args[0] != '_')
+		return (0);
+	while (args[i] && args[i] != '=')
 	{
-		ft_putendl_fd("Minishell: export: not a valid identifier", 2);
-		g_data.status = 256;
+		if ((!ft_isalnum(args[i]) && args[i] != '+') || \
+		(args[i] == '+' && args[i + 1] != '='))
+			return (0);
+		i++;
 	}
-	else if (!existing_var(args[1]) && ft_strrchr(args[1], '='))
+	return (1);
+}
+
+void	ft_export(char **args)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	j = 1;
+	if (!args[1])
+		return(sorted_env());
+	while (args[j])
 	{
-		while (g_data.env[i])
-			i++;
-		g_data.env = realloc_envv(i + 1);
-		g_data.env[i] = ft_strdup(args[1]);
-		g_data.env[i + 1] = NULL;
+		if (!check_args(args[j]))
+		{
+			ft_putendl_fd("Minishell: export: not a valid identifier", 2);
+			g_data.status = 256;
+			break ;
+		}
+		else if (!existing_var(args[j]))
+		{
+			while (g_data.env && g_data.env[i])
+				i++;
+			g_data.env = realloc_envv(i + 1);
+			g_data.env[i] = ft_strdup(args[j]);
+			g_data.env[i + 1] = NULL;
+		}
+		j++;
 	}
 }

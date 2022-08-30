@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/25 14:56:29 by yel-khad          #+#    #+#             */
+/*   Updated: 2022/08/30 14:07:16 by yel-khad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	redir_in(t_cmd_node *noeud)
@@ -34,74 +46,73 @@ int	redir_out(t_cmd_node *noeud)
 
 	fd_out = 1;
 	node = noeud->red->head;
-	while (node)
+	while (node && fd_out != -1)
 	{
 		if (fd_out != 1 && (node->type == REDOUT || node->type == APPEND))
 			close(fd_out);
 		if (node->type == REDOUT)
-			fd_out = open(node->filename, O_WRONLY | O_CREAT, 0777);
+			fd_out = open(node->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (node->type == APPEND)
 			fd_out = open(node->filename, O_WRONLY | O_CREAT | O_APPEND, 0777);
-		if (fd_out == -1)
-			return (-1);
 		node = node->next;
 	}
-	if (fd_out != 1)
+	if (fd_out != 1 && fd_out != -1)
 	{
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
 	}
 	return (fd_out);
 }
-void	rl_write_fd(char *filename)
+
+void	rl_write_fd(char *filename, int *fd)
 {
 	char		*line;
 	char		*rline;
-	int			p;
 
-	p = open("/tmp/.heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	close(fd[0]);
 	line = filename;
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 	rline = readline("> ");
 	while (rline && !ft_strcmp(line, rline))
 	{
-		ft_putendl_fd(rline, p);
+		ft_putendl_fd(rline, fd[1]);
+		free(rline);
 		rline = readline("> ");
 	}
-	close(p);
+	free(rline);
+	close(fd[1]);
+	exit(0);
 }
 
-int	heredoc(t_cmd_node *command)
+int	heredoc(t_red_node *node)
 {
-	t_red_node	*node;
 	int			pid;
-	int			p;
+	int			fd[2];
 	int			status;
 
-	node = command->red->head;
 	while (node && node->type != HEREDOC)
 		node = node->next;
 	if (node)
 	{
+		pipe(fd);
 		pid = fork();
 		if (pid == 0)
-		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-			rl_write_fd(node->filename);
-			exit(0);
-		}
+			rl_write_fd(node->filename, fd);
 		waitpid(pid, &status, 0);
-		p = open("/tmp/.heredoc", O_RDONLY, 0777);
-		unlink("/tmp/.heredoc");
 		if (WIFSIGNALED(status))
+		{
+			ft_putendl_fd("", 1);
 			return (-1);
-		dup2(p, STDIN_FILENO);
-		close(p);
+		}
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
 	}
 	return (0);
 }
 
-void	reset_in_out(t_cmd_node *command)
+int	reset_in_out(t_cmd_node *command)
 {
 	int	fd_redir[2];
 
@@ -124,10 +135,8 @@ void	reset_in_out(t_cmd_node *command)
 				dup2(command->prev_pipe[0], STDIN_FILENO);
 			close(command->prev_pipe[0]);
 		}
+		return (1);
 	}
-	else
-	{
-		ft_putstr_fd("Minishell: : No such file or directory\n", 2);
-		exit_status();
-	}
+	ft_putstr_fd("Minishell: : No such file or directory\n", 2);
+	return (0);
 }

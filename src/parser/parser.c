@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/20 20:48:51 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/30 14:16:10 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_cmd	*paser(t_list *list, t_cmd *cmd)
 
 	args = NULL;
 	red = get_red(list);
-	if (!list || !list->n)
+	if (!list->n || list->head->type == PIPE)
 		args = NULL;
 	else
 		args = get_args(list, args);

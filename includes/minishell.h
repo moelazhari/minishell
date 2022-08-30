@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/23 22:00:14 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/08/29 17:56:30 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,23 +109,28 @@ t_list		*new_list(void);
 void		del_node(t_list *list, t_node *node);
 t_list		*clear_list(t_list *list);
 int			check_syntax(t_list *list);
-void		reset_in_out(t_cmd_node *command);
-int			heredoc(t_cmd_node *command);
+t_red_node	*new_red_node(int type, char *filename);
+int			reset_in_out(t_cmd_node *command);
+int			heredoc(t_red_node *node);
 void		execute(t_cmd *cmds);
-int			check_builtins(t_cmd_node *command);
+int			builtins(t_cmd_node *command);
 void		echo(char **args);
 void		ft_pwd(void);
 void		cd(char **args);
 void		exit_shell(t_cmd *cmds, char **args);
-void		print_env(void);
+void		print_env(int n);
 void		ft_export(char **args);
-void		unset(char *var);
+void		unset(char **var);
 void		set_env_var(char *key, char *value);
 char		*get_env_var(char *var);
 char		**realloc_envv(int new_size);
 int			find_env_var(char *var);
-void		init_envv(char **env);
+void		init_envv(char **env, int ac, char **av);
 void		ft_freearr(char **arr);
 void		free_cmd(t_cmd *cmd);
 void		malloc_error(void);
+void		exit_status(int exit_stat);
+char		*rm_char(char *str);
+int			check_bins(t_cmd_node *command);
+int			check_builtin(t_cmd_node *command, int n);
 #endif		

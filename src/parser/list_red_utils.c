@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static t_red_node	*new_red_node(int type, char *filename)
+t_red_node	*new_red_node(int type, char *filename)
 {
 	t_red_node	*new;
 

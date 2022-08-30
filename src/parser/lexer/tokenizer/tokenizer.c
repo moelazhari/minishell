@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*is_wspace(t_list *list, char *line)
+static	char	*is_wspace(t_list *list, char *line)
 {
 	while (*line && ft_strchr(" \t\n\v\f\r", *line))
 		line++;
@@ -20,26 +20,13 @@ static char	*is_wspace(t_list *list, char *line)
 	return (line);
 }
 
-static char	*is_tilde(t_list *list, char *line)
-{
-	push_back(list, SIGN, "$");
-	push_back(list, WORD, ft_strdup("HOME"));
-	line++;
-	return (line);
-}
-
-static char	*is_dquote(t_list *list, char *line)
+static	char	*is_dquote(t_list *list, char *line)
 {
 	if (ft_strchr(line, '"'))
 	{
 		line = is_word(list, line, "\"$~");
 		if (*line == '$')
 			line = is_sing(list, line);
-		else if (*line == '~')
-		{
-			is_tilde(list, line);
-			line++;
-		}
 		if (*line != '"')
 		{
 			*(line - 1) = '"';
@@ -95,8 +82,6 @@ t_list	*tokenizer(char *line)
 			line = is_sing(list, line);
 		else if (ft_strchr("|<>", *line))
 			line = is_metacharacters(list, line);
-		else if (*line == '~')
-			line = is_tilde(list, line);
 		else
 			line = is_word(list, line, " \t\n\v\f\r\"'$|<>");
 		if (!line)

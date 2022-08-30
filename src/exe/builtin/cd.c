@@ -1,4 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/25 14:56:39 by yel-khad          #+#    #+#             */
+/*   Updated: 2022/08/29 18:55:17 by yel-khad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+void	cd_error(char *path)
+{
+		ft_putstr_fd("Minishell: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		if (access(path, F_OK) == -1)
+			ft_putendl_fd(": no such file or directory", 2);
+		else if (access(path, R_OK) == -1)
+			ft_putendl_fd(": permission denied", 2);
+		else
+			ft_putendl_fd(": not a directory", 2);
+		g_data.status = 256;
+}
 
 void	change_dir(char *path, int print_path)
 {
@@ -7,30 +32,21 @@ void	change_dir(char *path, int print_path)
 	int		ch;
 
 	cwd = getcwd(buff, 4096);
-	set_env_var("OLDPWD", cwd);
+	set_env_var("OLDPWD", ft_strdup(cwd));
 	ch = chdir(path);
 	if (!ch && cwd)
 	{
 		cwd = getcwd(buff, 4096);
-		set_env_var("PWD", cwd);
+		set_env_var("PWD", ft_strdup(cwd));
 		if (print_path)
 			ft_putendl_fd(get_env_var("PWD"), 1);
 		g_data.status = 0;
 	}
 	else if (cwd)
-	{
-		ft_putstr_fd("Minishell: cd: ", 2);
-		ft_putstr_fd(path, 1);
-		if (access(path, F_OK) == -1)
-			ft_putendl_fd(": no such file or directory", 2);
-		else if (access(path, R_OK) == -1)
-			ft_putendl_fd(": permission denied", 2);
-		else
-			ft_putendl_fd(": not a directory", 2);
-		g_data.status = 256;
-	}
+		cd_error(path);
 	else if (!cwd && path[0] == '.' && path[1] == '\0')
-		ft_putendl_fd("getcwd: cannot access parent directories: No such file or directory", 2);
+		ft_putendl_fd("getcwd: cannot access parent directories: \
+		No such file or directory", 2);
 	return ;
 }
 
