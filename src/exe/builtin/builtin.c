@@ -62,6 +62,8 @@ void	print_env(int n)
 	{
 		pwd = getcwd(buff, 4096);
 		ft_putendl_fd(pwd, 1);
+		// if (!pwd)
+		// free(pwd);
 		g_data.status = 0;
 		return ;
 	}	
@@ -108,9 +110,9 @@ int	builtins(t_cmd_node *command)
 	char	*tmp;
 
 	i = -11;
-	tmp = ft_strlower(command->args[0]);
 	if (ft_strequ(command->args[0], "exit"))
-		i = -1;
+		return (-1);
+	tmp = ft_strlower(command->args[0]);
 	if (ft_strequ(tmp, "echo"))
 		echo(command->args + 1);
 	else if (ft_strequ(command->args[0], "cd"))

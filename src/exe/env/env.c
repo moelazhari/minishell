@@ -20,7 +20,10 @@ int	find_env_var(char *var)
 	i = -1;
 	while (g_data.env[++i])
 	{
-		tmp = ft_strjoin(var, "=");
+		if (!ft_strrchr(var, '='))
+			tmp = ft_strjoin(var, "=");
+		else
+			tmp = var;
 		if (ft_startcmp(g_data.env[i], tmp))
 		{
 			free(tmp);
@@ -78,6 +81,9 @@ void	set_env_var(char *key, char *value)
 	char	*tmp;
 
 	pos = find_env_var(key);
+	key = ft_strdup(key);
+	exit(0);
+	key[ft_strlen(key) - ft_strlen(ft_strchr(key, '+'))] = '\0';
 	if (g_data.env[pos] && value)
 	{
 		tmp = ft_strjoin("=", value);
@@ -89,6 +95,7 @@ void	set_env_var(char *key, char *value)
 		free(value);
 		free(tmp);
 	}
+	free(key);
 }
 
 void	init_envv(char **env, int ac, char **av)

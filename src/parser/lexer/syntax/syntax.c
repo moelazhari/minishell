@@ -12,24 +12,8 @@
 
 #include "minishell.h"
 
-static int	syntax_error(t_node *tmp, int i)
+static int	print_error(int i)
 {
-	t_red_node	*red;
-	int			fd;
-
-	while (tmp)
-	{
-		if (tmp->type == HEREDOC)
-		{
-			signal(SIGINT, SIG_IGN);
-			red = new_red_node(HEREDOC, tmp->next->val);
-			fd = dup(STDIN_FILENO);
-			heredoc(red);
-			dup2(fd, STDIN_FILENO);
-			free(red);
-		}
-		tmp = tmp->prev;
-	}
 	if (i == 0)
 		ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
 	if (i == 1)
@@ -41,32 +25,29 @@ unexpected token `newline'", 2);
 	return (0);
 }
 
-static int	check_metachar(t_node *tmp)
+static int	syntax_error(t_list *list, t_node *tmp, int i)
 {
-	if (!tmp->next)
-		return (1);
-	if (tmp->type == PIPE)
-	{
-		if (!tmp->prev || tmp->next->type == PIPE)
-			return (syntax_error(tmp, 0));
-	}
-	else
-	{
-		if (tmp->next->type != WORD && tmp->next->type != SIGN \
-			&& tmp->next->type != HEREDOC)
-			return (syntax_error(tmp, 0));
-	}
-	return (1);
-}
+	t_red_node	*red;
+	int			fd;
+	t_node		*node;
 
-static int	check_word(t_node *tmp)
-{
-	char	*ptr;
-
-	ptr = ft_strchr(tmp->val, ';');
-	if (*(ptr + 1) == ';')
-		return (syntax_error(tmp, 1));
-	return (1);
+	node = list->head;
+	while (node != tmp)
+	{
+		if (node->type == HEREDOC)
+		{
+			signal(SIGINT, SIG_IGN);
+			if (node->next)
+				red = new_red_node(HEREDOC, node->next->val);
+			fd = dup(STDIN_FILENO);
+			if (heredoc(red, fd) == -1)
+				return (0);
+			dup2(fd, STDIN_FILENO);
+			free(red);
+		}
+		node = node->next;
+	}
+	return (print_error(i));
 }
 
 int	check_syntax(t_list *list)
@@ -74,23 +55,22 @@ int	check_syntax(t_list *list)
 	t_node	*tmp;
 
 	tmp = list->head;
-	if (list->tail->type == REDIN || list->tail->type == REDOUT || \
-		list->tail->type == PIPE || list->tail->type == APPEND || \
-		list->tail->type == HEREDOC)
-	{
-		if (list->tail == tmp)
-			return (syntax_error(NULL, 2));
-		return (syntax_error(list->tail, 2));
-	}
 	while (tmp)
 	{
-		if (tmp->type == WORD && ft_strchr(tmp->val, ';'))
-			if (!check_word(tmp))
-				return (0);
 		if (tmp->type == REDIN || tmp->type == REDOUT || tmp->type == PIPE \
 			|| tmp->type == APPEND || tmp->type == HEREDOC)
-			if (!check_metachar(tmp))
-				return (0);
+		{
+			if (!tmp->next)
+				return (syntax_error(list, list->tail, 2));
+			else if (tmp->type == PIPE)
+			{
+				if (!tmp->prev || tmp->next->type == PIPE)
+					return (syntax_error(list, tmp, 0));
+			}
+			else if (tmp->next->type != WORD && tmp->next->type != SIGN \
+					&& tmp->next->type != HEREDOC)
+				return (syntax_error(list, tmp, 0));
+		}
 		tmp = tmp->next;
 	}
 	return (1);

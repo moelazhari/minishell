@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*rm_char(char *str)
+char	*rm_char(char *str, char *c)
 {
 	int	i;
 	int	j;
@@ -22,7 +22,7 @@ char	*rm_char(char *str)
 	len = strlen(str);
 	while (i < len)
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		if (ft_strchr(c, str[i]))
 		{
 			j = i;
 			while (j < len)

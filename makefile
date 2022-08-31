@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC= gcc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 NAME= minishell
 
 INCLUDES= ./includes
@@ -41,7 +41,7 @@ $(B_DIR)/src/%.o: src/%.c $(LIBFT_LIB) $(HEDEAR)
 	mkdir -p $(@D)
 	$(CC) -I$(INCLUDES) $(CFLAGS) -I $(READLINE)/include -c $< -o $@
 
-$(NAME): $(OBJS) $(HEDEAR)
+$(NAME): $(LIBFT_LIB) $(OBJS) $(HEDEAR)
 	$(CC) $(CFLAGS) $(LIBFT_LIB) -L $(READLINE)/lib -lreadline $(OBJS) -o $(NAME)
 
 $(LIBFT_LIB):

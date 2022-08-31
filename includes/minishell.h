@@ -111,7 +111,7 @@ t_list		*clear_list(t_list *list);
 int			check_syntax(t_list *list);
 t_red_node	*new_red_node(int type, char *filename);
 int			reset_in_out(t_cmd_node *command);
-int			heredoc(t_red_node *node);
+int			heredoc(t_red_node *node, int in);
 void		execute(t_cmd *cmds);
 int			builtins(t_cmd_node *command);
 void		echo(char **args);
@@ -129,8 +129,9 @@ void		init_envv(char **env, int ac, char **av);
 void		ft_freearr(char **arr);
 void		free_cmd(t_cmd *cmd);
 void		malloc_error(void);
-void		exit_status(int exit_stat);
-char		*rm_char(char *str);
+void		exit_status(void);
+char		*rm_char(char *str, char *c);
 int			check_bins(t_cmd_node *command);
 int			check_builtin(t_cmd_node *command, int n);
-#endif		
+void		free_exit(t_cmd *cmds, int status);
+#endif

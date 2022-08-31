@@ -64,50 +64,58 @@ int	redir_out(t_cmd_node *noeud)
 	return (fd_out);
 }
 
-void	rl_write_fd(char *filename, int *fd)
+int	rl_write_fd(char *filename, int *fd)
 {
-	char		*line;
-	char		*rline;
+	char	*line;
+	char	*rline;
+	int		pid;
 
-	close(fd[0]);
-	line = filename;
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
-	rline = readline("> ");
-	while (rline && !ft_strcmp(line, rline))
-	{
-		ft_putendl_fd(rline, fd[1]);
-		free(rline);
+	pid = fork();
+	if (pid == 0)
+	{	
+		close(fd[0]);
+		line = filename;
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		rline = readline("> ");
+		while (rline && !ft_strcmp(line, rline))
+		{
+			ft_putendl_fd(rline, fd[1]);
+			free(rline);
+			rline = readline("> ");
+		}
+		free(rline);
+		close(fd[1]);
+		exit(0);
 	}
-	free(rline);
-	close(fd[1]);
-	exit(0);
+	return (pid);
 }
 
-int	heredoc(t_red_node *node)
+int	heredoc(t_red_node *node, int in)
 {
-	int			pid;
-	int			fd[2];
-	int			status;
+	int	pid;
+	int	fd[2];
+	int	status;
 
-	while (node && node->type != HEREDOC)
-		node = node->next;
-	if (node)
+	while (node)
 	{
-		pipe(fd);
-		pid = fork();
-		if (pid == 0)
-			rl_write_fd(node->filename, fd);
-		waitpid(pid, &status, 0);
-		if (WIFSIGNALED(status))
+		dup2(in, STDIN_FILENO);
+		if (node->type == HEREDOC)
 		{
-			ft_putendl_fd("", 1);
-			return (-1);
+			pipe(fd);
+			pid = rl_write_fd(node->filename, fd);
+			waitpid(pid, &status, 0);
+			if (WIFSIGNALED(status))
+			{
+				ft_putendl_fd("", 1);
+				g_data.status = 256;
+				return (-1);
+			}
+			close(fd[1]);
+			dup2(fd[0], STDIN_FILENO);
+			close(fd[0]);
 		}
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
+		node = node->next;
 	}
 	return (0);
 }

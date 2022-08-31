@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-void	exit_status(int exit_stat)
+void	exit_status(void)
 {
-	if (exit_stat == 3)
+	if (g_data.status == 3)
 	{
 		ft_putstr_fd("Quit: 3\n", 2);
 		g_data.status = 131;
 	}
-	else if (exit_stat == 2)
+	else if (g_data.status == 2)
 	{
 		write(2, "\n", 1);
 		g_data.status = 130;
@@ -27,7 +27,7 @@ void	exit_status(int exit_stat)
 	else if (g_data.status == 126 || g_data.status == 127)
 		return ;
 	else
-		g_data.status = WEXITSTATUS(exit_stat);
+		g_data.status = WEXITSTATUS(g_data.status);
 }
 
 int	main(int ac, char **av, char **env)
@@ -41,6 +41,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		line = prompt();
+			
 		if (!line)
 			continue ;
 		list = lexer(line);
@@ -52,7 +53,7 @@ int	main(int ac, char **av, char **env)
 			free_cmd(cmd);
 		}
 		free(line);
+		exit_status();
 	}
-	ft_freearr(g_data.env);
 	return (0);
 }

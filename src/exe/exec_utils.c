@@ -43,7 +43,6 @@ static int	run_cmd(char *bin_path, t_cmd_node *command, int is_builtin)
 	}
 	else if (pid == 0)
 		run_child(bin_path, command, is_builtin);
-	// if (!ft_strcmp(bin_path, command->args[0]))
 	free(bin_path);
 	return (pid);
 }
@@ -116,6 +115,6 @@ int	check_builtin(t_cmd_node *command, int n)
 		x = 1;
 	free(tmp);
 	if (x && n > 1)
-		return (run_cmd(command->args[0], command, 1));
+		return (run_cmd(ft_strdup(command->args[0]), command, 1));
 	return (builtins(command));
 }

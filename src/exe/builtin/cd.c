@@ -37,7 +37,7 @@ void	change_dir(char *path, int print_path)
 	if (!ch && cwd)
 	{
 		cwd = getcwd(buff, 4096);
-		set_env_var("PWD", ft_strdup(cwd));
+		set_env_var("PWD", cwd);
 		if (print_path)
 			ft_putendl_fd(get_env_var("PWD"), 1);
 		g_data.status = 0;
@@ -46,7 +46,7 @@ void	change_dir(char *path, int print_path)
 		cd_error(path);
 	else if (!cwd && path[0] == '.' && path[1] == '\0')
 		ft_putendl_fd("getcwd: cannot access parent directories: \
-		No such file or directory", 2);
+No such file or directory", 2);
 	return ;
 }
 

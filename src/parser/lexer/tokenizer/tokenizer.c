@@ -24,7 +24,7 @@ static	char	*is_dquote(t_list *list, char *line)
 {
 	if (ft_strchr(line, '"'))
 	{
-		line = is_word(list, line, "\"$~");
+		line = is_word(list, line, "\"$");
 		if (*line == '$')
 			line = is_sing(list, line);
 		if (*line != '"')

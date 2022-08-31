@@ -42,13 +42,10 @@ char	*prompt(void)
 	signal(SIGQUIT, SIG_IGN);
 	line = readline("Minishell$> ");
 	if (!line)
-	{
-		ft_putstr_fd("exit\n", 1);
-		clear_history();
-		exit(0);
-	}
+		free_exit(NULL, g_data.status);
 	else if (is_all_wspace(line))
 	{
+		printf("sfdsf%s\n", line);
 		free(line);
 		line = NULL;
 	}

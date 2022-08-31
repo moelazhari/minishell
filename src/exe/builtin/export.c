@@ -82,7 +82,7 @@ int	existing_var(char *var)
 		else
 			tmp = NULL;
 		free(tmp);
-		if (g_data.env[i][j] == var[j])
+		if (g_data.env[i][j] == var[j] || var[j] == '+')
 			return (1);
 	}
 	return (0);
@@ -110,26 +110,25 @@ void	ft_export(char **args)
 	int	i;
 	int	j;
 
-	i = 0;
-	j = 1;
+	j = 0;
 	if (!args[1])
 		return (sorted_env());
-	while (args[j])
+	while (args[++j])
 	{
 		if (!check_args(args[j]))
-		{
-			ft_putendl_fd("Minishell: export: not a valid identifier", 2);
-			g_data.status = 256;
 			break ;
-		}
 		else if (!existing_var(args[j]))
 		{
+			i = 0;
 			while (g_data.env && g_data.env[i])
 				i++;
 			g_data.env = realloc_envv(i + 1);
 			g_data.env[i] = ft_strdup(args[j]);
+			ft_strchr(args[j], '+')	
+
 			g_data.env[i + 1] = NULL;
 		}
-		j++;
 	}
+	ft_putendl_fd("Minishell: export: not a valid identifier", 2);
+	g_data.status = 256;
 }

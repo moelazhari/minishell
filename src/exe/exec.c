@@ -44,8 +44,7 @@ int	exec_loop(t_cmd *cmds, int *tmp_in_out)
 	exec = 0;
 	while (node)
 	{
-		g_data.status = 0;
-		if (heredoc(node->red->head) == -1)
+		if (heredoc(node->red->head, tmp_in_out[0]) == -1)
 			break ;
 		if (reset_in_out(node))
 		{
@@ -65,7 +64,6 @@ int	exec_loop(t_cmd *cmds, int *tmp_in_out)
 void	execute(t_cmd *cmds)
 {
 	int	tmp_in_out[2];
-	int	exit_stat;
 	int	exec;
 
 	signal(SIGINT, SIG_IGN);
@@ -73,10 +71,7 @@ void	execute(t_cmd *cmds)
 	tmp_in_out[1] = dup(STDOUT_FILENO);
 	exec = exec_loop(cmds, tmp_in_out);
 	if (exec >= 1)
-		waitpid(exec, &exit_stat, 0);
+		waitpid(exec, &g_data.status, 0);
 	while (cmds->n-- - (exec >= 1))
 		wait(0);
-	if (exec == -11)
-		exit_stat = g_data.status;
-	exit_status(exit_stat);
 }

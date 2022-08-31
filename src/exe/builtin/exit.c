@@ -14,7 +14,8 @@
 
 void	free_exit(t_cmd *cmds, int status)
 {
-	free_cmd(cmds);
+	if (cmds)
+		free_cmd(cmds);
 	ft_freearr(g_data.env);
 	ft_putstr_fd("exit\n", 1);
 	exit(status);
@@ -57,5 +58,5 @@ void	exit_shell(t_cmd *cmds, char **args)
 		}
 	}
 	else
-		free_exit(cmds, 0);
+		free_exit(cmds, g_data.status);
 }
