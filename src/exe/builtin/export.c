@@ -124,7 +124,7 @@ void	ft_export(char **args)
 				i++;
 			g_data.env = realloc_envv(i + 1);
 			g_data.env[i] = ft_strdup(args[j]);
-			ft_strchr(args[j], '+')	
+			// ft_strchr(args[j], '+')	
 
 			g_data.env[i + 1] = NULL;
 		}

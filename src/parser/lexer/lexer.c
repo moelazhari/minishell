@@ -82,7 +82,7 @@ static t_list	*expand(t_list *list)
 			tmp->val = ft_itoa(g_data.status);
 		}
 		else if (tmp && tmp->next && tmp->type == HEREDOC)
-			rm_char(tmp->next->val, "\"'");
+			rm_char(tmp->next->val);
 		tmp = tmp->next;
 	}
 	if (list->n)

@@ -24,7 +24,8 @@ void	exit_status(void)
 		write(2, "\n", 1);
 		g_data.status = 130;
 	}
-	else if (g_data.status == 126 || g_data.status == 127)
+	else if (g_data.status == 126 || g_data.status == 127 \
+|| g_data.status == 1)
 		return ;
 	else
 		g_data.status = WEXITSTATUS(g_data.status);
@@ -53,7 +54,6 @@ int	main(int ac, char **av, char **env)
 			free_cmd(cmd);
 		}
 		free(line);
-		exit_status();
 	}
 	return (0);
 }

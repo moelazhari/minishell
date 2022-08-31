@@ -130,8 +130,8 @@ void		ft_freearr(char **arr);
 void		free_cmd(t_cmd *cmd);
 void		malloc_error(void);
 void		exit_status(void);
-char		*rm_char(char *str, char *c);
+char		*rm_char(char *str);
 int			check_bins(t_cmd_node *command);
 int			check_builtin(t_cmd_node *command, int n);
 void		free_exit(t_cmd *cmds, int status);
-#endif
+#endif		

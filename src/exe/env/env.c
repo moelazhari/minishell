@@ -82,8 +82,8 @@ void	set_env_var(char *key, char *value)
 
 	pos = find_env_var(key);
 	key = ft_strdup(key);
-	exit(0);
-	key[ft_strlen(key) - ft_strlen(ft_strchr(key, '+'))] = '\0';
+	// exit(0);
+	// key[ft_strlen(key) - ft_strlen(ft_strchr(key, '+'))] = '\0';
 	if (g_data.env[pos] && value)
 	{
 		tmp = ft_strjoin("=", value);

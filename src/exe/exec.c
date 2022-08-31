@@ -74,4 +74,5 @@ void	execute(t_cmd *cmds)
 		waitpid(exec, &g_data.status, 0);
 	while (cmds->n-- - (exec >= 1))
 		wait(0);
+	exit_status();
 }
