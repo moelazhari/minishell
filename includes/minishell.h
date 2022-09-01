@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/29 17:56:30 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/09/01 17:32:18 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,10 @@ void		cd(char **args);
 void		exit_shell(t_cmd *cmds, char **args);
 void		print_env(int n);
 void		ft_export(char **args);
+int			*sort_index(void);
+void		sorted_env(void);
+int			existing_var(char *var);
+char		*getvar(char *str);
 void		unset(char **var);
 void		set_env_var(char *key, char *value);
 char		*get_env_var(char *var);

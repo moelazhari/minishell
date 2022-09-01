@@ -37,7 +37,7 @@ void	change_dir(char *path, int print_path)
 	if (!ch && cwd)
 	{
 		cwd = getcwd(buff, 4096);
-		set_env_var("PWD", cwd);
+		set_env_var("PWD", ft_strdup(cwd));
 		if (print_path)
 			ft_putendl_fd(get_env_var("PWD"), 1);
 		g_data.status = 0;

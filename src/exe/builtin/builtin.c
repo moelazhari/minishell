@@ -6,7 +6,7 @@
 /*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:11 by yel-khad          #+#    #+#             */
-/*   Updated: 2022/08/30 12:43:43 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/09/01 15:02:33 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void	print_env(int n)
 	{
 		pwd = getcwd(buff, 4096);
 		ft_putendl_fd(pwd, 1);
-		// if (!pwd)
-		// free(pwd);
 		g_data.status = 0;
 		return ;
 	}	

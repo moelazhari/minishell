@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+         #
+#    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/08/29 17:34:50 by yel-khad         ###   ########.fr        #
+#    Updated: 2022/09/01 17:29:12 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ TOKENIZER= $(addprefix	tokenizer/, tokenizer tokenizer1 list_utils)
 SYNTAX= $(addprefix syntax/, syntax)
 LEXER= $(addprefix lexer/, lexer $(TOKENIZER) $(SYNTAX))
 PARSER= $(addprefix parser/, parser list_red_utils list_cmd_utils $(LEXER))
-BUILTIN= $(addprefix builtin/, builtin cd exit export)
+BUILTIN= $(addprefix builtin/, builtin cd exit export export_utils)
 ENV= $(addprefix env/, env)
 EXE= $(addprefix exe/, $(BUILTIN) $(ENV) exec exec_utils redir)
 

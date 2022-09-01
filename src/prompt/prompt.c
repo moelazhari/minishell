@@ -6,7 +6,7 @@
 /*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:21:15 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/29 18:09:25 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/09/01 14:43:17 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	*prompt(void)
 		free_exit(NULL, g_data.status);
 	else if (is_all_wspace(line))
 	{
-		printf("sfdsf%s\n", line);
 		free(line);
 		line = NULL;
 	}

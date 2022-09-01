@@ -85,9 +85,10 @@ static char	*is_herdoc(t_list *list, char *line)
 	if (*line && *line != '<' && *line != '>' \
 		&& *line != '|')
 	{
-		while (ft_strchr(" \t\n\v\f\r", *line))
+		while (*line && ft_strchr(" \t\n\v\f\r", *line))
 				line++;
-		line = is_word(list, line, " \t\n\v\f\r|<>");
+		if (*line)
+			line = is_word(list, line, " \t\n\v\f\r|<>");
 	}
 	return (line);
 }

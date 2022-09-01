@@ -99,9 +99,9 @@ int	heredoc(t_red_node *node, int in)
 
 	while (node)
 	{
-		dup2(in, STDIN_FILENO);
 		if (node->type == HEREDOC)
 		{
+			dup2(in, STDIN_FILENO);
 			pipe(fd);
 			pid = rl_write_fd(node->filename, fd);
 			waitpid(pid, &status, 0);
