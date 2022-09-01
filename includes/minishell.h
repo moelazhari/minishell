@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/09/01 17:32:18 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/01 18:46:55 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		push_back_red(t_red *red, int type, char *filename);
 t_list		*lexer(char *line);
 t_list		*tokenizer(char *line);
 char		*is_word(t_list *list, char *line, char *stop);
-char		*is_sing(t_list *list, char *line);
+char		*is_sign(t_list *list, char *line);
 char		*is_metacharacters(t_list *list, char *line);
 char		*is_quote(t_list *list, char *line);
 void		push_back(t_list *list, int type, char *val);

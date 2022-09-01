@@ -3,28 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/30 14:11:26 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/09/01 20:07:06 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*is_sing1(t_list *list, char *line)
+static char	*is_sign1(t_list *list, char *line)
 {
-	char	*str;
+	char	str[2];
 
 	push_back(list, SIGN, "$");
 	if (*line <= '9' && *line >= '0')
 	{
-		str = malloc(sizeof(char) * 2);
-		if (!str)
-			malloc_error();
 		str[0] = *line;
 		str[1] = '\0';
-		push_back(list, WORD, str);
+		push_back(list, WORD, ft_strdup(str));
 		line++;
 	}
 	else
@@ -32,9 +29,11 @@ static char	*is_sing1(t_list *list, char *line)
 	return (line);
 }
 
-char	*is_sing(t_list *list, char *line)
+char	*is_sign(t_list *list, char *line)
 {
+	char tmp[2];
 	line++;
+
 	if (*line == 0)
 		push_back(list, WORD, ft_strdup("$"));
 	else if (*line == '?')
@@ -45,14 +44,15 @@ char	*is_sing(t_list *list, char *line)
 	else if (ft_strchr(" \t\n!\"%'()*+,-./:;<=>?@[\\]^`|~$", *line))
 	{
 		if (*line == '"' || *line == '\'')
-		{	
-			push_back(list, WORD, ft_strdup("$"));
 			return (line);
-		}
+		push_back(list, WORD, ft_strdup("$"));
+		tmp[0] = line[0];
+		tmp[1] = '\0';
+		push_back(list, WORD, ft_strdup(tmp));
 		line++;
 	}
 	else
-		line = is_sing1(list, line);
+		line = is_sign1(list, line);
 	return (line);
 }
 

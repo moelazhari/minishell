@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/24 12:28:08 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/01 19:40:44 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static	char	*is_dquote(t_list *list, char *line)
 	{
 		line = is_word(list, line, "\"$");
 		if (*line == '$')
-			line = is_sing(list, line);
+			line = is_sign(list, line);
 		if (*line != '"')
 		{
 			*(line - 1) = '"';
@@ -79,13 +79,13 @@ t_list	*tokenizer(char *line)
 		else if (*line == '\'' || *line == '"')
 			line = is_quote(list, line);
 		else if (*line == '$')
-			line = is_sing(list, line);
+			line = is_sign(list, line);
 		else if (ft_strchr("|<>", *line))
 			line = is_metacharacters(list, line);
 		else
 			line = is_word(list, line, " \t\n\v\f\r\"'$|<>");
-		if (!line)
-			return (NULL);
+		// if (!line)
+		// 	return (NULL);
 	}
 	return (list);
 }

@@ -6,22 +6,22 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/09/01 17:29:12 by mazhari          ###   ########.fr        #
+#    Updated: 2022/09/01 18:34:28 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC= gcc
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
 NAME= minishell
 
 INCLUDES= ./includes
 HEDEAR= $(INCLUDES)/minishell.h
 
-LIBFT_DIR = libft
+LIBFT_DIR = ./libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 READLINE=$(shell brew --prefix readline)
 
-B_DIR = build
+B_DIR = ./build
 
 PROMPT= $(addprefix prompt/, prompt)
 TOKENIZER= $(addprefix	tokenizer/, tokenizer tokenizer1 list_utils)
@@ -41,7 +41,7 @@ $(B_DIR)/src/%.o: src/%.c $(LIBFT_LIB) $(HEDEAR)
 	mkdir -p $(@D)
 	$(CC) -I$(INCLUDES) $(CFLAGS) -I $(READLINE)/include -c $< -o $@
 
-$(NAME): $(LIBFT_LIB) $(OBJS) $(HEDEAR)
+$(NAME): $(OBJS) $(HEDEAR)
 	$(CC) $(CFLAGS) $(LIBFT_LIB) -L $(READLINE)/lib -lreadline $(OBJS) -o $(NAME)
 
 $(LIBFT_LIB):
