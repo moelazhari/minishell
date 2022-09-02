@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/09/01 19:40:44 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/02 11:28:54 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ static	char	*is_dquote(t_list *list, char *line)
 	}
 	else
 	{
-		printf("minishell: unclosed double quotes\n");
+		ft_putstr_fd("minishell: unclosed double quotes\n", 2);
 		g_data.status = 258;
 		return (NULL);
 	}
 }
 
-char	*is_quote(t_list *list, char *line)
+static char	*is_quote(t_list *list, char *line)
 {
 	if (*line == '"')
 	{
@@ -59,7 +59,7 @@ char	*is_quote(t_list *list, char *line)
 		}
 		else
 		{
-			printf("minishell: unclosed single quotes\n");
+			ft_putstr_fd("minishell: unclosed single quotes\n", 2);
 			g_data.status = 258;
 			return (NULL);
 		}
@@ -84,8 +84,6 @@ t_list	*tokenizer(char *line)
 			line = is_metacharacters(list, line);
 		else
 			line = is_word(list, line, " \t\n\v\f\r\"'$|<>");
-		// if (!line)
-		// 	return (NULL);
 	}
 	return (list);
 }

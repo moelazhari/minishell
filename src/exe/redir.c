@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:56:29 by yel-khad          #+#    #+#             */
-/*   Updated: 2022/08/30 14:07:16 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/09/02 11:39:34 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	redir_in(t_cmd_node *noeud)
+static int	redir_in(t_cmd_node *noeud)
 {
 	t_red_node	*node;
 	int			fd_in;
@@ -39,7 +39,7 @@ int	redir_in(t_cmd_node *noeud)
 	return (fd_in);
 }
 
-int	redir_out(t_cmd_node *noeud)
+static int	redir_out(t_cmd_node *noeud)
 {
 	t_red_node	*node;
 	int			fd_out;
@@ -64,7 +64,7 @@ int	redir_out(t_cmd_node *noeud)
 	return (fd_out);
 }
 
-int	rl_write_fd(char *filename, int *fd)
+static int	rl_write_fd(char *filename, int *fd)
 {
 	char	*line;
 	char	*rline;

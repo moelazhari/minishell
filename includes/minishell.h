@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:34:07 by mazhari           #+#    #+#             */
-/*   Updated: 2022/09/01 18:46:55 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/02 11:42:32 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,52 +90,49 @@ typedef struct s_cmd
 	t_cmd_node	*tail;
 }				t_cmd;
 
-int			is_all_wspace(char *line);
 char		*prompt(void);
-void		sig_int_handler(int sig);
+t_list		*lexer(char *line);
+t_list		*tokenizer(char *line);
+char		*is_word(t_list *list, char *line, char *stop);
+char		*is_metacharacters(t_list *list, char *line);
+char		*is_sign(t_list *list, char *line);
+t_list		*new_list(void);
+void		push_back(t_list *list, int type, char *val);
+void		del_node(t_list *list, t_node *node);
+t_list		*clear_list(t_list *list);
+t_list		*expand(t_list *list);
+int			check_syntax(t_list *list);
 t_cmd		*paser(t_list *list, t_cmd *cmd);
 t_cmd		*new_cmd(void);
 void		push_back_cmd(t_cmd *cmd, char **args, t_red *red);
 t_red		*new_red(void);
 void		push_back_red(t_red *red, int type, char *filename);
-t_list		*lexer(char *line);
-t_list		*tokenizer(char *line);
-char		*is_word(t_list *list, char *line, char *stop);
-char		*is_sign(t_list *list, char *line);
-char		*is_metacharacters(t_list *list, char *line);
-char		*is_quote(t_list *list, char *line);
-void		push_back(t_list *list, int type, char *val);
-t_list		*new_list(void);
-void		del_node(t_list *list, t_node *node);
-t_list		*clear_list(t_list *list);
-int			check_syntax(t_list *list);
 t_red_node	*new_red_node(int type, char *filename);
+void		execute(t_cmd *cmds);
 int			reset_in_out(t_cmd_node *command);
 int			heredoc(t_red_node *node, int in);
-void		execute(t_cmd *cmds);
+int			check_bins(t_cmd_node *command);
+int			check_builtin(t_cmd_node *command, int n);
 int			builtins(t_cmd_node *command);
 void		echo(char **args);
 void		ft_pwd(void);
 void		cd(char **args);
 void		exit_shell(t_cmd *cmds, char **args);
+void		unset(char **var);
 void		print_env(int n);
 void		ft_export(char **args);
 int			*sort_index(void);
 void		sorted_env(void);
 int			existing_var(char *var);
 char		*getvar(char *str);
-void		unset(char **var);
 void		set_env_var(char *key, char *value);
 char		*get_env_var(char *var);
 char		**realloc_envv(int new_size);
 int			find_env_var(char *var);
 void		init_envv(char **env, int ac, char **av);
+void		malloc_error(void);
 void		ft_freearr(char **arr);
 void		free_cmd(t_cmd *cmd);
-void		malloc_error(void);
 void		exit_status(void);
-char		*rm_char(char *str);
-int			check_bins(t_cmd_node *command);
-int			check_builtin(t_cmd_node *command, int n);
 void		free_exit(t_cmd *cmds, int status);
 #endif		

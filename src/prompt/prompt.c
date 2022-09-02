@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:21:15 by mazhari           #+#    #+#             */
-/*   Updated: 2022/09/01 14:43:17 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/09/02 11:24:03 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_all_wspace(char *line)
+static int	is_all_wspace(char *line)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ int	is_all_wspace(char *line)
 	return (0);
 }
 
-void	sig_int_handler(int sig)
+static void	sig_int_handler(int sig)
 {
 	(void)sig;
 	rl_replace_line("", 0);

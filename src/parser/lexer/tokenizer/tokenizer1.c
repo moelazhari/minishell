@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/09/01 20:07:06 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/02 11:22:19 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,53 @@
 
 static char	*is_sign1(t_list *list, char *line)
 {
-	char	str[2];
+	char	*tmp;
+	int		i;
 
-	push_back(list, SIGN, "$");
-	if (*line <= '9' && *line >= '0')
+	i = 0;
+	while (ft_isalnum(line[i]) || line[i] == '_')
+		i++;
+	tmp = malloc(sizeof(char) * (i + 1));
+	i = 0;
+	while (ft_isalnum(*line) || *line == '_')
 	{
-		str[0] = *line;
-		str[1] = '\0';
-		push_back(list, WORD, ft_strdup(str));
+		tmp[i] = *line;
 		line++;
+		i++;
 	}
-	else
-		line = is_word(list, line, " \t\n!\"%'()*+,-./:;<=>?@[\\]^`|~$");
+	tmp[i] = '\0';
+	push_back(list, SIGN, "$");
+	push_back(list, WORD, tmp);
 	return (line);
 }
 
 char	*is_sign(t_list *list, char *line)
 {
-	char tmp[2];
-	line++;
+	char	tmp[2];
 
+	line++;
 	if (*line == 0)
-		push_back(list, WORD, ft_strdup("$"));
-	else if (*line == '?')
 	{
-		push_back(list, EXIT_STATUS, "$?");
-		line++;
+		push_back(list, WORD, ft_strdup("$"));
+		return (line);
 	}
-	else if (ft_strchr(" \t\n!\"%'()*+,-./:;<=>?@[\\]^`|~$", *line))
+	else if (*line == '?')
+		push_back(list, EXIT_STATUS, "$?");
+	else if (!ft_isalpha(*line) && *line != '_')
 	{
 		if (*line == '"' || *line == '\'')
 			return (line);
-		push_back(list, WORD, ft_strdup("$"));
+		if (ft_isdigit(*line))
+			push_back(list, SIGN, "$");
+		else
+			push_back(list, WORD, ft_strdup("$"));
 		tmp[0] = line[0];
 		tmp[1] = '\0';
 		push_back(list, WORD, ft_strdup(tmp));
-		line++;
 	}
 	else
-		line = is_sign1(list, line);
-	return (line);
+		return (is_sign1(list, line));
+	return (line + 1);
 }
 
 char	*is_word(t_list *list, char *line, char *stop)

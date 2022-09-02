@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:20:49 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/30 14:16:10 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/09/02 11:32:53 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	**malooc_args(t_list *list, char **args)
 	return (args);
 }
 
-char	**get_args(t_list *list, char **args)
+static char	**get_args(t_list *list, char **args)
 {
 	t_node	*tmp;
 	int		i;
@@ -61,7 +61,7 @@ char	**get_args(t_list *list, char **args)
 	return (args);
 }
 
-t_node	*remove_red(t_list *list, t_node *tmp)
+static t_node	*remove_red(t_list *list, t_node *tmp)
 {
 	while (tmp != list->head)
 	{

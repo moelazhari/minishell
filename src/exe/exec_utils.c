@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:34:21 by yel-khad          #+#    #+#             */
-/*   Updated: 2022/08/30 13:55:00 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/09/02 11:40:55 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_child(char *bin_path, t_cmd_node *command, int is_builtin)
+static void	run_child(char *bin_path, t_cmd_node *command, int is_builtin)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);

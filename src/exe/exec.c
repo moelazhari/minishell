@@ -6,13 +6,13 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:36:32 by yel-khad          #+#    #+#             */
-/*   Updated: 2022/09/01 17:31:37 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/02 11:37:39 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_command(t_cmd_node *command, int n)
+static int	exec_command(t_cmd_node *command, int n)
 {
 	int	is_builtin;
 	int	is_bin;
@@ -35,7 +35,7 @@ int	exec_command(t_cmd_node *command, int n)
 	return (0);
 }
 
-int	exec_loop(t_cmd *cmds, int *tmp_in_out)
+static int	exec_loop(t_cmd *cmds, int *tmp_in_out)
 {
 	t_cmd_node	*node;
 	int			exec;

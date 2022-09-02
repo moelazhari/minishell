@@ -6,37 +6,11 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:38:53 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/20 18:05:59 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/02 11:26:59 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*rm_char(char *str)
-{
-	int	i;
-	int	j;
-	int	len;
-
-	i = 0;
-	len = strlen(str);
-	while (i < len)
-	{
-		if (str[i] == '"' || str[i] == '\'')
-		{
-			j = i;
-			while (j < len)
-			{
-				str[j] = str[j + 1];
-				j++;
-			}
-			len--;
-			i--;
-		}
-		i++;
-	}
-	return (str);
-}
 
 static t_cmd_node	*new_cmd_node(char **args, t_red *red)
 {
