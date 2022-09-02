@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:29:40 by mazhari           #+#    #+#             */
-/*   Updated: 2022/09/02 11:22:19 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/02 12:07:20 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,16 @@ char	*is_sign(t_list *list, char *line)
 	char	tmp[2];
 
 	line++;
-	if (*line == 0)
+	if (*line == 0 || *line == '"' || *line == '\'')
 	{
-		push_back(list, WORD, ft_strdup("$"));
+		if (*(line) == 0 || *(line + 1) == 0)
+			push_back(list, WORD, ft_strdup("$"));
 		return (line);
 	}
 	else if (*line == '?')
 		push_back(list, EXIT_STATUS, "$?");
 	else if (!ft_isalpha(*line) && *line != '_')
 	{
-		if (*line == '"' || *line == '\'')
-			return (line);
 		if (ft_isdigit(*line))
 			push_back(list, SIGN, "$");
 		else

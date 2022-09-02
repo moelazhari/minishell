@@ -6,12 +6,12 @@
 #    By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 12:36:51 by mazhari           #+#    #+#              #
-#    Updated: 2022/09/02 11:28:31 by mazhari          ###   ########.fr        #
+#    Updated: 2022/09/02 12:09:19 by mazhari          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC= gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 NAME= minishell
 
 INCLUDES= ./includes
@@ -27,7 +27,7 @@ PROMPT= $(addprefix prompt/, prompt)
 TOKENIZER= $(addprefix	tokenizer/, tokenizer tokenizer1 list_utils)
 EXPAND= $(addprefix expand/, expand)
 SYNTAX= $(addprefix syntax/, syntax)
-LEXER= $(addprefix lexer/, lexer $(TOKENIZER) $(SYNTAX))
+LEXER= $(addprefix lexer/, lexer $(TOKENIZER) $(EXPAND) $(SYNTAX))
 PARSER= $(addprefix parser/, parser list_red_utils list_cmd_utils $(LEXER))
 BUILTIN= $(addprefix builtin/, builtin cd exit export export_utils)
 ENV= $(addprefix env/, env)
