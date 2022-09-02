@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:14:05 by mazhari           #+#    #+#             */
-/*   Updated: 2022/09/02 12:10:40 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/02 13:54:27 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_list	*tokenizer(char *line)
 		else
 			line = is_word(list, line, " \t\n\v\f\r\"'$|<>");
 		if (!line)
-			return (NULL);
+			return (clear_list(list));
 	}
 	return (list);
 }

@@ -6,7 +6,7 @@
 /*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:28:39 by mazhari           #+#    #+#             */
-/*   Updated: 2022/09/01 17:33:24 by mazhari          ###   ########.fr       */
+/*   Updated: 2022/09/02 14:19:16 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	sorted_env(void)
 	int	*ps;
 	int	i;
 	int	j;
+	int	k;
 
 	ps = sort_index();
 	i = 0;
@@ -78,7 +79,15 @@ void	sorted_env(void)
 		while (ps[j] != i)
 			j++;
 		ft_putstr_fd("declare -x ", 1);
-		ft_putendl_fd(g_data.env[j], 1);
+		if (ft_strchr(g_data.env[j], '='))
+		{
+			k = 0;
+			while (g_data.env[j][k - 1] != '=' && g_data.env[j][k])
+				printf("%c", g_data.env[j][k++]);
+			printf("\"%s\"\n", ft_strchr(g_data.env[j], '=') + 1);
+		}
+		else
+			ft_putendl_fd(g_data.env[j], 1);
 		i++;
 	}
 	free(ps);

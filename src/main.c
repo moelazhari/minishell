@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:32:25 by mazhari           #+#    #+#             */
-/*   Updated: 2022/08/29 19:20:02 by yel-khad         ###   ########.fr       */
+/*   Updated: 2022/09/02 13:14:41 by mazhari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exit_status(void)
 int	main(int ac, char **av, char **env)
 {
 	t_list	*list;
-	t_cmd	*cmd;
+	t_cmd	*cmds;
 	char	*line;
 
 	g_data.env = NULL;
@@ -47,10 +47,10 @@ int	main(int ac, char **av, char **env)
 		list = lexer(line);
 		if (list)
 		{
-			cmd = paser(list, new_cmd());
+			cmds = paser(list, new_cmd());
 			clear_list(list);
-			execute(cmd);
-			free_cmd(cmd);
+			execute(cmds);
+			free_cmd(cmds);
 		}
 		free(line);
 	}
