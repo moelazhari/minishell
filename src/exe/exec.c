@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazhari <mazhari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yel-khad <yel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:36:32 by yel-khad          #+#    #+#             */
-/*   Updated: 2022/09/02 11:37:39 by mazhari          ###   ########.fr       */
+/*   Updated: 2023/01/29 17:38:00 by yel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 
 static int	exec_command(t_cmd_node *command, int n)
 {
